@@ -1,0 +1,18 @@
+.cta-form {
+  margin-top: 2rem;
+}
+
+.input-cta-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+}
+
+.input-cta {
+  height: 4rem;
+  width: 30rem;
+  padding: 2rem;
+  font-size: 1.4rem;
+  display: inline-block;
+}

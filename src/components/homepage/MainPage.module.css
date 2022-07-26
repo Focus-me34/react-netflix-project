@@ -1,0 +1,41 @@
+.main-section-img {
+  width: 100%;
+  height: 80vh;
+  background-image: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.9) 0%,
+      /* rgba(0, 0, 0, 1) 1%, */
+      rgba(0, 0, 0, 0.7) 10%,
+      rgba(0, 0, 0, 0.4) 20%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.4) 80%,
+      rgba(0, 0, 0, 0.9) 99%,
+      rgba(0, 0, 0, 0.9) 100%),
+    url("../../../public/homepage.jpg");
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content {
+  z-index: 2000;
+  color: white;
+  text-align: center;
+  width: 80%;
+}
+
+.main-content h1 {
+  margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: bold;
+    line-height: 1;
+}
+
+.main-content p {
+  font-size: 1.3rem;
+    line-height: 1.1;
+}

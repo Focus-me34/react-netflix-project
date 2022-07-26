@@ -1,0 +1,27 @@
+.btn-cta {
+  display: inline-block;
+  border-radius: 2px;
+  background-color: rgb(226, 16, 20);
+  font-size: 1.4rem;
+  padding: 1.16rem;
+  line-height: 1.8rem;
+  white-space: nowrap;
+}
+
+.btn-cta:hover {
+  background-color: rgb(246, 13, 18);
+}
+
+.btn-auth {
+  width: 8rem;
+  display: inline-block;
+  border-radius: 3px;
+  background-color: rgb(226, 16, 20);
+}
+
+.btn-auth:hover {
+  background-color: rgb(246, 13, 18);
+}
+
+/* 212 30 34 */
+/* 216 13 18 */

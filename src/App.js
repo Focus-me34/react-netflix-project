@@ -5,6 +5,7 @@ import PersonalDetailPage from "./pages/PersonalDetailPage";
 import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import NotFound from "./components/UI/NotFound";
 
+
 function App() {
   return (
     <Routes>

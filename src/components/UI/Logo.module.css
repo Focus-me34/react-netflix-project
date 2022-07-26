@@ -1,0 +1,11 @@
+.container-logo {
+  width: 170px;
+}
+
+
+/* ? This class is used in the MainInfo component */
+.margin-left-auto {
+  margin-left: auto;
+}
+
+/* .logo{} */

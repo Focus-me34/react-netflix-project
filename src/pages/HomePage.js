@@ -1,5 +1,8 @@
+import MainPage from "../components/homepage/MainPage";
 const Homepage = () => {
-  return ( <p>HomePage.js</p> );
+  return (
+    <MainPage />
+  );
 }
 
 export default Homepage;
