@@ -1,8 +1,8 @@
 import classes from "./MainInfo.module.css"
-import Container from 'react-bootstrap/Container';
-import Logo from "../UI/Logo";
-
 import kids from "./../../images/kids.png"
+import tv from "./../../images/tv.png"
+import sThings from "./../../images/stranger-things-download.jpg"
+import devices from "./../../images/device-pile.png"
 
 
 const MAIN_INFO_CONTENT = [
@@ -22,14 +22,14 @@ const MainInfo = () => {
         </div>
 
         <div className={classes["main-info-card-media"]}>
-          <Logo></Logo>
+          <img src={tv} alt="Image for kids" />
         </div>
       </div>
 
 
       <div className={classes["main-info-card"]}>
         <div className={classes["main-info-card-media"]}>
-          <Logo classInfo={"margin-left"}></Logo>
+          <img src={sThings} alt="Image for kids" />
         </div>
 
         <div className={classes["main-info-card-text"]}>
@@ -46,7 +46,7 @@ const MainInfo = () => {
         </div>
 
         <div className={classes["main-info-card-media"]}>
-          <Logo></Logo>
+          <img src={devices} alt="Image for kids" />
         </div>
       </div>
 

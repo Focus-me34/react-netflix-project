@@ -1,0 +1,31 @@
+.question-answer-container {
+  width: 100%;
+  margin: 0 auto 0.5rem;
+}
+
+.question {}
+
+
+.answer {
+  border-top: 2px solid black;
+  font-size: 1.8rem;
+  background-color: rgb(42, 42, 42);
+  color: white;
+
+  padding: 1rem 2rem;
+  margin: 0 auto;
+
+  width: 80%;
+  height: auto;
+}
+
+
+/* ! ANIMATE EXPAND ICON */
+.expand-icon {
+  transform: scale(2) translateY(-2px);
+  font-weight: lighter;
+}
+
+/* .animate-expand-icon {
+  animation: ;
+} */

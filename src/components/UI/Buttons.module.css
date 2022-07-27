@@ -23,5 +23,26 @@
   background-color: rgb(246, 13, 18);
 }
 
+
+.btn-qa {
+  font-size: 1.8rem;
+  background-color: rgb(42, 42, 42);
+  color: white;
+  border: none;
+
+  padding: 1rem 2rem;
+  margin: 0 auto;
+
+  width: 80%;
+  height: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: relative;
+  z-index: 10;
+}
+
 /* 212 30 34 */
 /* 216 13 18 */

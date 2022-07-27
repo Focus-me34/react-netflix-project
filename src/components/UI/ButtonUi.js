@@ -1,4 +1,4 @@
-import classes from "./Button.module.css"
+import classes from "./Buttons.module.css"
 
 const ButtonUI = (props) => {
 
@@ -11,12 +11,15 @@ switch (props.type) {
   case "auth":
     buttonClasses = classes["btn-auth"]
     break;
+  case "qa":
+    buttonClasses = classes["btn-qa"]
+    break;
   // default:
   //   break;
 }
 
   return (
-    <button type="button" className={`${classes.button} ${buttonClasses}`}></button>
+    <button type="button" className={`${classes.button} ${buttonClasses}`} onClick={props.onClick}>{props.children}</button>
    );
 }
 

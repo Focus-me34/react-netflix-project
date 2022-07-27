@@ -1,5 +1,9 @@
+import Favourites from "../components/favourites/Favourites";
+
 const FavouriteMoviesPage = () => {
-  return (<p>FavouriteMoviesPage.js</p>);
+  return (
+    <Favourites />
+  );
 }
 
 export default FavouriteMoviesPage;

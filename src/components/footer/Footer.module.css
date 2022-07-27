@@ -1,0 +1,45 @@
+footer {
+  color: #737373;
+  font-size: 1rem;
+  border-top: 8px solid #222;
+
+  margin-top: -4rem;
+  padding: 3rem 0;
+}
+
+footer ul {
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  font-size: 1rem;
+  color: #737373;
+
+  padding: 0;
+}
+
+footer h5 {
+  font-size: 1rem;
+  font-weight: 400 ;
+}
+
+footer a {
+  display: inline-block;
+  text-decoration: none;
+  color: #737373;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+footer a:hover,
+footer a:active {
+  text-decoration: underline !important;
+  color: #737373;
+}
+
+footer a:visited,
+footer a:link {
+  text-decoration: none;
+  color: #737373;
+}

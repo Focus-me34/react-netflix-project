@@ -1,5 +1,22 @@
+.input-cta-container {
+  margin-top: 3rem;
+}
+
+.main-content .input-cta-container {
+  margin-top: 1rem !important;
+}
+
+.input-cta-title {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 0 !important;
+}
+
 .cta-form {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 }
 
 .input-cta-line {
@@ -11,7 +28,7 @@
 
 .input-cta {
   height: 4rem;
-  width: 30rem;
+  width: 35rem;
   padding: 2rem;
   font-size: 1.4rem;
   display: inline-block;

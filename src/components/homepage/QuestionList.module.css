@@ -1,0 +1,16 @@
+.frequently-asked-questions {
+  margin-bottom: 10rem;
+}
+
+.frequently-asked-questions h2 {
+  font-size: 3rem;
+  color: white;
+  text-align: center;
+
+  width: 100%;
+  margin: 5rem 0 3rem;
+}
+
+.frequently-asked-questions p {
+  margin: 0;
+}

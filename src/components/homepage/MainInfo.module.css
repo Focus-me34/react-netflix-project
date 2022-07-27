@@ -1,12 +1,18 @@
 /* .main-infos {} */
 
-.main-infos h2 {
+.main-info h2 {
   font-size: 3rem;
+}
+
+.main-info p {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
 }
 
 .main-info-card {
   width: 100%;
-  height: 30rem;
+  height: 28rem;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -18,7 +24,7 @@
 }
 
 .main-info-card img {
-  transform: scale(0.8);
+  transform: scale(0.85);
 }
 
 .main-info-card:last-of-type {
@@ -28,11 +34,14 @@
 .main-info-card-text {
   text-align: left;
   width: 40%;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .main-info-card-media {
-  width: 40%;
-  justify-self: center;
+ width: 40%;
   padding: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

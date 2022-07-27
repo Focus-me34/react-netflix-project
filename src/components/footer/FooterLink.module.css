@@ -1,0 +1,24 @@
+.footer-li {
+  width: 25%;
+  list-style: none;
+    margin-bottom: -0.5rem;
+}
+
+.footer-link {
+  display: lock;
+  text-decoration: none;
+  color: #737373;
+  font-size: 0.8rem;
+}
+
+.footer-link:hover,
+.footer-link:active {
+  text-decoration: underline !important;
+  color: #737373;
+}
+
+.footer-link:link,
+.footer-link:visited {
+  text-decoration: none;
+  color: #737373;
+}
