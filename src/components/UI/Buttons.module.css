@@ -44,5 +44,13 @@
   z-index: 10;
 }
 
+.btn-link {
+  color: #0071eb !important;
+  font-size: 0.6rem;
+}
+.btn-link:hover {
+  text-decoration: underline solid #0071eb 2px;
+}
+
 /* 212 30 34 */
 /* 216 13 18 */

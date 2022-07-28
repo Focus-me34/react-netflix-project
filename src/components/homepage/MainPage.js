@@ -1,4 +1,5 @@
 import Navbar from "../navbar/Navbar";
+import AuthModal from "../UI/AuthModal";
 import MainPageHeader from "./MainPageHeader";
 import MainInfo from "./MainInfo";
 import QuestionList from "./QuestionList";
@@ -14,6 +15,7 @@ const MainPage = () => {
       <MainInfo></MainInfo>
       <QuestionList></QuestionList>
       <Footer></Footer>
+      <AuthModal></AuthModal>
     </>
   );
 }
