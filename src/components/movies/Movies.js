@@ -1,6 +1,11 @@
 import NavbarDetailed from "../navbar/NavbarDetailed";
 import DisplayContent from "../UI/DisplayContent";
+import MovieList from "./MovieList";
+import Footer from "../footer/Footer";
 
+
+// import useFetch from "./hooks/useFetch";
+import { getActionMovies } from "../../lib/api";
 import classes from "./Movies.module.css"
 
 const Movies = () => {
@@ -12,7 +17,11 @@ const Movies = () => {
     <>
       <NavbarDetailed></NavbarDetailed>
       <DisplayContent type={type} description={description} >
-
+        <MovieList httpMethod={getActionMovies} genre="Action"></MovieList>
+        <MovieList httpMethod={getActionMovies} genre="Thriller"></MovieList>
+        <MovieList httpMethod={getActionMovies} genre="Horror"></MovieList>
+        <MovieList httpMethod={getActionMovies} genre="Romantic"></MovieList>
+      <Footer />
       </DisplayContent>
     </>
 
