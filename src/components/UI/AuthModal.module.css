@@ -3,7 +3,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -80%);
+  transform: translate(-50%, -50%);
   z-index: 20000;
 
   width: 330px;
@@ -36,6 +36,12 @@
   background-color: white !important;
 
   padding: 0.5rem 1rem;
+}
+
+.auth-modal .error-message {
+  color: red;
+  font-size: 0.6rem;
+  text-align: center;
 }
 
 .auth-modal form input[type="checkbox"] {
@@ -99,6 +105,16 @@
 
 .auth-modal-bottom div p a:active,
 .auth-modal-bottom div p a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.auth-modal-bottom .auth-switch {
+  color: white;
+  text-decoration: none;
+}
+
+.auth-modal-bottom .auth-switch:hover {
   color: white;
   text-decoration: underline;
 }
