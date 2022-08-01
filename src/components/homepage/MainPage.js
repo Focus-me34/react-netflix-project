@@ -4,10 +4,24 @@ import MainPageHeader from "./MainPageHeader";
 import MainInfo from "./MainInfo";
 import QuestionList from "./QuestionList";
 import Footer from "../footer/Footer";
+import { useEffect } from "react";
 
 import classes from "./MainPage.module.css"
 
 const MainPage = () => {
+
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/member-data")
+  //     .then(res => {
+  //       console.log(res);
+  //       return res.json()
+  //     })
+  //     .then(data => console.log(data))
+  // }, [])
+
+
+
+
   return (
     <>
       <Navbar />
@@ -15,7 +29,6 @@ const MainPage = () => {
       <MainInfo></MainInfo>
       <QuestionList></QuestionList>
       <Footer></Footer>
-      <AuthModal></AuthModal>
     </>
   );
 }

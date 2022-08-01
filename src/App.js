@@ -5,6 +5,9 @@ import SeriesListPage from "./pages/SeriesListPage";
 import PersonalDetailPage from "./pages/PersonalDetailPage";
 import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import NotFound from "./components/UI/NotFound";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from "react";
+
 
 
 

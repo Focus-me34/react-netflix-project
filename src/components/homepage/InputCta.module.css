@@ -27,9 +27,14 @@
 }
 
 .input-cta {
-  height: 4rem;
+  height: 3.5rem;
   width: 35rem;
-  padding: 2rem;
+  padding: 0rem 1rem;
   font-size: 1.4rem;
   display: inline-block;
+}
+
+.input-cta .btn-cta {
+  height: 3.5rem !important;
+  border-radius: initial;
 }
