@@ -7,9 +7,11 @@ import btnClasses from "../UI/Buttons.module.css"
 
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../store/slices/AuthSlice";
+import { destroySession } from "../../store/slices/AuthSlice";
 
 const Navbar = () => {
   const isAuthModalOpen = useSelector(state => state.auth.isAuthModalOpen);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
 
@@ -18,11 +20,16 @@ const Navbar = () => {
     dispatch(toggleModal())
   }
 
+  const signOutHandler = () => {
+    dispatch(destroySession());
+  }
+
   return (
     <>
       <nav className={classes.navbar}>
         <Logo></Logo>
-        <Button onClick={toggleModalHandler} className={btnClasses["btn-auth"]} variant="danger" size="s">Sign in</Button>
+        {!isLoggedIn && <Button onClick={toggleModalHandler} className={btnClasses["btn-auth"]} variant="danger" size="s">Sign in</Button>}
+        {isLoggedIn && <Button onClick={signOutHandler} className={btnClasses["btn-auth"]} variant="danger" size="s">Sign out</Button>}
       </nav>
       {isAuthModalOpen && <AuthModal />}
     </>
