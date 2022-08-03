@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+const isToken = localStorage.getItem("token") ? true : false;
+
 const initialState = {
   isAuthModalOpen: false,
-  user: null,
-  notification: null,
-  isLoggedIn: false,
-  token: null
+  user: isToken ? JSON.parse(localStorage.getItem("user")) : null, // ! If there's a token, there's a user obviously
+  notification: isToken ? { status: "success", title: "Success", message: "Signed in successfully!" } : null,
+  isLoggedIn: isToken ? true : false,
+  token: isToken ? localStorage.getItem("token") : null
 }
 
 const authSlice = createSlice({
@@ -26,14 +29,18 @@ const authSlice = createSlice({
 
     setSession: (state, action) => {
       state.token = action.payload.token;
+      state.user = action.payload.user
       state.isLoggedIn = true;
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
     },
 
     destroySession: (state) => {
       state.token = null
+      state.user = null;
       state.isLoggedIn = false;
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     }
   },
 });
@@ -87,7 +94,8 @@ export const signIn = (credentials) => {
 
     try {
       const data = await sendRequest();
-      dispatch(authSlice.actions.setSession({ token: data.token }));
+      console.log(data);
+      dispatch(authSlice.actions.setSession({ token: data.token, user: data.user }));
       dispatch(authSlice.actions.toggleModal())
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
     } catch (error) {
@@ -97,10 +105,10 @@ export const signIn = (credentials) => {
 }
 
 // ! SIGN OUT
-export const signOut = (token) => {
+export const signOut = () => {
   return async (dispatch) => {
     dispatch(authSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Signing in Please wait..." }))
-
+    const token = localStorage.getItem("token");
     const sendRequest = async () => {
       const res = await fetch("http://localhost:3000/users/sign_out", {
         method: "DELETE",

@@ -13,12 +13,12 @@ import classes from "./Movies.module.css";
 const Movies = () => {
   const { sendRequest, status, data: movies, error} = useFetch(getMovies, true);
 
-  console.log(movies);
   useEffect(() => {
     sendRequest();
   }, [sendRequest]);
 
-  const separate_movies = (mvs) => {
+  const separate_movies = (mvs = []) => {
+    console.log(mvs);
     const movies_1 = mvs.slice(0,10)
     const movies_2 = mvs.slice(10,25)
     const movies_3 = mvs.slice(25,50)
@@ -49,6 +49,8 @@ const Movies = () => {
             <MovieList movies={updated_movies[4]} rank="76-100"></MovieList>
           </>
         )}
+
+        {error && <p>An error occured</p>}
         <Footer />
       </DisplayContent>
     </>

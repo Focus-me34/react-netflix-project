@@ -8,13 +8,12 @@ import btnClasses from "../UI/Buttons.module.css"
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../store/slices/AuthSlice";
 import { destroySession } from "../../store/slices/AuthSlice";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const isAuthModalOpen = useSelector(state => state.auth.isAuthModalOpen);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const dispatch = useDispatch();
-
-
 
   const toggleModalHandler = () => {
     dispatch(toggleModal())

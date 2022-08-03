@@ -11,20 +11,19 @@ import { useSelector } from "react-redux";
 
 function App() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
-  console.log(isLoggedIn);
 
   return (
     <Routes>
       <Route path="/" element={<Homepage />}></Route>
 
-      {/* {isLoggedIn &&
-        <> */}
+      {isLoggedIn &&
+        <>
           <Route path="/movies" element={<MoviesListPage />}></Route>
           <Route path="/series" element={<SeriesListPage />}></Route>
           <Route path="/account" element={<PersonalDetailPage />}></Route>
           <Route path="/favourites" element={<FavouriteMoviesPage />}></Route>
-        {/* </>
-      } */}
+        </>
+      }
       <Route path="/page-not-found" element={<NotFound />}></Route>
       <Route path="/*" element={<Navigate replace to="/page-not-found" />}
       ></Route>
