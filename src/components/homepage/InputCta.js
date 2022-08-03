@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 import btnClasses from "../UI/Buttons.module.css"
@@ -14,14 +14,15 @@ const InputCta = () => {
     setDisableButton(!email.current.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))
   }
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = (e) => {
+    e.preventDefault()
     navigate("/movies")
   }
 
   return (
     <div className={classes["input-cta-container"]}>
       <p className={classes["input-cta-title"]}>Ready to watch? Enter your email to create or restart your membership.</p>
-      <form onSubmit={onSubmitHandler} className={`${classes["cta-form"]} ${classes["form-cta"]}`}>
+      <form onSubmit={onSubmitHandler} id="cta-form" className={`${classes["cta-form"]} ${classes["form-cta"]}`}>
         {/* <label htmlFor="email">E-mail</label> */}
         <div className={classes["input-cta-line"]}>
           <input onChange={onChangeHanlder} ref={email} className={`${classes["input-cta"]} ${classes["email-cta"]}`} type="email" name="email" placeholder={"E-mail"} />

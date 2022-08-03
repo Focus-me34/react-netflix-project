@@ -1,8 +1,9 @@
 import ReactDom from "react-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import btnClasses from "../UI/Buttons.module.css"
+import SpinLoader from "./SpinLoader";
 
 import classes from "./AuthModal.module.css"
 
@@ -11,11 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { signUp } from "../../store/slices/AuthSlice";
 import { signIn } from "../../store/slices/AuthSlice";
+import { useNavigate } from "react-router-dom";
 
 
 // ! BACKDROP FOR THE MODAL
 const Backdrop = () => {
-  // const isModalOpen = useSelector(state => state.auth.isModalOpen)
   const dispatch = useDispatch()
 
   const toggleModalHandler = () => {
@@ -31,8 +32,12 @@ const Backdrop = () => {
 const AuthModalContent = () => {
   const [authType, setAuthType] = useState("signin");
   const [isError, setIsError] = useState({ status: false, message: "" })
+  const notification = useSelector((state) => state.auth.notification);
+
+  console.log(notification);
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // ! SIGN IN REFS
   const emailSignIn = useRef();
@@ -43,29 +48,34 @@ const AuthModalContent = () => {
   const passwordSignUp = useRef()
   const passwordSignUpConfirmation = useRef()
 
+  useEffect(() => {
+  }, []);
 
   const signinHandler = (e) => {
     e.preventDefault();
 
     if ((emailSignIn.current.value !== "") &&  passwordSignIn.current.value !== "") {
-      dispatch(signIn({ email: emailSignIn.current.value, password: passwordSignIn.current.value }))
+      try{
+        dispatch(signIn({ email: emailSignIn.current.value, password: passwordSignIn.current.value }))
+      } finally {
+        setTimeout(() => {
+          navigate("/movies");
+        }, 1000);
+      }
     } else {
-      setIsError({ status: true, message: "Make sure you povide both email and password" })
+      setIsError({ status: true, message: "Make sure you povide both email and password" });
     }
-
-    console.log({ email: emailSignIn.current.value, password: passwordSignIn.current.value });
   }
 
 
   const signupHandler = (e) => {
     e.preventDefault();
+
     if (passwordSignUp.current.value === passwordSignUpConfirmation.current.value) {
-      dispatch(signUp({ email: emailSignup.current.value, password: passwordSignUp.current.value }))
+      dispatch(signUp({ email: emailSignup.current.value, password: passwordSignUp.current.value }));
     } else {
-      console.log("hey there");
-      setIsError({ status: true, message: "Make sure the password confirmation matches your password" })
+      setIsError({ status: true, message: "Make sure the password confirmation matches your password" });
     }
-    // console.log({ email: emailSignup.current.value, password: passwordSignUp.current.value, password_confirmation: passwordSignUp.current.value });
   }
 
   const changeAuthType = () => {
@@ -83,7 +93,8 @@ const AuthModalContent = () => {
 
             {isError.status && <p className={classes["error-message"]}>{isError.message}</p>}
 
-            <Button type="submit" className={`${btnClasses["btn-auth"]} w-100`} variant="danger" size="s">Sign in</Button>
+            {(notification === null || notification?.status !== "pending") && <Button type="submit" className={`${btnClasses["btn-auth"]} w-100`} variant="danger" size="s">Sign in</Button>}
+            {notification?.status === "pending" && <SpinLoader />}
 
             <div className={classes["auth-remember-me-section"]}>
               <div className={classes["auth-remember-me"]}>

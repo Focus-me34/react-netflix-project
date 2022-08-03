@@ -1,9 +1,35 @@
 // const FIREBASE_DOMAIN = 'https://react-router-quotes-be708-default-rtdb.europe-west1.firebasedatabase.app';
-const api_key = `${process.env.REACT_APP_TMDB_API_KEY}`
+// const api_key = `${process.env.REACT_APP_TMDB_API_KEY}`
 
-// ! GET MOVIES BY CATEGORY
-// export async function getActionMovies() {
-//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=action}`;
+// ! GET MOVIES
+export async function getMovies() {
+  const token = localStorage.getItem("token");
+  console.log(token);
+  const url = "http://localhost:3000/api/v1/movies";
+  const res = await fetch(url,
+    {
+      method: "GET",
+      headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
+    });
+    console.log(res);
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || 'Could not fetch action movies from RAILS.');
+  }
+
+  if (data.errorMessage) {
+    throw new Error(data.errorMessage)
+  }
+
+
+  return data;
+}
+
+
+
+// export async function getThrillerMovies() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=thriller}`;
 //   const response = await fetch(url);
 //   console.log(response);
 //   const data = await response.json();
@@ -19,145 +45,108 @@ const api_key = `${process.env.REACT_APP_TMDB_API_KEY}`
 //   return data.results;
 // }
 
-export async function getActionMovies() {
-  const url = `http://localhost:3000/api/v1/movies`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
+// export async function getHorrorMovies() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=horror}`;
+//   const response = await fetch(url);
+//   console.log(response);
+//   const data = await response.json();
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies from RAILS.');
-  }
+//   if (!response.ok) {
+//     throw new Error(data.message || 'Could not fetch action movies.');
+//   }
 
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage)
+//   }
 
-  console.log(data);
-  return data;
-}
+//   return data.results;
+// }
 
+// export async function getRomanceMovies() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=romance}`;
+//   const response = await fetch(url);
+//   console.log(response);
+//   const data = await response.json();
 
+//   if (!response.ok) {
+//     throw new Error(data.message || 'Could not fetch action movies.');
+//   }
 
-export async function getThrillerMovies() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=thriller}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage)
+//   }
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
+//   return data.results;
+// }
 
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
+// // ! GET SERIES BY CATEGORY
+// export async function getActionSeries() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=action}`;
+//   const response = await fetch(url);
+//   console.log(response);
+//   const data = await response.json();
 
-  return data.results;
-}
+//   if (!response.ok) {
+//     throw new Error(data.message || 'Could not fetch action movies.');
+//   }
 
-export async function getHorrorMovies() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=horror}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage)
+//   }
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
+//   return data.results;
+// }
 
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
+// export async function getThrillerSeries() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=thriller}`;
+//   const response = await fetch(url);
+//   console.log(response);
+//   const data = await response.json();
 
-  return data.results;
-}
+//   if (!response.ok) {
+//     throw new Error(data.message || 'Could not fetch action movies.');
+//   }
 
-export async function getRomanceMovies() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=romance}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage)
+//   }
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
+//   return data.results;
+// }
 
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
+// export async function getHorrorSeries() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=horror}`;
+//   const response = await fetch(url);
+//   console.log(response);
+//   const data = await response.json();
 
-  return data.results;
-}
+//   if (!response.ok) {
+//     throw new Error(data.message || 'Could not fetch action movies.');
+//   }
 
-// ! GET SERIES BY CATEGORY
-export async function getActionSeries() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=action}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage)
+//   }
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
+//   return data.results;
+// }
 
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
+// export async function getRomanceSeries() {
+//   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=romance}`;
+//   const response = await fetch(url);
+//   console.log(response);
+//   const data = await response.json();
 
-  return data.results;
-}
+//   if (!response.ok) {
+//     throw new Error(data.message || 'Could not fetch action movies.');
+//   }
 
-export async function getThrillerSeries() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=thriller}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage)
+//   }
 
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
-
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
-
-  return data.results;
-}
-
-export async function getHorrorSeries() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=horror}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
-
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
-
-  return data.results;
-}
-
-export async function getRomanceSeries() {
-  const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?title_type=tv_series&genres=romance}`;
-  const response = await fetch(url);
-  console.log(response);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || 'Could not fetch action movies.');
-  }
-
-  if (data.errorMessage) {
-    throw new Error(data.errorMessage)
-  }
-
-  return data.results;
-}
+//   return data.results;
+// }
 
 // export async function getSingleQuote(quoteId) {
 //   const response = await fetch(`${FIREBASE_DOMAIN}/quotes/${quoteId}.json`);

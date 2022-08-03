@@ -3,29 +3,58 @@ import DisplayContent from "../UI/DisplayContent";
 import MovieList from "./MovieList";
 import Footer from "../footer/Footer";
 
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import useFetch from "./../../hooks/useFetch"
 
-// import useFetch from "./hooks/useFetch";
-import { getActionMovies } from "../../lib/api";
-import classes from "./Movies.module.css"
+import { getMovies } from "../../lib/api";
+import classes from "./Movies.module.css";
 
 const Movies = () => {
+  const { sendRequest, status, data: movies, error} = useFetch(getMovies, true);
 
-  const type = "Movies"
-  const description = "Movies move us like nothing else can, whether they’re scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience."
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
+  const separate_movies = (mvs = []) => {
+    console.log(mvs);
+    const movies_1 = mvs.slice(0,10)
+    const movies_2 = mvs.slice(10,25)
+    const movies_3 = mvs.slice(25,50)
+    const movies_4 = mvs.slice(50,75)
+    const movies_5 = mvs.slice(75,100)
+    const updated_movies = [movies_1, movies_2, movies_3, movies_4, movies_5];
+
+    return updated_movies
+  }
+
+  const updated_movies = movies ? separate_movies(movies) : "";
+
+  const type = "Movies";
+  const description =
+    "Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.";
+
 
   return (
     <>
       <NavbarDetailed></NavbarDetailed>
-      <DisplayContent type={type} description={description} >
-        <MovieList httpMethod={getActionMovies} genre="Action"></MovieList>
-        <MovieList httpMethod={getActionMovies} genre="Thriller"></MovieList>
-        <MovieList httpMethod={getActionMovies} genre="Horror"></MovieList>
-        <MovieList httpMethod={getActionMovies} genre="Romantic"></MovieList>
-      <Footer />
+      <DisplayContent type={type} description={description}>
+        {status === "completed" && !error && (
+          <>
+            <MovieList movies={updated_movies[0]} rank="1-10"></MovieList>
+            <MovieList movies={updated_movies[1]} rank="11-25"></MovieList>
+            <MovieList movies={updated_movies[2]} rank="26-50"></MovieList>
+            <MovieList movies={updated_movies[3]} rank="51-75"></MovieList>
+            <MovieList movies={updated_movies[4]} rank="76-100"></MovieList>
+          </>
+        )}
+
+        {error && <p>An error occured</p>}
+        <Footer />
       </DisplayContent>
     </>
-
   );
-}
+};
 
 export default Movies;
