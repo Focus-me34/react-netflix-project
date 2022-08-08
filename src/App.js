@@ -12,6 +12,15 @@ import { useSelector } from "react-redux";
 function App() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
+// useEffect(() => {
+//   const token = "02dd4cd70ad7780c66d197c4bf127340";
+//   fetch(
+//     `https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=5`
+//   )
+//     .then((res) => res.json())
+//     .then((data) => console.log(data));
+// }, [])
+
   return (
     <Routes>
       <Route path="/" element={<Homepage />}></Route>

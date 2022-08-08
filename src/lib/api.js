@@ -4,14 +4,12 @@
 // ! GET MOVIES
 export async function getMovies() {
   const token = localStorage.getItem("token");
-  console.log(token);
   const url = "http://localhost:3000/api/v1/movies";
   const res = await fetch(url,
     {
       method: "GET",
       headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
     });
-    console.log(res);
   const data = await res.json();
 
   if (!res.ok) {

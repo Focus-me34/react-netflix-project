@@ -1,5 +1,5 @@
 .movie-category-container {
-  margin: 0 3rem 6rem;
+  margin: 0 3rem 3rem;
   color: white;
 }
 
@@ -9,7 +9,6 @@
   overflow-x: auto;
 
   width: 100%;
-  height: 450px;
 
   display: flex;
   flex-wrap: nowrap;
@@ -23,9 +22,8 @@
 
 .movie-card {
   flex-shrink: 0;
-
   width: 250px;
-  height: 400px;
+  height: 30rem;
 }
 
 .movie-card img {
@@ -51,27 +49,52 @@
   margin: 0;
   padding: 1rem 2rem;
   background-color: #000000;
+
+  min-height: 25rem;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .movie-details video {
-  display: block;
   width: 50%;
   margin: 0 auto;
 }
 
-.synopsis {
-  text-align: center;
-  text-decoration: underline;
-  text-underline-offset: 20%;
-
+.movie-details .title {
+  font-size: 2.3rem;
   font-weight: bolder;
-  font-size: 1.5rem;
-  display: block;
+  text-align: center;
+  margin-bottom: 2rem;
+
 }
 
-.movie-details p  {
+.movie-details .synopsis {
   width: 80%;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 3rem;
+}
+
+.movie-details .bottom-card {
+  margin: 0 auto;
+width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.release-date {
+  font-size: 0.8rem;
+  font-weight: bolder;
+  text-emphasis-color: rgb(182, 182, 182);
+}
+
+.vote-average {
+  font-size: 0.8rem;
+  font-weight: bolder;
+  text-emphasis-color: rgb(182, 182, 182);
 }
