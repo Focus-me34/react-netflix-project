@@ -18,7 +18,7 @@ const Movies = () => {
   }, [sendRequest]);
 
   const separate_movies = (mvs = []) => {
-    console.log(mvs);
+    // console.log(mvs);
     const movies_1 = mvs.slice(0,10)
     const movies_2 = mvs.slice(10,25)
     const movies_3 = mvs.slice(25,50)
@@ -28,7 +28,6 @@ const Movies = () => {
 
     return updated_movies
   }
-
   const updated_movies = movies ? separate_movies(movies) : "";
 
   const type = "Movies";
@@ -40,15 +39,15 @@ const Movies = () => {
     <>
       <NavbarDetailed></NavbarDetailed>
       <DisplayContent type={type} description={description}>
-        {status === "completed" && !error && (
-          <>
-            <MovieList movies={updated_movies[0]} rank="1-10"></MovieList>
-            <MovieList movies={updated_movies[1]} rank="11-25"></MovieList>
-            <MovieList movies={updated_movies[2]} rank="26-50"></MovieList>
-            <MovieList movies={updated_movies[3]} rank="51-75"></MovieList>
-            <MovieList movies={updated_movies[4]} rank="76-100"></MovieList>
-          </>
-        )}
+        {status === "completed" && !error && updated_movies &&
+            <>
+              <MovieList allMovies={movies} movies={updated_movies[0]} rank="1-10"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[1]} rank="11-25"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[2]} rank="26-50"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[3]} rank="51-75"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[4]} rank="76-100"></MovieList>
+            </>
+          }
 
         {error && <p>An error occured</p>}
         <Footer />
