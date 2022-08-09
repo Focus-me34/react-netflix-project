@@ -25,6 +25,32 @@ export async function getMovies() {
 }
 
 
+export async function getFavorites() {
+  const token = localStorage.getItem("token");
+  const url = "http://localhost:3000/api/v1/favorites";
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      data.message || "Could not fetch action movies from RAILS."
+    );
+  }
+
+  if (data.errorMessage) {
+    throw new Error(data.errorMessage);
+  }
+
+  return data.favorite_movies;
+}
+
 
 // export async function getThrillerMovies() {
 //   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=thriller}`;
