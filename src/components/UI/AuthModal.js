@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 
 // ! BACKDROP FOR THE MODAL
-const Backdrop = () => {
+export const Backdrop = () => {
   const dispatch = useDispatch()
 
   const toggleModalHandler = () => {

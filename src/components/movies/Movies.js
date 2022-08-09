@@ -41,11 +41,11 @@ const Movies = () => {
       <DisplayContent type={type} description={description}>
         {status === "completed" && !error && updated_movies &&
             <>
-              <MovieList allMovies={movies} movies={updated_movies[0]} rank="1-10"></MovieList>
-              <MovieList allMovies={movies} movies={updated_movies[1]} rank="11-25"></MovieList>
-              <MovieList allMovies={movies} movies={updated_movies[2]} rank="26-50"></MovieList>
-              <MovieList allMovies={movies} movies={updated_movies[3]} rank="51-75"></MovieList>
-              <MovieList allMovies={movies} movies={updated_movies[4]} rank="76-100"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[0]} rank="Most Popular Movies - Rank: 1-10"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[1]} rank="Most Popular Movies - Rank: 11-25"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[2]} rank="Most Popular Movies - Rank: 26-50"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[3]} rank="Most Popular Movies - Rank: 51-75"></MovieList>
+              <MovieList allMovies={movies} movies={updated_movies[4]} rank="Most Popular Movies - Rank: 76-100"></MovieList>
             </>
           }
 

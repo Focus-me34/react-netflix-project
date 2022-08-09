@@ -49,6 +49,7 @@
   margin: 0;
   padding: 1rem 2rem;
   background-color: #000000;
+  color: white;
 
   min-height: 25rem;
   background-size: 100% auto;
@@ -82,7 +83,7 @@
 
 .movie-details .bottom-card {
   margin: 0 auto;
-width: 80%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
 }

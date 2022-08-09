@@ -37,7 +37,7 @@ const MovieList = (props) => {
 
   return (
     <div className={classes["movie-category-container"]}>
-      <h2>Most Popular Movies - Rank: {props.rank}</h2>
+      <h2>{props.rank}</h2>
       <div className={classes["movie-category-list"]}>
         {props.movies.map(movie => {
           return (
