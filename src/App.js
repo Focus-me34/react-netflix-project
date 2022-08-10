@@ -7,10 +7,15 @@ import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import NotFound from "./components/UI/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
+
+import { getAllWatchlists } from "./store/slices/MovieSlice";
 
 function App() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
+
+  dispatch(getAllWatchlists());
 
 // useEffect(() => {
 //   const token = "02dd4cd70ad7780c66d197c4bf127340";
@@ -34,6 +39,23 @@ function App() {
 //     .then((res) => res.json())
 //     .then((data) => console.log(data));
 // }, [])
+
+
+// useEffect(() => {
+//   const token = localStorage.getItem("token");
+//   fetch(`http://localhost:3000/api/v1/watchlists`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${token}`,
+//     },
+//     // body: JSON.stringify({movie_id: 20})
+//   })
+//     .then((res) => res.json())
+//     .then((data) => console.log(data));
+// }, [])
+
+
 
   return (
     <Routes>

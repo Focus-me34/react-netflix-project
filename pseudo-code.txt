@@ -11,4 +11,19 @@ DONE - Portal movie description in the movie section.
 DONE - Close Backdrop modal when clicking on it
 
 DONE - Simplify / REFACTOR the whole code base
+
+
+- Create new page for watch list and add link to the navbar.
+(- Make navbar shrink)
+
+- Create watchlist slice?
+
+
+
+
+
+
+
+
+
 - Add more comments
