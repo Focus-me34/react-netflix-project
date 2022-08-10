@@ -1,7 +1,7 @@
 // const FIREBASE_DOMAIN = 'https://react-router-quotes-be708-default-rtdb.europe-west1.firebasedatabase.app';
 // const api_key = `${process.env.REACT_APP_TMDB_API_KEY}`
 
-// ! GET MOVIES
+// ! GET ALL MOVIES
 export async function getMovies() {
   const token = localStorage.getItem("token");
   const url = "http://localhost:3000/api/v1/movies";
@@ -27,7 +27,7 @@ export async function getMovies() {
   return data;
 }
 
-
+// ! GET ALL FAVORITE MOVIES
 export async function getFavorites() {
   const token = localStorage.getItem("token");
   const url = "http://localhost:3000/api/v1/favorites";
@@ -55,6 +55,33 @@ export async function getFavorites() {
   return data.favorite_movies;
 }
 
+// // ! GET ALL WATCHLISTS
+// export async function getFavorites() {
+//   const token = localStorage.getItem("token");
+//   const url = "http://localhost:3000/api/v1/favorites";
+//   const res = await fetch(url, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${token}`
+//       // "Access-Control-Allow-Origin": "http://localhost:3006",
+//     },
+//   });
+
+//   const data = await res.json();
+
+//   if (!res.ok) {
+//     throw new Error(
+//       data.message || "Could not fetch action movies from RAILS."
+//     );
+//   }
+
+//   if (data.errorMessage) {
+//     throw new Error(data.errorMessage);
+//   }
+
+//   return data.favorite_movies;
+// }
 
 // export async function getThrillerMovies() {
 //   const url = `https://imdb-api.com/API/AdvancedSearch/${api_key}/?genres=thriller}`;

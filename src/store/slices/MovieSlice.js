@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: localStorage.getItem("token") || null,
+  notification: null,
   isSelectedMovie: false,
   movieId: null,
   movie: null,
-  updatedFavMovieList: null
+  updatedFavMovieList: null,
+  allWatchlists: null
 };
 
 
@@ -22,20 +24,24 @@ const movieSlice = createSlice({
     },
 
     selectMovie: (state, action) => {
-        state.isSelectedMovie = true;
-        state.movieId = action.payload.movieId;
-        state.movie = action.payload.movie
+      state.isSelectedMovie = true;
+      state.movieId = action.payload.movieId;
+      state.movie = action.payload.movie;
     },
 
     unselectMovie: (state) => {
-        state.isSelectedMovie = false;
-        state.movieId = null;
-        state.movie = null;
+      state.isSelectedMovie = false;
+      state.movieId = null;
+      state.movie = null;
     },
 
-    updateFavMovieList: (state, action) => {
-      state.updatedFavMovieList = action.payload.newFavMovieList
-    }
+    setFavMovieList: (state, action) => {
+      state.updatedFavMovieList = action.payload.newFavMovieList;
+    },
+
+    setAllWatchlists: (state, action) => {
+      state.allWatchlists = action.payload.allWatchlists;
+    },
   },
 });
 
@@ -65,7 +71,7 @@ export const addFavoriteMovie = (movie_id) => {
 
     try {
       const data = await sendRequest();
-      dispatch(movieSlice.actions.updateFavMovieList({ newFavMovieList: JSON.parse(data.favorite_movies) }));
+      dispatch(movieSlice.actions.setFavMovieList({ newFavMovieList: JSON.parse(data.favorite_movies) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Added movie to favorite successfully!" }))
     } catch (error) {
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while adding movie to favorite" }))
@@ -96,10 +102,42 @@ export const removeFavoriteMovie = (movie_id) => {
 
     try {
       const data = await sendRequest();
-      dispatch(movieSlice.actions.updateFavMovieList({ newFavMovieList: JSON.parse(data.favorite_movies) }));
+      dispatch(movieSlice.actions.setFavMovieList({ newFavMovieList: JSON.parse(data.favorite_movies) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Removed movie from favorite successfully!" }))
     } catch (error) {
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while removing movie from favorite" }))
+    }
+  }
+}
+
+// ! GET WATCLISTS FOR USER
+export const getAllWatchlists = () => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching user watchlists..." }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch("http://localhost:3000/api/v1/watchlists", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error("An error occured: Failed to fetch all the watchlists...")
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.setAllWatchlists({ allWatchlists: JSON.parse(data.watchlists) }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed watchlists successfully!" }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while all the watchlists" }))
     }
   }
 }
