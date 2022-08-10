@@ -1,66 +1,59 @@
-import { useReducer, useRef, useEffect } from "react";
-
+import Movie from "./Movie"
 import SeparationPattern from "../UI/SeparationPattern";
 import classes from "./MovieList.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
+import useFetch from "./../../hooks/useFetch";
+import { getFavorites } from "../../lib/api";
 
 
-// ? REDUCER INITIAL STATE + HANDLER
-const selectMovieReducer = (state, action) => {
-  switch (action.type) {
-    case "SELECT":
-      return { isSelectedMovie: true, selectedMovie: state.allMovies[action.movieId - 1], movieId: action.movieId, allMovies: state.allMovies }
-    case "UNSELECT":
-      return { isSelectedMovie: false, selectedMovie: null, movieId: null, allMovies: state.allMovies }
-    default:
-      break;
-  }
-}
-
+import SpinLoader from "../UI/SpinLoader";
 
 const MovieList = (props) => {
+  const { sendRequest, status: status, data: favorite_movies, error} = useFetch(getFavorites, true);
 
-  const [movieState, dispatch] = useReducer(selectMovieReducer, { isSelectedMovie: false, selectedMovie: null, movieId: null, allMovies: props.allMovies });
-  // const video = useRef(null);
-  console.log(props.movies);
+  const { isSelectedMovie, movieId} = useSelector(state => state.movie)
+  const selectedMovie = isSelectedMovie ? props.movies[movieId - 1] : null;
 
-  const toggleSelectMovieHandler = (id) => {
-    if (!movieState.isSelectedMovie) {
-      dispatch({ type: "SELECT", movieId: id, movies: props.movies })
-    } else {
-      if (movieState.movieId === id) {
-        dispatch({ type: "UNSELECT" })
-      } else {
-        dispatch({ type: "SELECT", movieId: id, movies: props.movies })
-      }
-    }
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+
+
+  const isMovieFavourite = (prop_movie) => {
+    return favorite_movies.some(movie => movie.id === prop_movie.id);
+  }
+
+  const addFavorite = (movie_id) => {
+    props.addFavorite(movie_id);
+  }
+
+  const removeFavorite = (movie_id) => {
+    props.removeFavorite(movie_id);
   }
 
   return (
     <div className={classes["movie-category-container"]}>
       <h2>{props.rank}</h2>
       <div className={classes["movie-category-list"]}>
-        {props.movies.map(movie => {
-          return (
-            <div onClick={() => toggleSelectMovieHandler(movie.id)} key={movie.id} className={classes["movie-card"]}>
-              <img src={movie.poster_path} alt="image of movie: movie.title" />
-              <p className={movie.id === movieState.movieId ? classes.active : ""}>{movie.title}</p>
-            </div>
-          )
-        })}
+        { status === "completed" && !error && props.movies.map(movie => <Movie addFavorite={addFavorite} removeFavorite={removeFavorite} isFavorite={isMovieFavourite(movie)} movie={movie} key={movie.id} />)}
+        { status !== "completed" && !error && <SpinLoader />}
+        { status === "completed" && error && <p>AN ERROR OCCURED</p>}
       </div>
 
-      {movieState.isSelectedMovie &&
+      {isSelectedMovie &&
         <>
           <SeparationPattern />
-          {console.log(movieState.selectedMovie)}
-          <div className={classes["movie-details"]} style={{backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${movieState.selectedMovie.backdrop_path})`}}>
+          {console.log(selectedMovie)}
+          <div className={classes["movie-details"]} style={{backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${selectedMovie.backdrop_path})`}}>
             <div>
-              <p className={classes.title}>{movieState.selectedMovie.title}</p>
-              <p className={classes.synopsis}>{movieState.selectedMovie.synopsis}</p>
+              <p className={classes.title}>{selectedMovie.title}</p>
+              <p className={classes.synopsis}>{selectedMovie.synopsis}</p>
 
               <div className={classes["bottom-card"]}>
-                  <p className={classes["release-date"]}>Release date: {movieState.selectedMovie.release_date}</p>
-                  <p className={classes["vote-average"]}>⭐️ {movieState.selectedMovie.vote_average}</p>
+                  <p className={classes["release-date"]}>Release date: {selectedMovie.release_date}</p>
+                  <p className={classes["vote-average"]}>⭐️ {selectedMovie.vote_average}</p>
               </div>
             </div>
           </div>
@@ -88,3 +81,35 @@ export default MovieList;
 //   </video>
 // </div>
 // <SeparationPattern />
+
+
+
+// ? REDUCER INITIAL STATE + HANDLER
+// const selectMovieReducer = (state, action) => {
+//   switch (action.type) {
+//     case "SELECT":
+//       return { isSelectedMovie: true, selectedMovie: state.allMovies[action.movieId - 1], movieId: action.movieId, allMovies: state.allMovies }
+//     case "UNSELECT":
+//       return { isSelectedMovie: false, selectedMovie: null, movieId: null, allMovies: state.allMovies }
+//     default:
+//       break;
+//   }
+// }
+
+
+
+  // const [movieState, dispatch] = useReducer(selectMovieReducer, { isSelectedMovie: false, selectedMovie: null, movieId: null, allMovies: props.allMovies });
+
+  // const video = useRef(null);
+
+  // const toggleSelectMovieHandler = (id) => {
+  //   if (!movieState.isSelectedMovie) {
+  //     dispatch({ type: "SELECT", movieId: id, movies: props.movies })
+  //   } else {
+  //     if (movieState.movieId === id) {
+  //       dispatch({ type: "UNSELECT" })
+  //     } else {
+  //       dispatch({ type: "SELECT", movieId: id, movies: props.movies })
+  //     }
+  //   }
+  // }

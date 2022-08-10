@@ -5,6 +5,9 @@ footer {
 
   margin-top: 0rem;
   padding: 3rem 0;
+
+  position: absolute;
+  width: 100%;
 }
 
 footer ul {

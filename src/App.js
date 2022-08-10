@@ -21,6 +21,20 @@ function App() {
 //     .then((data) => console.log(data));
 // }, [])
 
+// useEffect(() => {
+//   const token = localStorage.getItem("token");
+//   fetch(`http://localhost:3000/api/v1/favorites`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${token}`,
+//     },
+//     body: JSON.stringify({movie_id: 20})
+//   })
+//     .then((res) => res.json())
+//     .then((data) => console.log(data));
+// }, [])
+
   return (
     <Routes>
       <Route path="/" element={<Homepage />}></Route>
