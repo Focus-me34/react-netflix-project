@@ -1,32 +1,19 @@
 import ReactDom from "react-dom";
 import { useEffect, useRef, useState } from "react";
 
+import Backdrop from "./Backdrop";
 import Button from "react-bootstrap/Button";
 import btnClasses from "../UI/Buttons.module.css"
 import SpinLoader from "./SpinLoader";
 
 import classes from "./AuthModal.module.css"
 
-import { toggleModal } from "../../store/slices/AuthSlice";
+import { closeAuthModal } from "../../store/slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { signUp } from "../../store/slices/AuthSlice";
 import { signIn } from "../../store/slices/AuthSlice";
 import { useNavigate } from "react-router-dom";
-
-
-// ! BACKDROP FOR THE MODAL
-export const Backdrop = () => {
-  const dispatch = useDispatch()
-
-  const toggleModalHandler = () => {
-    dispatch(toggleModal());
-  }
-
-  return (
-    <div className={classes.backdrop} onClick={toggleModalHandler}></div>
-  );
-}
 
 // ! CONTENT OF TYHE AUTH MODAL
 const AuthModalContent = () => {

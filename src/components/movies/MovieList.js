@@ -1,20 +1,18 @@
-import Movie from "./Movie"
-import SeparationPattern from "../UI/SeparationPattern";
-import classes from "./MovieList.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import useFetch from "./../../hooks/useFetch";
 import { getFavorites } from "../../lib/api";
 
-
+import Movie from "./Movie"
 import SpinLoader from "../UI/SpinLoader";
+
+import classes from "./MovieList.module.css";
+
 
 const MovieList = (props) => {
   const { sendRequest, status: status, data: favorite_movies, error} = useFetch(getFavorites, true);
-
-  const { isSelectedMovie, movieId} = useSelector(state => state.movie)
-  const selectedMovie = isSelectedMovie ? props.movies[movieId - 1] : null;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     sendRequest();
@@ -37,29 +35,10 @@ const MovieList = (props) => {
     <div className={classes["movie-category-container"]}>
       <h2>{props.rank}</h2>
       <div className={classes["movie-category-list"]}>
-        { status === "completed" && !error && props.movies.map(movie => <Movie addFavorite={addFavorite} removeFavorite={removeFavorite} isFavorite={isMovieFavourite(movie)} movie={movie} key={movie.id} />)}
+        { status === "completed" && !error && props.movies.map(movie => <Movie addFavorite={addFavorite} removeFavorite={removeFavorite} isFavorite={isMovieFavourite(movie)} selectMovie={props.selectMovie} movie={movie} movies={props.movies} key={movie.id} />)}
         { status !== "completed" && !error && <SpinLoader />}
         { status === "completed" && error && <p>AN ERROR OCCURED</p>}
       </div>
-
-      {isSelectedMovie &&
-        <>
-          <SeparationPattern />
-          {console.log(selectedMovie)}
-          <div className={classes["movie-details"]} style={{backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(${selectedMovie.backdrop_path})`}}>
-            <div>
-              <p className={classes.title}>{selectedMovie.title}</p>
-              <p className={classes.synopsis}>{selectedMovie.synopsis}</p>
-
-              <div className={classes["bottom-card"]}>
-                  <p className={classes["release-date"]}>Release date: {selectedMovie.release_date}</p>
-                  <p className={classes["vote-average"]}>⭐️ {selectedMovie.vote_average}</p>
-              </div>
-            </div>
-          </div>
-          <SeparationPattern />
-        </>
-      }
     </div>
   );
 }
