@@ -15,8 +15,16 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    toggleModal: (state) => {
-      state.isAuthModalOpen = !state.isAuthModalOpen;
+    // toggleModal: (state) => {
+    //   state.isAuthModalOpen = !state.isAuthModalOpen;
+    // },
+
+    openAuthModal: (state) => {
+      state.isAuthModalOpen = true;
+    },
+
+    closeAuthModal: (state) => {
+      state.isAuthModalOpen = false;
     },
 
     showNotifications: (state, action) => {
@@ -29,19 +37,19 @@ const authSlice = createSlice({
 
     setSession: (state, action) => {
       state.token = action.payload.token;
-      state.user = action.payload.user
+      state.user = action.payload.user;
       state.isLoggedIn = true;
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("user", JSON.stringify(action.payload.user));
     },
 
     destroySession: (state) => {
-      state.token = null
+      state.token = null;
       state.user = null;
       state.isLoggedIn = false;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-    }
+    },
   },
 });
 
@@ -145,5 +153,5 @@ export const signOut = () => {
   }
 }
 
-export const { toggleModal, destroySession } = authSlice.actions;
+export const { openAuthModal, closeAuthModal, destroySession } = authSlice.actions;
 export default authSlice.reducer;

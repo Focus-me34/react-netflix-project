@@ -30,7 +30,7 @@
 }
 
 .visible {
-  display: block;
+  display: initial;
 }
 
 .invisible {
@@ -45,82 +45,4 @@
 .title {
   text-align: center;
   color: white;
-}
-
-/* ! MODAL FAVORITE MOVIE DESCRIPTION */
-.favorite-movie-details {
-  position: fixed;
-  z-index: 999999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: black;
-
-  /* border: 1px solid rgba(255, 255, 255, 0.5); */
-  box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, 0.8);
-
-  padding: 0;
-  width: 80%;
-
-  padding: 1rem 2rem;
-  color: white;
-
-  min-height: 25rem;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.favorite-movie-details .title {
-  font-size: 3rem;
-  font-weight: bolder;
-  text-align: center;
-  margin-bottom: 2rem;
-
-}
-
-.favorite-movie-details .synopsis {
-  width: 80%;
-  margin: 0 auto;
-  font-size: 1rem;
-  margin-bottom: 3rem;
-}
-
-.favorite-movie-details .bottom-card {
-  margin: 0 auto;
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.release-date {
-  font-size: 0.8rem;
-  font-weight: bolder;
-  text-emphasis-color: rgb(182, 182, 182);
-}
-
-.vote-average {
-  font-size: 0.8rem;
-  font-weight: bolder;
-  text-emphasis-color: rgb(182, 182, 182);
-}
-
-.container-close-icon {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-}
-
-.container-close-icon svg {
-  transition: 0.2s all;
-}
-
-.container-close-icon svg:hover {
-  transition: 0.2s all;
-  transform: scale(1.3) rotate(90deg);
-  cursor: pointer;
 }

@@ -6,7 +6,7 @@ import classes from "./Navbar.module.css"
 import btnClasses from "../UI/Buttons.module.css"
 
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "../../store/slices/AuthSlice";
+import { openAuthModal } from "../../store/slices/AuthSlice";
 import { destroySession } from "../../store/slices/AuthSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const Navbar = () => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
-  const toggleModalHandler = () => {
-    dispatch(toggleModal())
+  const openModalHandler = () => {
+    dispatch(openAuthModal())
   }
 
   const signOutHandler = () => {
@@ -27,8 +27,26 @@ const Navbar = () => {
     <>
       <nav className={classes.navbar}>
         <Logo></Logo>
-        {!isLoggedIn && <Button onClick={toggleModalHandler} className={btnClasses["btn-auth"]} variant="danger" size="s">Sign in</Button>}
-        {isLoggedIn && <Button onClick={signOutHandler} className={btnClasses["btn-auth"]} variant="danger" size="s">Sign out</Button>}
+        {!isLoggedIn && (
+          <Button
+            onClick={openModalHandler}
+            className={btnClasses["btn-auth"]}
+            variant="danger"
+            size="s"
+          >
+            Sign in
+          </Button>
+        )}
+        {isLoggedIn && (
+          <Button
+            onClick={signOutHandler}
+            className={btnClasses["btn-auth"]}
+            variant="danger"
+            size="s"
+          >
+            Sign out
+          </Button>
+        )}
       </nav>
       {isAuthModalOpen && <AuthModal />}
     </>
