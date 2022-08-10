@@ -54,9 +54,14 @@ export const signUp = (credentials) => {
     const sendRequest = async () => {
       const res = await fetch("http://localhost:3000/users", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user: { email: credentials.email, password: credentials.password } })
-      })
+        headers: {
+          "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "localhost:3006"
+        },
+        body: JSON.stringify({
+          user: { email: credentials.email, password: credentials.password },
+        }),
+      });
 
       if (!res.ok) {
         throw new Error("An error occured: Failed to sign up...")
@@ -81,7 +86,10 @@ export const signIn = (credentials) => {
     const sendRequest = async () => {
       const res = await fetch("http://localhost:3000/users/sign_in", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "localhost:3006"
+       },
         body: JSON.stringify({ user: { email: credentials.email, password: credentials.password } }),
       })
 
@@ -112,8 +120,12 @@ export const signOut = () => {
     const sendRequest = async () => {
       const res = await fetch("http://localhost:3000/users/sign_out", {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}}`, "Content-Type": "application/json" }
-      })
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}}`,
+          // "Access-Control-Allow-Origin": "http://localhost:3006"
+        },
+      });
 
       if (!res.ok) {
         throw new Error("An error occured: Failed to sign out...")

@@ -7,6 +7,12 @@
   padding: 0rem 2rem 3rem;
 }
 
+.no-favorite-movie-msg {
+  color: white;
+  font-size: 1.75rem;
+  text-align: center;
+}
+
 .favorite-movie-card {
   flex-shrink: 0;
   width: 10rem;

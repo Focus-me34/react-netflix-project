@@ -1,2 +1,14 @@
 - organise movie lists
 - setup local storage to be able to retrieve the list of movies
+
+
+
+DONE - Favourite: Enable the interaction with the database.
+DONE - Check rails if everything is handled properly.
+- Make sure everything is fine with the movie slice.
+DONE - Use the status of the fetch to display appropriate content.
+- Portal movie description in the movie section.
+
+
+- Simplify the whole code base
+- Add more comments

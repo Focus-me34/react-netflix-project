@@ -5,11 +5,14 @@
 export async function getMovies() {
   const token = localStorage.getItem("token");
   const url = "http://localhost:3000/api/v1/movies";
-  const res = await fetch(url,
-    {
-      method: "GET",
-      headers: {"Content-Type": "application/json", "Authorization": `Bearer ${token}`}
-    });
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+      // "Access-Control-Allow-Origin": "http://localhost:3006"
+    }
+  });
   const data = await res.json();
 
   if (!res.ok) {
@@ -32,7 +35,8 @@ export async function getFavorites() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`
+      // "Access-Control-Allow-Origin": "http://localhost:3006",
     },
   });
 

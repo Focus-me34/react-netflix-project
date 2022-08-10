@@ -6,7 +6,7 @@ import { Backdrop } from "../UI/AuthModal";
 
 import { Heart, Close, HeartOutline } from "react-ionicons";
 import classes from "./FavoriteMovie.module.css"
-import movieClasses from "../movies/MovieList.module.css";
+
 
 
 // ! WHEN CLICKING ON A MOVIE, THIS MODAL POPS IN DISPLAYING THE INFORMATION OF THE SELECTED MOVIE.
@@ -52,9 +52,7 @@ const FavoriteMovie = (props) => {
       setIsHover((prevState) => !prevState);
     }
 
-    const unsetSelectedMovieHandler = () => {
-      setSelectedMovie(null)
-    }
+    const unsetSelectedMovieHandler = () => { setSelectedMovie(null) }
 
   return (
     <>
