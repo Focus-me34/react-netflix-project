@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavorites } from "../../store/slices/MovieSlice";
 
@@ -15,19 +15,14 @@ const WatchlistList = (props) => {
     if (favorite_movies === null) dispatch(getFavorites());
   }, [getFavorites]);
 
-  const isMovieFavourite = (prop_movie) => {
+  const isMovieFavourite = useCallback((prop_movie) => {
     return favorite_movies.some((movie) => movie.id === prop_movie.id);
-  };
+  }, [favorite_movies])
 
   return (
     <div className={classes["watchlist-category-container"]}>
       <h2>{props.name}</h2>
       <div className={classes["watchlist-category-list"]}>
-        {/* { !favorite_movies && notification?.status === "pending" && <SpinLoader />}
-        { favorite_movies && notification?.status === "success" && props.movies.map(movie => <Movie addFavorite={addFavorite} removeFavorite={removeFavorite} isFavorite={isMovieFavourite(movie)} selectMovie={props.selectMovie} movie={movie} movies={props.movies} key={movie.id} />)}
-        { favorite_movies && notification?.status === "pending" && props.movies.map(movie => <Movie addFavorite={addFavorite} removeFavorite={removeFavorite} isFavorite={isMovieFavourite(movie)} selectMovie={props.selectMovie} movie={movie} movies={props.movies} key={movie.id} />)}
-        { notification?.status === "error" && <p>AN ERROR OCCURED</p>} */}
-
         { !favorite_movies && notification?.status === "pending" && <SpinLoader />}
         { favorite_movies && notification?.status === "success" && props.movies.map(movie => <Movie  movie={movie} movies={props.movies} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
         { favorite_movies && notification?.status === "pending" && props.movies.map(movie => <Movie  movie={movie} movies={props.movies} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }

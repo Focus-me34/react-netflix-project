@@ -21,24 +21,25 @@ DONE - Add route + link for watchlist
 - WatchlistPage X => Watchlists X => WatchlistList => Watchlist
 
 
-- WatchlistPage:
-  - Render "Watchlists component"
+DONE - WatchlistPage:
+  DONE - Render "Watchlists component"
 
 - Watchlists:
-  - Layout
+  DONE - Layout
   - Get all needed data to pass as props
-  - Handle add / remove from watchlist
+  DONE - Handle add / remove from watchlist
 
 
 - WatchlistForm to get further information about which watchlist the user wants
 to ad a movie to. (New ? Existing?)
+  - Add watchlist button to display / remove form modal with state "isAddingWatchList"
+  - Attach reducers to buttons to itnteract with rails DB
+
+
+
+
+
 
 - Random movie from watchlist suggestion
-
-
-
-
-
-
 - Make navbar shrink
 - Add more comments
