@@ -7,6 +7,7 @@ const initialState = {
   movieId: null,
   movie: null,
   updatedFavMovieList: null,
+  allMovies: null,
   allWatchlists: null
 };
 
@@ -41,6 +42,10 @@ const movieSlice = createSlice({
 
     setAllWatchlists: (state, action) => {
       state.allWatchlists = action.payload.allWatchlists;
+    },
+
+    setAllMovies: (state, action) => {
+      state.allMovies = action.payload.movies;
     },
   },
 });
@@ -121,7 +126,7 @@ export const getAllWatchlists = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         }
       });
 
@@ -137,11 +142,43 @@ export const getAllWatchlists = () => {
       dispatch(movieSlice.actions.setAllWatchlists({ allWatchlists: JSON.parse(data.watchlists) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed watchlists successfully!" }))
     } catch (error) {
-      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while all the watchlists" }))
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while fetching all the watchlists" }))
+    }
+  }
+}
+
+// ! GET WATCLISTS FOR USER
+export const getAllMovies = () => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching all movies..." }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch("http://localhost:3000/api/v1/movies", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error("An error occured: Failed to fetch all the movies...")
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.setAllMovies({ movies: data }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed all movies successfully!" }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while fetching all the movies" }))
     }
   }
 }
 
 
-export const { selectMovie, unselectMovie } = movieSlice.actions;
+export const { selectMovie, unselectMovie, setAllMovies, setAllWatchlists } = movieSlice.actions;
 export default movieSlice.reducer;
