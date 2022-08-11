@@ -1,0 +1,19 @@
+.watchlist-category-container {
+  margin: 0 3rem 3rem;
+    color: white;
+}
+
+.watchlist-category-list {
+  overflow-x: auto;
+
+  width: 100%;
+
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  /* background-color: yellow !important; */
+}
+
+.watchlist-category-list::-webkit-scrollbar {
+  display: none;
+}

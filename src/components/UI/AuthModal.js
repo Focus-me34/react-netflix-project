@@ -35,8 +35,6 @@ const AuthModalContent = () => {
   const passwordSignUp = useRef()
   const passwordSignUpConfirmation = useRef()
 
-  useEffect(() => {
-  }, []);
 
   const signinHandler = (e) => {
     e.preventDefault();

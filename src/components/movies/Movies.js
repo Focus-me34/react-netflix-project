@@ -22,8 +22,8 @@ const Movies = () => {
   const selectedMovie = isSelectedMovie ? movies[movieId - 1] : null;
 
   useEffect(() => {
-    dispatch(getAllMovies())
-  }, []);
+    dispatch(getAllMovies());
+  }, [getAllMovies]);
 
   const separate_movies = (mvs = []) => {
     const movies_1 = mvs.slice(0,10)
@@ -38,8 +38,8 @@ const Movies = () => {
   const updated_movies = movies ? separate_movies(movies) : "";
 
   // ! FAVORITE ASYNC TASKS
-  const addFavorite = (movie_id) => { dispatch(addFavoriteMovie(movie_id)) };
-  const removeFavorite = (movie_id) => {dispatch(removeFavoriteMovie(movie_id)) };
+  // const addFavorite = (movie_id) => { dispatch(addFavoriteMovie(movie_id)) };
+  // const removeFavorite = (movie_id) => {dispatch(removeFavoriteMovie(movie_id)) };
 
   const selectMovieHandler = (movie_id, movie) => { !isSelectedMovie ? dispatch(selectMovie({ movieId: movie_id, movie: movie })) : dispatch(unselectMovie()) }
 
@@ -55,40 +55,30 @@ const Movies = () => {
         { ((movies && notification.status === "success" && !notification.error) || (movies && notification.status === "pending" && !notification.error)) && (
           <>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[0]}
               rank="Most Popular Movies - Rank: 1-10"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[1]}
               rank="Most Popular Movies - Rank: 11-25"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[2]}
               rank="Most Popular Movies - Rank: 26-50"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[3]}
               rank="Most Popular Movies - Rank: 51-75"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[4]}

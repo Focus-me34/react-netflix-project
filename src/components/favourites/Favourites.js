@@ -9,7 +9,7 @@ import FavoriteMovieList from "./FavoriteMovieList";
 import Footer from "../footer/Footer";
 
 const Favourites = () => {
-  const { allFavorites: favorite_movies, updatedFavMovieList, notification } = useSelector((state) => state.movie);
+  const { allFavorites: favorite_movies, notification } = useSelector((state) => state.movie);
   const dispatch = useDispatch()
 
   useEffect(() => {

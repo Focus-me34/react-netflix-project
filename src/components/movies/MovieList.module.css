@@ -3,7 +3,7 @@
   color: white;
 }
 
-.movie-category-container h2 {}
+/* .movie-category-container h2 {} */
 
 .movie-category-list {
   overflow-x: auto;
@@ -30,11 +30,11 @@
   transition: 0.33s;
 }
 
-.movie-card:hover {
+/* .movie-card:hover {
   transition: 0.33s;
 
   transform: scale(0.95);
-}
+} */
 
 .movie-card img {
   width: 250px;
