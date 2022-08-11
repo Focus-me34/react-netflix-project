@@ -28,12 +28,8 @@ const Movies = () => {
   const selectedMovie = isSelectedMovie ? movies[movieId - 1] : null;
 
   useEffect(() => {
-    if (movies === null) {
-      console.log("not supposed to happen");
-      dispatch(getAllMovies())}
-
-    // sendRequest();
-  }, []);
+    if (movies === null) { dispatch(getAllMovies()) }
+  }, [getAllMovies, movies]);
 
   const separate_movies = (mvs = []) => {
     const movies_1 = mvs.slice(0,10)
@@ -46,7 +42,6 @@ const Movies = () => {
     return updated_movies
   }
   const updated_movies = movies ? separate_movies(movies) : "";
-  // console.log(updated_movies);
 
   // ! FAVORITE ASYNC TASKS
   const addFavorite = (movie_id) => { dispatch(addFavoriteMovie(movie_id)) };
@@ -57,8 +52,6 @@ const Movies = () => {
 
   const type = "Movies";
   const description = "Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.";
-
-// console.log(notification?.status);
 
   return (
     <>
