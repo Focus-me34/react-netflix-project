@@ -3,9 +3,7 @@ import ReactDom from "react-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
-import useFetch from "./../../hooks/useFetch"
 
-import { getMovies } from "../../lib/api";
 import { getAllMovies } from "../../store/slices/MovieSlice";
 import { addFavoriteMovie } from "../../store/slices/MovieSlice";
 import { removeFavoriteMovie } from "../../store/slices/MovieSlice";
@@ -16,20 +14,16 @@ import MovieList from "./MovieList";
 import SelectedMovieInformation from "../UI/SelectedMovieInformation";
 import Backdrop from "../UI/Backdrop";
 import Footer from "../footer/Footer";
-import SpinLoader from "../UI/SpinLoader";
-
 
 const Movies = () => {
-  // const { sendRequest, status, data: movies, error} = useFetch(getMovies, true);
   const { allMovies: movies, notification } = useSelector(state => state.movie)
   const dispatch = useDispatch();
-  // const [reRender, setReRender] = useState(false)
   const { isSelectedMovie, movieId } = useSelector((state) => state.movie);
   const selectedMovie = isSelectedMovie ? movies[movieId - 1] : null;
 
   useEffect(() => {
-    if (movies === null) { dispatch(getAllMovies()) }
-  }, [getAllMovies, movies]);
+    dispatch(getAllMovies())
+  }, []);
 
   const separate_movies = (mvs = []) => {
     const movies_1 = mvs.slice(0,10)

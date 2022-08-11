@@ -19,8 +19,7 @@ DONE - Create watchlist slice? (NO. same as movie)
 DONE - Add route + link for watchlist
 
 - WatchlistPage X => Watchlists X => WatchlistList => Watchlist
-- WatchlistForm to get further information about which watchlist the user wants
-to ad a movie to. (New ? Existing?)
+
 
 - WatchlistPage:
   - Render "Watchlists component"
@@ -30,6 +29,9 @@ to ad a movie to. (New ? Existing?)
   - Get all needed data to pass as props
   - Handle add / remove from watchlist
 
+
+- WatchlistForm to get further information about which watchlist the user wants
+to ad a movie to. (New ? Existing?)
 
 - Random movie from watchlist suggestion
 
