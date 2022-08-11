@@ -13,17 +13,32 @@ DONE - Close Backdrop modal when clicking on it
 DONE - Simplify / REFACTOR the whole code base
 
 
-- Create new page for watch list and add link to the navbar.
-(- Make navbar shrink)
+DONE - Create new page for watch list and add link to the navbar.
 
-- Create watchlist slice?
+DONE - Create watchlist slice? (NO. same as movie)
+DONE - Add route + link for watchlist
 
-
-
-
+- WatchlistPage X => Watchlists X => WatchlistList => Watchlist
 
 
+- WatchlistPage:
+  - Render "Watchlists component"
+
+- Watchlists:
+  - Layout
+  - Get all needed data to pass as props
+  - Handle add / remove from watchlist
+
+
+- WatchlistForm to get further information about which watchlist the user wants
+to ad a movie to. (New ? Existing?)
+
+- Random movie from watchlist suggestion
 
 
 
+
+
+
+- Make navbar shrink
 - Add more comments

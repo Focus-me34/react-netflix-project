@@ -30,8 +30,9 @@ const navigate = useNavigate();
           <ul>
             <li><NavLink className={isLinkActive} to={"/"}>Home</NavLink></li>
             <li><NavLink className={isLinkActive} to={"/movies"}>Movies</NavLink></li>
-            <li><NavLink className={isLinkActive} to={"/series"}>Series</NavLink></li>
+            {/* <li><NavLink className={isLinkActive} to={"/series"}>Series</NavLink></li> */}
             <li><NavLink className={isLinkActive} to={"/favourites"}>Favourite</NavLink></li>
+            <li><NavLink className={isLinkActive} to={"/watchlists"}>Watchlists</NavLink></li>
           </ul>
         </div>
       </div>

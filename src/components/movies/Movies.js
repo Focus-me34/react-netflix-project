@@ -1,11 +1,10 @@
 import ReactDom from "react-dom";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
-import useFetch from "./../../hooks/useFetch"
 
-import { getMovies } from "../../lib/api";
+import { getAllMovies } from "../../store/slices/MovieSlice";
 import { addFavoriteMovie } from "../../store/slices/MovieSlice";
 import { removeFavoriteMovie } from "../../store/slices/MovieSlice";
 
@@ -16,17 +15,15 @@ import SelectedMovieInformation from "../UI/SelectedMovieInformation";
 import Backdrop from "../UI/Backdrop";
 import Footer from "../footer/Footer";
 
-
 const Movies = () => {
-  const { sendRequest, status, data: movies, error} = useFetch(getMovies, true);
+  const { allMovies: movies, notification } = useSelector(state => state.movie)
   const dispatch = useDispatch();
-
   const { isSelectedMovie, movieId } = useSelector((state) => state.movie);
   const selectedMovie = isSelectedMovie ? movies[movieId - 1] : null;
 
   useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
+    dispatch(getAllMovies())
+  }, []);
 
   const separate_movies = (mvs = []) => {
     const movies_1 = mvs.slice(0,10)
@@ -42,7 +39,6 @@ const Movies = () => {
 
   // ! FAVORITE ASYNC TASKS
   const addFavorite = (movie_id) => { dispatch(addFavoriteMovie(movie_id)) };
-
   const removeFavorite = (movie_id) => {dispatch(removeFavoriteMovie(movie_id)) };
 
   const selectMovieHandler = (movie_id, movie) => { !isSelectedMovie ? dispatch(selectMovie({ movieId: movie_id, movie: movie })) : dispatch(unselectMovie()) }
@@ -55,25 +51,66 @@ const Movies = () => {
     <>
       <NavbarDetailed></NavbarDetailed>
       <DisplayContent type={type} description={description}>
-        {status === "completed" && !error && updated_movies &&
-            <>
-              <MovieList addFavorite={addFavorite} removeFavorite={removeFavorite} selectMovie={selectMovieHandler} allMovies={movies} movies={updated_movies[0]} rank="Most Popular Movies - Rank: 1-10"></MovieList>
-              <MovieList addFavorite={addFavorite} removeFavorite={removeFavorite} selectMovie={selectMovieHandler} allMovies={movies} movies={updated_movies[1]} rank="Most Popular Movies - Rank: 11-25"></MovieList>
-              <MovieList addFavorite={addFavorite} removeFavorite={removeFavorite} selectMovie={selectMovieHandler} allMovies={movies} movies={updated_movies[2]} rank="Most Popular Movies - Rank: 26-50"></MovieList>
-              <MovieList addFavorite={addFavorite} removeFavorite={removeFavorite} selectMovie={selectMovieHandler} allMovies={movies} movies={updated_movies[3]} rank="Most Popular Movies - Rank: 51-75"></MovieList>
-              <MovieList addFavorite={addFavorite} removeFavorite={removeFavorite} selectMovie={selectMovieHandler} allMovies={movies} movies={updated_movies[4]} rank="Most Popular Movies - Rank: 76-100"></MovieList>
-            </>
-          }
-
-        {error && <p>An error occured</p>}
-
-        {isSelectedMovie &&
+        {/* {!movies && <SpinLoader />} */}
+        { ((movies && notification.status === "success" && !notification.error) || (movies && notification.status === "pending" && !notification.error)) && (
           <>
-            {ReactDom.createPortal(<Backdrop />, document.getElementById("backdrop"))}
-            {ReactDom.createPortal(<SelectedMovieInformation movie={selectedMovie} />, document.getElementById("movie-description"))}
+            <MovieList
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              selectMovie={selectMovieHandler}
+              allMovies={movies}
+              movies={updated_movies[0]}
+              rank="Most Popular Movies - Rank: 1-10"
+            ></MovieList>
+            <MovieList
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              selectMovie={selectMovieHandler}
+              allMovies={movies}
+              movies={updated_movies[1]}
+              rank="Most Popular Movies - Rank: 11-25"
+            ></MovieList>
+            <MovieList
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              selectMovie={selectMovieHandler}
+              allMovies={movies}
+              movies={updated_movies[2]}
+              rank="Most Popular Movies - Rank: 26-50"
+            ></MovieList>
+            <MovieList
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              selectMovie={selectMovieHandler}
+              allMovies={movies}
+              movies={updated_movies[3]}
+              rank="Most Popular Movies - Rank: 51-75"
+            ></MovieList>
+            <MovieList
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              selectMovie={selectMovieHandler}
+              allMovies={movies}
+              movies={updated_movies[4]}
+              rank="Most Popular Movies - Rank: 76-100"
+            ></MovieList>
           </>
-        }
+        )}
 
+        {movies && notification.error && <p>An error occured</p>}
+
+        {isSelectedMovie && (
+          <>
+            {ReactDom.createPortal(
+              <Backdrop />,
+              document.getElementById("backdrop")
+            )}
+            {ReactDom.createPortal(
+              <SelectedMovieInformation movie={selectedMovie} />,
+              document.getElementById("movie-description")
+            )}
+          </>
+        )}
         <Footer />
       </DisplayContent>
     </>
