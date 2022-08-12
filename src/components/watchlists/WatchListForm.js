@@ -3,6 +3,8 @@ import { useDispatch, useSelector,  } from "react-redux";
 import { getAllWatchlists } from "../../store/slices/MovieSlice";
 import { addMovieToWatchlist } from "../../store/slices/MovieSlice";
 import { closeWatchlistForm } from "../../store/slices/MovieSlice";
+import { Close } from "react-ionicons";
+
 
 import SpinLoader from "../UI/SpinLoader"
 import Button from "react-bootstrap/Button";
@@ -12,7 +14,7 @@ import btnClasses from "../UI/Buttons.module.css";
 
 
 const WatchListForm = () => {
-  const [showForm, setShowForm ] = useState(true)
+  const [showForm, setShowForm ] = useState(false)
   const { allWatchlists: watchlists, notification, movie, movieId } = useSelector(state => state.movie)
   const dispatch = useDispatch()
   const wl_name = useRef(null)
@@ -27,9 +29,19 @@ const WatchListForm = () => {
     dispatch(closeWatchlistForm())
   }
 
-  return (
+  const closeWatchlistModal = () => {
+    dispatch(closeWatchlistForm());
+  }
 
+
+
+  return (
     <div className={classes["watchlist-form-control"]}>
+
+      <div className={classes["container-close-icon"]}>
+        <Close onClick={ closeWatchlistModal } color={'#ffffff'} title={"close-icon"} height="30px" width="30px" />
+      </div>
+
       { notification?.status === "pending" && <SpinLoader />}
 
       { watchlists && !showForm && (notification.status === "success") &&

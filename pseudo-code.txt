@@ -35,8 +35,12 @@ to ad a movie to. (New ? Existing?)
   DONE - Add watchlist button to display / remove form modal with state "isAddingWatchList"
   DONE - Feature to add movie to watchlist
   - Feature to remove movie from watchlist
-  - Attach reducers to Formik handlers to interact with rails DB
+  - Input validation for the name of the new checlist
   - Modal Watchlist close icon to add
+
+
+
+  - Attach reducers to Formik handlers to interact with rails DB
   (- Implement Formik API to handle forms)
 
 
