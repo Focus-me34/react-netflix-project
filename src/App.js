@@ -17,7 +17,6 @@ function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   // const dispatch = useDispatch();
 
-
   // useEffect(() => {
   //   const token = "02dd4cd70ad7780c66d197c4bf127340";
   //   fetch(
@@ -53,6 +52,20 @@ function App() {
   //   })
   //     .then((res) => res.json())
   //     .then((data) => console.log(data));
+  // }, [])
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   fetch(`http://localhost:3000/api/v1/watchlists`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": `Bearer ${token}`
+  //     },
+  //     body: JSON.stringify({name: "CQFD", movie_id: 29})
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(JSON.parse(data.watchlists)));
   // }, [])
 
   return (

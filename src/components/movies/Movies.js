@@ -5,25 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
 
 import { getAllMovies } from "../../store/slices/MovieSlice";
-import { addFavoriteMovie } from "../../store/slices/MovieSlice";
-import { removeFavoriteMovie } from "../../store/slices/MovieSlice";
 
 import NavbarDetailed from "../navbar/NavbarDetailed";
 import DisplayContent from "../UI/DisplayContent";
 import MovieList from "./MovieList";
 import SelectedMovieInformation from "../UI/SelectedMovieInformation";
 import Backdrop from "../UI/Backdrop";
+import WatchListForm from "../watchlists/WatchListForm";
 import Footer from "../footer/Footer";
 
 const Movies = () => {
-  const { allMovies: movies, notification } = useSelector(state => state.movie)
+  const { allMovies: movies, notification, allWatchlists } = useSelector(state => state.movie)
   const dispatch = useDispatch();
   const { isSelectedMovie, movieId } = useSelector((state) => state.movie);
   const selectedMovie = isSelectedMovie ? movies[movieId - 1] : null;
 
   useEffect(() => {
-    dispatch(getAllMovies())
-  }, []);
+    dispatch(getAllMovies());
+  }, [getAllMovies]);
 
   const separate_movies = (mvs = []) => {
     const movies_1 = mvs.slice(0,10)
@@ -37,12 +36,7 @@ const Movies = () => {
   }
   const updated_movies = movies ? separate_movies(movies) : "";
 
-  // ! FAVORITE ASYNC TASKS
-  const addFavorite = (movie_id) => { dispatch(addFavoriteMovie(movie_id)) };
-  const removeFavorite = (movie_id) => {dispatch(removeFavoriteMovie(movie_id)) };
-
   const selectMovieHandler = (movie_id, movie) => { !isSelectedMovie ? dispatch(selectMovie({ movieId: movie_id, movie: movie })) : dispatch(unselectMovie()) }
-
 
   const type = "Movies";
   const description = "Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.";
@@ -55,40 +49,30 @@ const Movies = () => {
         { ((movies && notification.status === "success" && !notification.error) || (movies && notification.status === "pending" && !notification.error)) && (
           <>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[0]}
               rank="Most Popular Movies - Rank: 1-10"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[1]}
               rank="Most Popular Movies - Rank: 11-25"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[2]}
               rank="Most Popular Movies - Rank: 26-50"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[3]}
               rank="Most Popular Movies - Rank: 51-75"
             ></MovieList>
             <MovieList
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
               selectMovie={selectMovieHandler}
               allMovies={movies}
               movies={updated_movies[4]}
@@ -108,6 +92,19 @@ const Movies = () => {
             {ReactDom.createPortal(
               <SelectedMovieInformation movie={selectedMovie} />,
               document.getElementById("movie-description")
+            )}
+          </>
+        )}
+
+        {isAddingWatchlist && (
+          <>
+            {ReactDom.createPortal(
+              <Backdrop />,
+              document.getElementById("backdrop")
+            )}
+            {ReactDom.createPortal(
+              <WatchListForm />,
+              document.getElementById("watchlist-form-modal")
             )}
           </>
         )}

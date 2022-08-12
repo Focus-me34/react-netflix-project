@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavoriteMovie } from "../../store/slices/MovieSlice";
+import { removeFavoriteMovie } from "../../store/slices/MovieSlice";
 
 import { Heart, HeartOutline } from "react-ionicons";
 import favClasses from "../favourites/FavoriteMovie.module.css"
@@ -8,20 +10,30 @@ import movieListClasses from "./MovieList.module.css"
 
 
 const Movie = (props) => {
-  const { movieId } = useSelector((state) => state.movie);
+  const { movieId } = useSelector( (state) => state.movie);
+  const dispatch = useDispatch();
+
   const [isHover, setIsHover] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+  const [isFavorite, setIsFavorite] = useState(props.isFavorite)
+
+  const addFavorite = (movie_id) => {
+    dispatch(addFavoriteMovie(movie_id));
+  };
+
+  const removeFavorite = (movie_id) => {
+    dispatch(removeFavoriteMovie(movie_id));
+  };
 
   const setFavorite = (movie_id) => {
     setIsFavorite(true);
     setIsHover((prevState) => !prevState);
-    props.addFavorite(movie_id)
+    addFavorite(movie_id)
   };
 
   const unsetFavorite = (movie_id) => {
     setIsFavorite(false);
     setIsHover((prevState) => !prevState);
-    props.removeFavorite(movie_id);
+    removeFavorite(movie_id);
   };
 
   const toggleShowActionIconHandler = () => {setIsHover((prevState) => !prevState)};

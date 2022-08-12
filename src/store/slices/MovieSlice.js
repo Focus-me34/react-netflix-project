@@ -51,6 +51,10 @@ const movieSlice = createSlice({
     setAllWatchlists: (state, action) => {
       state.allWatchlists = action.payload.allWatchlists;
     },
+
+    // addToWatchList: (state, action) => {
+    //   state.allWatchlists = action.payload.allWatchlists;
+    // },
   },
 });
 
@@ -219,6 +223,72 @@ export const getAllWatchlists = () => {
   }
 }
 
+
+// ! ADD A MOVIE TO A WATCHLIST
+export const addMovieToWatchlist = (name, movie_id) => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Adding movie to watchlist..." }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch("http://localhost:3000/api/v1/watchlists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ wl_name: name, movie_id: movie_id }),
+      });
+
+      if (!res.ok) {
+        throw new Error("An error occured: Failed to add movie to watchlist...")
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.setAllWatchlists({ favorite_movies: JSON.parse(data.favorite_movies) }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Added movie to watchlist successfully!" }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while adding movie to watchlist" }))
+    }
+  }
+}
+
+// ! DELETE A MOVIE FROM A USER'S SPECIFIC WATCHLIST
+export const deleteMovieFromWatchlist = (name, movie_id) => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Deleting movie from watchlist..." }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch("http://localhost:3000/api/v1/watchlists", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ wl_name: name, movie_id: movie_id }),
+      });
+
+      if (!res.ok) {
+        throw new Error("An error occured: Failed to delete movie from watchlist...")
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.setAllWatchlists({ favorite_movies: JSON.parse(data.favorite_movies) }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Deleted movie from watchlist successfully!" }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while deleting movie from watchlist" }))
+    }
+  }
+}
 
 export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists } = movieSlice.actions;
 export default movieSlice.reducer;
