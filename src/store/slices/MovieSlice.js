@@ -258,7 +258,7 @@ export const addMovieToWatchlist = (name, movie_id) => {
 
     try {
       const data = await sendRequest();
-      dispatch(movieSlice.actions.setAllWatchlists({ favorite_movies: JSON.parse(data.favorite_movies) }));
+      dispatch(movieSlice.actions.setAllWatchlists({ allWatchlists: JSON.parse(data.watchlists) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Added movie to watchlist successfully!" }))
     } catch (error) {
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while adding movie to watchlist" }))

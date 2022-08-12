@@ -32,10 +32,12 @@ DONE - WatchlistPage:
 
 - WatchlistForm to get further information about which watchlist the user wants
 to ad a movie to. (New ? Existing?)
-  - Add watchlist button to display / remove form modal with state "isAddingWatchList"
-  - Implement Formik API to handle forms
+  DONE - Add watchlist button to display / remove form modal with state "isAddingWatchList"
+  DONE - Feature to add movie to watchlist
+  - Feature to remove movie from watchlist
   - Attach reducers to Formik handlers to interact with rails DB
-
+  - Modal Watchlist close icon to add
+  (- Implement Formik API to handle forms)
 
 
 
