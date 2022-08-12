@@ -5,6 +5,7 @@ const initialState = {
   notification: null,
   allMovies: null,
   isSelectedMovie: false,
+  isAddingToWatchlist: false,
   movieId: null,
   movie: null,
   allFavorites: null,
@@ -52,9 +53,17 @@ const movieSlice = createSlice({
       state.allWatchlists = action.payload.allWatchlists;
     },
 
-    // addToWatchList: (state, action) => {
-    //   state.allWatchlists = action.payload.allWatchlists;
-    // },
+    openWatchlistForm: (state, action) => {
+      state.isAddingToWatchlist = true;
+      state.movie = action.payload.movie;
+      state.movieId = action.payload.movie_id;
+    },
+
+    closeWatchlistForm: (state) => {
+      state.isAddingToWatchlist = false;
+      state.movie = null;
+      state.movieId = null;
+    },
   },
 });
 
@@ -290,5 +299,5 @@ export const deleteMovieFromWatchlist = (name, movie_id) => {
   }
 }
 
-export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists } = movieSlice.actions;
+export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists, openWatchlistForm,closeWatchlistForm } = movieSlice.actions;
 export default movieSlice.reducer;

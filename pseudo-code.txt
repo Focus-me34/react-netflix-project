@@ -26,14 +26,15 @@ DONE - WatchlistPage:
 
 - Watchlists:
   DONE - Layout
-  - Get all needed data to pass as props
+  DONE - Get all needed data to pass as props
   DONE - Handle add / remove from watchlist
 
 
 - WatchlistForm to get further information about which watchlist the user wants
 to ad a movie to. (New ? Existing?)
   - Add watchlist button to display / remove form modal with state "isAddingWatchList"
-  - Attach reducers to buttons to itnteract with rails DB
+  - Implement Formik API to handle forms
+  - Attach reducers to Formik handlers to interact with rails DB
 
 
 

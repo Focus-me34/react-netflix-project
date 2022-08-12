@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
-import { addFavoriteMovie } from "../../store/slices/MovieSlice";
+import { addFavoriteMovie, openWatchlistForm } from "../../store/slices/MovieSlice";
 import { removeFavoriteMovie } from "../../store/slices/MovieSlice";
 
-import { Heart, HeartOutline } from "react-ionicons";
+import { Heart, HeartOutline, Stopwatch, StopwatchOutline } from "react-ionicons";
 import favClasses from "../favourites/FavoriteMovie.module.css"
+
 import classes from "./MovieList.module.css";
 import movieListClasses from "./MovieList.module.css"
 
@@ -12,9 +15,11 @@ import movieListClasses from "./MovieList.module.css"
 const Movie = (props) => {
   const { movieId } = useSelector( (state) => state.movie);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isHover, setIsHover] = useState(false);
   const [isFavorite, setIsFavorite] = useState(props.isFavorite)
+  const [isInWatchlist, setIsInWatchlist] = useState(props.isInWatchlist)
 
   const addFavorite = (movie_id) => {
     dispatch(addFavoriteMovie(movie_id));
@@ -36,11 +41,22 @@ const Movie = (props) => {
     removeFavorite(movie_id);
   };
 
+  const openWatchlistModal = (movie, movie_id) => {
+    dispatch(openWatchlistForm({ movie: movie, movie_id: movie_id }));
+  } // ! THIS METHOD TRIIGERS THE OPENING OF THE MODAL INSIDE "MOVIES.JS"
+
+  // const closeWatchlistModal = (movie_id) => { // NOT HERE (IN MOVIES INSTEAD)
+  //   dispatch(openWatchlistForm({ movie_id: movie_id }));
+  // }
+
   const toggleShowActionIconHandler = () => {setIsHover((prevState) => !prevState)};
 
   return (
     <div key={props.movie.id} onMouseEnter={toggleShowActionIconHandler} onMouseLeave={toggleShowActionIconHandler} className={movieListClasses["movie-card"]}>
       <div className={`${favClasses["container-action-icons"]} ${isHover  || isFavorite ? favClasses.visible : favClasses.invisible }`}>
+        { !isInWatchlist && <StopwatchOutline onClick={ () => openWatchlistModal(props.movie, props.movie.id) } color={'#fa0000'} title={"add-to-watchlist"} height="50px" width="50px"/>}
+        { isInWatchlist && <Stopwatch onClick={ () => navigate("/watchlists")} color={'#fa0000'} title={"check-watchlist"} height="50px" width="50px"/>}
+
         { !isFavorite && <HeartOutline onClick={() => setFavorite(props.movie.id)} color={'#ff0000'} title={"like-button"} height="50px" width="50px" />}
         { isFavorite && <Heart onClick={() => unsetFavorite(props.movie.id)} color={'#ff0000'} title={"like-button"} height="50px" width="50px" />}
       </div>

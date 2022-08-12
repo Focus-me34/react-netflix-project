@@ -23,17 +23,19 @@ const WatchListForm = () => {
 
   return (
 
-    <div>
+    <div className={classes["watchlist-form-control"]}>
       { watchlists && (notification.satus === "success") &&
         <select name="watchlist-name" id="watchlist-name" ref={wl_name}>
           {watchlists.map((wl) => <option value={wl.name}></option>)}
         </select>
       }
 
-      <Button>New Watchlist</Button>
+      {/* <Button>New Watchlist</Button> */}
       <Button type="button" className={btnClasses["btn-open-form"]} variant="danger">New Watchlist</Button>{' '}
 
-      {showForm && <form></form>}
+
+      {/* FORMIK HERE */}
+      {/* {showForm && <form></form>} */}
     </div>
   );
 }
