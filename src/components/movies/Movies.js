@@ -15,9 +15,8 @@ import WatchListForm from "../watchlists/WatchListForm";
 import Footer from "../footer/Footer";
 
 const Movies = () => {
-  const { allMovies: movies, notification, allWatchlists } = useSelector(state => state.movie)
+  const { allMovies: movies, notification, isSelectedMovie, movieId, isAddingToWatchlist } = useSelector(state => state.movie)
   const dispatch = useDispatch();
-  const { isSelectedMovie, movieId } = useSelector((state) => state.movie);
   const selectedMovie = isSelectedMovie ? movies[movieId - 1] : null;
 
   useEffect(() => {
@@ -38,14 +37,10 @@ const Movies = () => {
 
   const selectMovieHandler = (movie_id, movie) => { !isSelectedMovie ? dispatch(selectMovie({ movieId: movie_id, movie: movie })) : dispatch(unselectMovie()) }
 
-  const type = "Movies";
-  const description = "Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.";
-
   return (
     <>
       <NavbarDetailed></NavbarDetailed>
-      <DisplayContent type={type} description={description}>
-        {/* {!movies && <SpinLoader />} */}
+      <DisplayContent type="Movies" description="Movies move us like nothing else can, whether they're scary, funny, dramatic, romantic or anywhere in-between. So many titles, so much to experience.">
         { ((movies && notification.status === "success" && !notification.error) || (movies && notification.status === "pending" && !notification.error)) && (
           <>
             <MovieList
@@ -96,7 +91,7 @@ const Movies = () => {
           </>
         )}
 
-        {isAddingWatchlist && (
+        {isAddingToWatchlist && (
           <>
             {ReactDom.createPortal(
               <Backdrop />,
