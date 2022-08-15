@@ -11,6 +11,7 @@ import PersonalDetailPage from "./pages/PersonalDetailPage";
 import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import NotFound from "./components/UI/NotFound";
 import WatchlistPage from "./pages/WatchlistPage";
+import WatchlistShow from "./components/watchlists/WatchlistShow";
 
 
 function App() {
@@ -74,14 +75,21 @@ function App() {
 
       {isLoggedIn && (
         <>
-          <Route path="/movies" element={<MoviesListPage />}></Route>
-          <Route path="/series" element={<SeriesListPage />}></Route>
-          <Route path="/account" element={<PersonalDetailPage />}></Route>
-          <Route path="/favourites" element={<FavouriteMoviesPage />}></Route>
-          <Route path="/watchlists" element={<WatchlistPage />}></Route>
+          <Route path="movies" element={<MoviesListPage />}></Route>
+          <Route path="series" element={<SeriesListPage />}></Route>
+          <Route path="account" element={<PersonalDetailPage />}></Route>
+          <Route path="favourites" element={<FavouriteMoviesPage />}></Route>
+
+          <Route path="watchlists">
+            <Route index element={<WatchlistPage />} />
+            <Route path=":watchlistId" element={<WatchlistShow />}>
+              <Route path="comments" element={<p>DOUPI</p>} />
+            </Route>
+          </Route>
+
         </>
       )}
-      <Route path="/page-not-found" element={<NotFound />}></Route>
+      <Route path="page-not-found" element={<NotFound />}></Route>
       <Route
         path="/*"
         element={<Navigate replace to="/page-not-found" />}

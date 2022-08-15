@@ -11,9 +11,15 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 1rem;
-  /* background-color: yellow !important; */
 }
 
 .watchlist-category-list::-webkit-scrollbar {
   display: none;
+}
+
+
+.watchlist-creator {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.4rem;
+  margin-left: 1rem
 }
