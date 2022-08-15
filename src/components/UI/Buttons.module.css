@@ -2,7 +2,6 @@
   display: inline-block;
   background-color: rgb(226, 16, 20);
   font-size: 1.4rem;
-  padding: 1.16rem;
   line-height: 1.8rem;
   white-space: nowrap;
   height: 3.5rem !important;
@@ -62,7 +61,7 @@
   font-size: 1.3rem !important;
   font-weight: bold !important;
 
-  background-color: red !important;
+  /* background-color: red !important; */
   color: white !important;
 }
 

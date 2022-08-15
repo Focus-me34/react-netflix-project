@@ -34,10 +34,12 @@ const WatchlistList = (props) => {
     <div className={classes["watchlist-category-container"]}>
       <h2>{props.name}</h2>
       <div className={classes["watchlist-category-list"]}>
-        { !allWatchlistedMovies && <SpinLoader /> }
-        { !favorite_movies && notification?.status === "pending" && <SpinLoader />}
+        { (!allWatchlistedMovies || !favorite_movies) && <SpinLoader /> }
+        {/* { !favorite_movies && notification?.status === "pending" && <SpinLoader />} */}
         { favorite_movies && allWatchlistedMovies && notification?.status === "success" && props.movies.map(movie => <Movie movie={movie} movies={props.movies} isInWatchlist={isMovieInWatchlist(movie)} watchlistName={props.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
         { favorite_movies && allWatchlistedMovies && notification?.status === "pending" && props.movies.map(movie => <Movie movie={movie} movies={props.movies} isInWatchlist={isMovieInWatchlist(movie)} watchlistName={props.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
+        { notification?.status === "error" && <p>An error occured. Try refreshing the page</p> }
+
       </div>
     </div>
     );
