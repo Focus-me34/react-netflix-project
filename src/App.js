@@ -69,6 +69,21 @@ function App() {
   //     .then((data) => console.log(JSON.parse(data.watchlists)));
   // }, [])
 
+  // ! WATCHLIST SHOW
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   fetch(`http://localhost:3000/api/v1/watchlists/1`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": `Bearer ${token}`
+  //     }
+  //     // body: JSON.stringify({name: "CQFD", movie_id: 29})
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(JSON.parse(data.reviews)));
+  // }, [])
+
   return (
     <Routes>
       <Route path="/" element={<Homepage />}></Route>
@@ -86,7 +101,6 @@ function App() {
               <Route path="comments" element={<p>DOUPI</p>} />
             </Route>
           </Route>
-
         </>
       )}
       <Route path="page-not-found" element={<NotFound />}></Route>

@@ -44,8 +44,8 @@ const WatchlistList = (props) => {
         { notification?.status === "error" && <p>An error occured. Try refreshing the page</p> }
       </div>
 
-      <Button type="button" onClick={ () => navigate(`/watchlists/${props.watchlist_id}`) } className={btnClasses["btn-watchlist-comment"]} variant="secondary">See comments</Button>{' '}
       {/* <Button type="button" onClick={ () => console.log("Open form modal to add a comment") } className={btnClasses["btn-watchlist-comment"]} variant="primary">Add comment</Button>{' '} */}
+      <Button type="button" onClick={ () => navigate(`/watchlists/${props.watchlist_id}`) } className={btnClasses["btn-watchlist-comment"]} variant="secondary">See comments</Button>{' '}
     </div>
     );
 }
