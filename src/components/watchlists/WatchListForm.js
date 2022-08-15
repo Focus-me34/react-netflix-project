@@ -17,9 +17,10 @@ const WatchListForm = () => {
   const [showForm, setShowForm ] = useState(false)
   const { allWatchlists: watchlists, notification, movie, movieId } = useSelector(state => state.movie)
   const dispatch = useDispatch()
-  const wl_name = useRef(null)
+  const wl_name = useRef(null);
+  const [readyToSubmit, setReadyToSubmit] = useState(false)
 
-  console.log(movie);
+
   useEffect(() => {
     dispatch(getAllWatchlists());
   }, [getAllWatchlists]);
@@ -33,6 +34,14 @@ const WatchListForm = () => {
     dispatch(closeWatchlistForm());
   }
 
+  const showFormHandler = () => {
+    setShowForm(prevState => !prevState);
+    setReadyToSubmit(false);
+  }
+
+  const readyToSubmitHandler = () => {
+    wl_name.current.value !== "" ? setReadyToSubmit(true) : setReadyToSubmit(false);
+  }
 
 
   return (
@@ -44,35 +53,50 @@ const WatchListForm = () => {
 
       { notification?.status === "pending" && <SpinLoader />}
 
-      { watchlists && !showForm && (notification.status === "success") &&
+      { (watchlists.length !== 0) && !showForm && (notification.status === "success") &&
       <div className={classes["existing-watchlist-form-container"]}>
         <h2>Pick an existing Watchlist</h2>
         <form id="add-to-existing-watchlist-form" className={classes["add-to-existing-watchlist-form"]}>
-          <input name="movie-name" id="movie-name-input" type="text" disabled placeholder="Give a name to your watchlist" value={movie.title} ref={wl_name} />
+          <input name="movie-name" id="movie-name-input" type="text" disabled placeholder="Give a name to your watchlist" value={movie.title} />
 
           {/* <label htmlFor="watchlist-name" id="watchlist-name-label"></label> */}
           <select name="watchlist-name" id="watchlist-name-select" ref={wl_name}>
             {watchlists.map((wl) => <option value={wl.name} key={wl.id}>{wl.name}</option>)}
           </select>
 
-          <Button type="button" onClick={ addMovieToWatchlistHandler } form="existing" className={btnClasses["btn-watchlist-form"]} variant="danger">Add to this watchlist</Button>{' '}
-          <Button type="button" onClick={() => setShowForm(true)} className={btnClasses["btn-watchlist-form"]} variant="danger">Create a new watchlist</Button>{' '}
+          <Button type="button" onClick={ addMovieToWatchlistHandler } form="add-to-existing-watchlist-form" className={btnClasses["btn-watchlist-form"]} variant="success">Add to this watchlist</Button>{' '}
+          <Button type="button" onClick={showFormHandler} className={btnClasses["btn-watchlist-form"]} variant="danger">Create a new watchlist</Button>{' '}
         </form>
       </div>
       }
 
-      { watchlists && showForm && (notification.status === "success") &&
+
+      { (watchlists.length > 0) && showForm && (notification.status === "success") &&
         <div className={classes["unexisting-watchlist-form-container"]}>
           <h2>Create a brand new watchlist</h2>
 
           <form id="add-to-new-watchlist-form" className={classes["add-to-new-watchlist-form"]}>
-            <input name="movie-name" id="movie-name-input" type="text" disabled placeholder="Give a name to your watchlist" value={movie.title} ref={wl_name} />
-            <input name="watchlist-name" id="watchlist-name-input" type="text" placeholder="Give a name to your watchlist" ref={wl_name} />
+            <input name="movie-name" id="movie-name-input" type="text" disabled value={movie.title} />
+            <input onChange={readyToSubmitHandler} name="watchlist-name" id="watchlist-name-input" type="text" placeholder="Give a name to your watchlist" ref={wl_name} />
           </form>
 
-          <Button type="button" onClick={ addMovieToWatchlistHandler } form="existing" className={btnClasses["btn-watchlist-form"]} variant="danger">Create this new watchlist</Button>{' '}
-          <Button type="button" onClick={() => setShowForm(false)} className={btnClasses["btn-watchlist-form"]} variant="danger">Add to an existing watchlist</Button>{' '}
+          <Button type="button" onClick={ addMovieToWatchlistHandler } disabled={!readyToSubmit} form="add-to-new-watchlist-form" className={btnClasses["btn-watchlist-form"]} variant="success">Create this new watchlist</Button>{' '}
+          <Button type="button" onClick={showFormHandler} className={btnClasses["btn-watchlist-form"]} variant="danger">Add to an existing watchlist</Button>{' '}
 
+        </div>
+      }
+
+
+      { (watchlists.length === 0) && (notification.status === "success") &&
+        <div className={classes["unexisting-watchlist-form-container"]}>
+          <h2>Create a brand new watchlist</h2>
+
+          <form id="add-to-new-watchlist-form" className={classes["add-to-new-watchlist-form"]}>
+            <input name="movie-name" id="movie-name-input" type="text" disabled value={movie.title} />
+            <input onChange={readyToSubmitHandler} name="watchlist-name" id="watchlist-name-input" type="text" placeholder="Give a name to your watchlist" ref={wl_name} />
+          </form>
+
+          <Button disabled={!readyToSubmit} type="button" onClick={ addMovieToWatchlistHandler } form="add-to-new-watchlist-form" className={btnClasses["btn-watchlist-form"]} variant="success">Create this new watchlist</Button>{' '}
         </div>
       }
 

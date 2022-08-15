@@ -34,19 +34,34 @@ DONE - WatchlistPage:
 to ad a movie to. (New ? Existing?)
   DONE - Add watchlist button to display / remove form modal with state "isAddingWatchList"
   DONE - Feature to add movie to watchlist
-  - Feature to remove movie from watchlist
-  - Input validation for the name of the new checlist
-  - Modal Watchlist close icon to add
+  DONE - Feature to remove movie from watchlist
+  DONE - Input validation for the name of the new watchlist
+  DONE - Modal Watchlist close icon to add
 
 
+  NO NEED - Attach reducers to Formik handlers to interact with rails DB
+  NO NEED (- Implement Formik API to handle forms)
 
-  - Attach reducers to Formik handlers to interact with rails DB
-  (- Implement Formik API to handle forms)
-
-
+- Comments
+  - Give the possibility for users to review a whole watchlist.
+  - Create watchlists index in rails + view
 
 
 
 - Random movie from watchlist suggestion
 - Make navbar shrink
 - Add more comments
+
+
+- TESTING (Framework ? (JEST))
+- PRODUCTION (Heroku Rails + react and see how it all works together)
+
+
+
+
+
+- PAGINATION:
+As soon as we build an endpoint that returns a list of items pagination should be put in place.
+Collections usually grow overtime thus it is important to always return a limited and controlled amount of elements.
+It is fair to let API consumers choose how many objects to get but is always good idea to predefine a number and have a maximum for it.
+The main reason for this being that it will be very time and bandwidth consuming to return a huge array of data.
