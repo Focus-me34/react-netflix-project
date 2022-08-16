@@ -16,7 +16,6 @@ const Favourites = () => {
     if (favorite_movies === null) dispatch(getFavorites());
   }, [getFavorites, favorite_movies]);
 
-  console.log(favorite_movies);
   return (
     <>
       <NavbarDetailed />
