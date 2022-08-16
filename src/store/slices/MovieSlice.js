@@ -10,6 +10,11 @@ const initialState = {
   movie: null,
   allFavorites: null,
   allWatchlists: null,
+
+  watchlist: null,
+  reviews: null,
+  watchlistMovies: null,
+  watchlistCreator: null
 };
 
 
@@ -51,6 +56,20 @@ const movieSlice = createSlice({
 
     setAllWatchlists: (state, action) => {
       state.allWatchlists = action.payload.allWatchlists;
+    },
+
+    setWatchlistWithReviews: (state, action) => {
+      state.watchlist = action.payload.watchlist;
+      state.reviews = action.payload.reviews;
+      state.watchlistMovies = action.payload.watchlistMovies;
+      state.watchlistCreator = action.payload.watchlistCreator;
+    },
+
+    unsetWatchlistWithReviews: (state) => {
+      state.watchlist = null;
+      state.reviews = null;
+      state.watchlistMovies = null
+      state.watchlistCreator = null;
     },
 
     openWatchlistForm: (state, action) => {
@@ -200,10 +219,10 @@ export const removeFavoriteMovie = (movie_id) => {
 }
 
 
-// ! GET WATCHLISTS FOR USER
+// ! GET ALL WATCHLISTS
 export const getAllWatchlists = () => {
   return async (dispatch) => {
-    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching user watchlists..." }))
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching watchlists..." }))
     const token = localStorage.getItem("token");
 
     const sendRequest = async () => {
@@ -232,6 +251,37 @@ export const getAllWatchlists = () => {
   }
 }
 
+// ! GET WATCHLIST WITH ID (SHOW)
+export const getWatchlist = (watchlist_id) => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching specified watchlist..." }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch(`http://localhost:3000/api/v1/watchlists/${watchlist_id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error("An error occured: Failed to fetch all the watchlists...")
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.setWatchlistWithReviews({ watchlist: JSON.parse(data.watchlist), reviews: JSON.parse(data.reviews), watchlistMovies: JSON.parse(data.movies), watchlistCreator: JSON.parse(data.watchlist_creator) }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed specified watchlist successfully!" }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while fetching the specified watchlist" }))
+    }
+  }
+}
 
 // ! ADD A MOVIE TO A WATCHLIST
 export const addMovieToWatchlist = (name, movie_id) => {
@@ -291,7 +341,6 @@ export const deleteMovieFromWatchlist = (movie_id) => {
 
     try {
       const data = await sendRequest();
-      console.log(JSON.parse(data.watchlists));
       dispatch(movieSlice.actions.setAllWatchlists({ allWatchlists: JSON.parse(data.watchlists) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Deleted movie from watchlist successfully!" }))
     } catch (error) {
@@ -300,5 +349,5 @@ export const deleteMovieFromWatchlist = (movie_id) => {
   }
 }
 
-export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists, openWatchlistForm,closeWatchlistForm } = movieSlice.actions;
+export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists, setWatchlistWithReviews, unsetWatchlistWithReviews, openWatchlistForm,closeWatchlistForm } = movieSlice.actions;
 export default movieSlice.reducer;

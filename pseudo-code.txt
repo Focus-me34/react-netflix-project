@@ -42,9 +42,13 @@ to ad a movie to. (New ? Existing?)
   NO NEED - Attach reducers to Formik handlers to interact with rails DB
   NO NEED (- Implement Formik API to handle forms)
 
-- Comments
-  - Give the possibility for users to review a whole watchlist.
+- Reviews
+  - Give the possibility for users to review a whole watchlist. Any user can review any watchlist
   - Create watchlists index in rails + view
+  - More to come here...
+
+
+
 
 
 

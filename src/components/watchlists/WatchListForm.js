@@ -16,14 +16,18 @@ import btnClasses from "../UI/Buttons.module.css";
 const WatchListForm = () => {
   const [showForm, setShowForm ] = useState(false)
   const { allWatchlists: watchlists, notification, movie, movieId } = useSelector(state => state.movie)
+  const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const wl_name = useRef(null);
   const [readyToSubmit, setReadyToSubmit] = useState(false)
+  const [userWatchlists, setUserWatchlists] = useState(null)
 
 
   useEffect(() => {
-    dispatch(getAllWatchlists());
-  }, [getAllWatchlists]);
+    if (!watchlists) dispatch(getAllWatchlists());
+    if (watchlists && (userWatchlists === null)) getCurrentUserWatchlists();
+  }, [getAllWatchlists, watchlists, userWatchlists]);
+
 
   const addMovieToWatchlistHandler = () => {
     dispatch(addMovieToWatchlist(wl_name.current.value, movieId));
@@ -43,6 +47,11 @@ const WatchListForm = () => {
     wl_name.current.value !== "" ? setReadyToSubmit(true) : setReadyToSubmit(false);
   }
 
+  const getCurrentUserWatchlists = () => {
+    const currentUserWatchlists = watchlists.filter(wl => wl.user_id === user.id)
+    setUserWatchlists(currentUserWatchlists);
+  }
+
 
   return (
     <div className={classes["watchlist-form-control"]}>
@@ -53,7 +62,7 @@ const WatchListForm = () => {
 
       { notification?.status === "pending" && <SpinLoader />}
 
-      { (watchlists.length !== 0) && !showForm && (notification.status === "success") &&
+      { (userWatchlists?.length !== 0) && !showForm && (notification.status === "success") &&
       <div className={classes["existing-watchlist-form-container"]}>
         <h2>Pick an existing Watchlist</h2>
         <form id="add-to-existing-watchlist-form" className={classes["add-to-existing-watchlist-form"]}>
@@ -61,7 +70,7 @@ const WatchListForm = () => {
 
           {/* <label htmlFor="watchlist-name" id="watchlist-name-label"></label> */}
           <select name="watchlist-name" id="watchlist-name-select" ref={wl_name}>
-            {watchlists.map((wl) => <option value={wl.name} key={wl.id}>{wl.name}</option>)}
+            {userWatchlists?.map((wl) => <option value={wl.name} key={wl.id}>{wl.name}</option>)}
           </select>
 
           <Button type="button" onClick={ addMovieToWatchlistHandler } form="add-to-existing-watchlist-form" className={btnClasses["btn-watchlist-form"]} variant="success">Add to this watchlist</Button>{' '}
@@ -71,7 +80,7 @@ const WatchListForm = () => {
       }
 
 
-      { (watchlists.length > 0) && showForm && (notification.status === "success") &&
+      { (userWatchlists?.length > 0) && showForm && (notification.status === "success") &&
         <div className={classes["unexisting-watchlist-form-container"]}>
           <h2>Create a brand new watchlist</h2>
 
@@ -87,7 +96,7 @@ const WatchListForm = () => {
       }
 
 
-      { (watchlists.length === 0) && (notification.status === "success") &&
+      { (userWatchlists?.length === 0) && (notification.status === "success") &&
         <div className={classes["unexisting-watchlist-form-container"]}>
           <h2>Create a brand new watchlist</h2>
 
