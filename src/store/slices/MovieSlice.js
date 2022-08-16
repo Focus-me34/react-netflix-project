@@ -341,7 +341,6 @@ export const deleteMovieFromWatchlist = (movie_id) => {
 
     try {
       const data = await sendRequest();
-      console.log(JSON.parse(data.watchlists));
       dispatch(movieSlice.actions.setAllWatchlists({ allWatchlists: JSON.parse(data.watchlists) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Deleted movie from watchlist successfully!" }))
     } catch (error) {

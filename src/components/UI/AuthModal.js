@@ -21,8 +21,6 @@ const AuthModalContent = () => {
   const [isError, setIsError] = useState({ status: false, message: "" })
   const notification = useSelector((state) => state.auth.notification);
 
-  console.log(notification);
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

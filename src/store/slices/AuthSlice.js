@@ -110,7 +110,6 @@ export const signIn = (credentials) => {
 
     try {
       const data = await sendRequest();
-      console.log(data);
       dispatch(authSlice.actions.setSession({ token: data.token, user: data.user }));
       dispatch(authSlice.actions.toggleModal())
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
@@ -139,7 +138,6 @@ export const signOut = () => {
         throw new Error("An error occured: Failed to sign out...")
       }
 
-      console.log(res);
       return res.json()
     }
 

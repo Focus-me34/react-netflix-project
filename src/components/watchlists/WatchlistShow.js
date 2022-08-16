@@ -39,8 +39,6 @@ const WatchlistShow = () => {
     if (allFavorites === null) dispatch(getFavorites());
   }, [watchlist, getWatchlist, allFavorites, watchlistMovies]);
 
-// console.log(allWatchlists);
-
   const toggleCommentForm = () => {
     // !!location.pathname.match("comments") ? navigate(`/watchlists/${params.watchlistId}`) : navigate(`${location.pathname}/comments`)
     !!location.pathname.match("comments") ? navigate(-1) : navigate(`${location.pathname}/comments`)
