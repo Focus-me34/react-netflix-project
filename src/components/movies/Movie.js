@@ -71,8 +71,8 @@ const Movie = (props) => {
         { isFavorite && <Heart className={`${isFavorite ? favClasses.visible : favClasses.invisible}`} onClick={() => unsetFavorite(props.movie.id)} color={'#ff0000'} title={"like-button"} height="50px" width="50px" />}
       </div>
 
-      { <img /* onClick={() => props.selectMovie(props.movie.id, props.movie)} */ src={props.movie.poster_path} alt="image of movie: movie.title" /> }
-      <p /* onClick={() => props.selectMovie(props.movie.id, props.movie)} */ className={props.movie.id === movieId ? movieListClasses.active : ""}>{props.movie.title}</p>
+      { <img onClick={() => props.selectMovie(props.movie.id, props.movie)} src={props.movie.poster_path} alt={`image of movie: ${props.movie.title}`} /> }
+      <p onClick={() => props.selectMovie(props.movie.id, props.movie)} className={props.movie.id === movieId ? movieListClasses.active : ""}>{props.movie.title}</p>
     </div>
   );
 }

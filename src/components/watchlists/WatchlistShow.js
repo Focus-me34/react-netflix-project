@@ -1,61 +1,74 @@
+import ReactDom from "react-dom";
+
+import { useEffect, useCallback } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getWatchlist } from "../../store/slices/MovieSlice";
 import { getFavorites } from "../../store/slices/MovieSlice";
 import { getAllWatchlists } from "../../store/slices/MovieSlice";
-import { getArrayWithAllWatchlistedMovies } from "../movies/MovieList";
+import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
 
 import NavbarDetailed from "../navbar/NavbarDetailed";
 import DisplayContent from "../UI/DisplayContent";
 import Movie from "../movies/Movie";
 import SpinLoader from "../UI/SpinLoader";
 import Button from "react-bootstrap/Button";
+import Backdrop from "../UI/Backdrop";
+import WatchListForm from "./WatchListForm";
+import SelectedMovieInformation from "../UI/SelectedMovieInformation";
+import Footer from "../footer/Footer";
 
-// import classes from "../watchlists/WatchlistList.module.css";
 import classes from "../movies/MovieList.module.css";
 import btnClasses from "../UI/Buttons.module.css";
 
 
 const WatchlistShow = () => {
-  const { watchlist, reviews, watchlistMovies, watchlistCreator, allFavorites, notification } = useSelector(state => state.movie)
+  const { allWatchlists, watchlist, reviews, watchlistMovies, watchlistCreator, isAddingToWatchlist, allFavorites, isSelectedMovie, selectedMovie, notification } = useSelector(state => state.movie)
+  const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch();
-  const [allWatchlistedMovies, setAllWatchlistedMovies] = useState(null);
 
   const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-console.log(watchlistMovies);
 
   useEffect(() => {
+    if (!allWatchlists) dispatch(getAllWatchlists())
     if (!watchlist) dispatch(getWatchlist(params.watchlistId));
     if (allFavorites === null) dispatch(getFavorites());
-    if (watchlistMovies && allWatchlistedMovies === null) setAllWatchlistedMovies(watchlistMovies);
-  }, [getWatchlist]);
+  }, [watchlist, getWatchlist, allFavorites, watchlistMovies]);
+
+// console.log(allWatchlists);
 
   const toggleCommentForm = () => {
     // !!location.pathname.match("comments") ? navigate(`/watchlists/${params.watchlistId}`) : navigate(`${location.pathname}/comments`)
     !!location.pathname.match("comments") ? navigate(-1) : navigate(`${location.pathname}/comments`)
   }
 
-  console.log(watchlist);
-  console.log(reviews);
-  console.log(watchlistMovies);
+
 
   const isMovieFavourite = useCallback(
     (prop_movie) => {
-      return allFavorites.some((movie) => movie.id === prop_movie.id);
+      return allFavorites?.some((movie) => movie.id === prop_movie.id);
     },
     [allFavorites]
   );
 
-  const isMovieInWatchlist = (prop_movie) => {
-    return allWatchlistedMovies?.some((movie) => movie.id === prop_movie.id);
+  const isMovieInUserWatchlists = (mapped_movie) => {
+    const userWatchlists = allWatchlists?.filter(wl => wl.user_id === user.id)
+    let userAllWatchlistedMovies = []
+    userWatchlists.map((wl) => userAllWatchlistedMovies.push(...wl.movies));
+
+    return userAllWatchlistedMovies?.some((movie) => movie.id === mapped_movie.id);
+  };
+
+  const selectMovieHandler = (movie_id, movie) => {
+    !isSelectedMovie ? dispatch(selectMovie({ movieId: movie_id, movie: movie })) : dispatch(unselectMovie());
   };
 
   const watchlistCreationDate = new Date(watchlist?.created_at).toLocaleDateString() || ""
+
 
   return (
     <>
@@ -65,19 +78,42 @@ console.log(watchlistMovies);
           <h2>{watchlist?.name || ""} - {`This watchlist was created by "${watchlistCreator || ""}" the ${watchlistCreationDate}`}</h2>
 
           <div className={classes["movie-category-list"]}>
-            {(!watchlist || !reviews || !watchlistMovies) && <SpinLoader />}
-            {(!watchlist || !reviews || !watchlistMovies) && notification?.status === "pending" && <SpinLoader />}
+            {(!watchlist || !reviews || !watchlistMovies || !allWatchlists) && <SpinLoader />}
+            {(!watchlist || !reviews || !watchlistMovies|| !allWatchlists) && notification?.status === "pending" && <SpinLoader />}
 
-            { watchlist && reviews && watchlistMovies && notification?.status === "pending" && watchlistMovies.map(movie => <Movie movie={movie} movies={watchlistMovies} isInWatchlist={isMovieInWatchlist(movie)} watchlistName={watchlist.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
-            { watchlist && reviews && watchlistMovies && notification?.status === "success" && watchlistMovies.map(movie => <Movie movie={movie} movies={watchlistMovies} isInWatchlist={isMovieInWatchlist(movie)} watchlistName={watchlist.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
+            { allWatchlists && watchlist && reviews && watchlistMovies && notification?.status === "pending" && watchlistMovies.map(movie => <Movie movie={movie} movies={watchlistMovies} selectMovie={selectMovieHandler} isInWatchlist={isMovieInUserWatchlists(movie)} watchlistName={watchlist.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
+            { allWatchlists && watchlist && reviews && watchlistMovies && notification?.status === "success" && watchlistMovies.map(movie => <Movie movie={movie} movies={watchlistMovies} selectMovie={selectMovieHandler} isInWatchlist={isMovieInUserWatchlists(movie)} watchlistName={watchlist.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
 
             { notification?.status === "error" && <p>An error occured while loadig the content of ths watchlist</p>}
 
           </div>
             <Button type="button" onClick={ toggleCommentForm } className={btnClasses["btn-watchlist-comment"]} variant="danger">Add comment</Button>{' '}
         </div>
-      </DisplayContent>
+
+      <Footer></Footer>
       <Outlet />
+      </DisplayContent>
+
+      {isSelectedMovie && (
+        <>
+          {ReactDom.createPortal(
+            <Backdrop />,
+            document.getElementById("backdrop")
+          )}
+          {ReactDom.createPortal(
+            <SelectedMovieInformation movie={selectedMovie} />,
+            document.getElementById("movie-description")
+          )}
+        </>
+      )}
+
+      {isAddingToWatchlist && (
+        <>
+          { ReactDom.createPortal(<Backdrop />, document.getElementById("backdrop") )}
+          { ReactDom.createPortal( <WatchListForm />, document.getElementById("watchlist-form-modal") )}
+        </>
+      )}
+
     </>
   );
 }
