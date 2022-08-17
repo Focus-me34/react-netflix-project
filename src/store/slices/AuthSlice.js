@@ -5,7 +5,8 @@ const isToken = localStorage.getItem("token") ? true : false;
 
 const initialState = {
   isAuthModalOpen: false,
-  user: isToken ? JSON.parse(localStorage.getItem("user")) : null, // ! If there's a token, there's a user obviously
+  user: JSON?.parse(localStorage.getItem("user")) || null, // ! If there's a token, there's a user obviously
+  // user: isToken ? JSON.parse(localStorage.getItem("user")) : null, // ! If there's a token, there's a user obviously
   notification: isToken ? { status: "success", title: "Success", message: "Signed in successfully!" } : null,
   isLoggedIn: isToken ? true : false,
   token: isToken ? localStorage.getItem("token") : null
@@ -105,11 +106,24 @@ export const signIn = (credentials) => {
         throw new Error("An error occured: Failed to sign in...")
       }
 
-      return res.json()
-    }
+      // console.log(`Hello from the res section`);
+      // console.log(res);
+      // console.log(`Headers only`);
+      // console.log(res.headers);
+      // console.log(`AUTH HEADER ONLY`);
+      // console.log(res.headers.get('authorization').split(' ')[1]);
+      // console.log(`Cycling starts`);
+      // res.headers.forEach(console.log);
+      // console.log(`Auth header only`);
+      // for (let entry of res.headers.entries()) { console.log(entry) };
+      // console.log(`END OF RES SECTION`);
+      return [res.json(), res];
+      }
 
     try {
-      const data = await sendRequest();
+      const [data, res] = await sendRequest();
+      console.log(data)
+      console.log(res.headers.get('authorization').split(' ')[1]);
       dispatch(authSlice.actions.setSession({ token: data.token, user: data.user }));
       dispatch(authSlice.actions.toggleModal())
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
