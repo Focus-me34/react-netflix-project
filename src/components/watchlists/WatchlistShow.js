@@ -45,10 +45,6 @@ const WatchlistShow = () => {
 ;
   }, [watchlist, allWatchlists, getWatchlist, allFavorites, watchlistMovies]);
 
-  // useEffect(() => {
-  //   let watchlist
-  // }, [watchlistMovies]);
-
   useEffect(() => {
     dispatch(getWatchlist(params.watchlistId));
 
