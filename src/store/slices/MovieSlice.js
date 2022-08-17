@@ -97,7 +97,7 @@ export const getAllMovies = () => {
   return async (dispatch) => {
     dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching all movies..." }))
     const token = localStorage.getItem("token");
-
+    console.log(token)
     const sendRequest = async () => {
       const res = await fetch("http://localhost:3000/api/v1/movies", {
         method: "GET",
