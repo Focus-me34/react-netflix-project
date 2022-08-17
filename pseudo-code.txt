@@ -44,24 +44,31 @@ to ad a movie to. (New ? Existing?)
 
 - Reviews
   - Give the possibility for users to review a whole watchlist. Any user can review any watchlist
-  - Create watchlists index in rails + view
-  - More to come here...
+  DONE - Create watchlists index in rails + view
+  - Get all reviews for specified watchlist (GET#index in rails)
+  - Handle everykind of situation (No reviews /  etc. ...)
+  - Make it possible for users to add a new comment for this watchlist (POST#create)
+  - Make it possible for users to edit their comments (PATCH#update)
+  - Make it possible for a user to delete its comment (DELETE#destroy)
+  - Add some basic styling Netflic style to the form
 
 
 
+- Animation + overall UX
+  - Animate the whole website
+  - Check notification.status everywhere to make the user journey very fluid
+  - Add more comments (Both rails / React)
+  - Make navbar shrink
 
 
 
-- Random movie from watchlist suggestion
-- Make navbar shrink
-- Add more comments
+- Extra
+  - Random movie from watchlist suggestion
+  - Infinite scroll? / pagination?
 
 
 - TESTING (Framework ? (JEST))
 - PRODUCTION (Heroku Rails + react and see how it all works together)
-
-
-
 
 
 - PAGINATION:

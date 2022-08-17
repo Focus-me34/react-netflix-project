@@ -103,8 +103,8 @@ const Movies = () => {
             )}
           </>
         )}
-        <Footer />
       </DisplayContent>
+      <Footer />
     </>
   );
 };

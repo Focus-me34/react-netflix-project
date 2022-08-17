@@ -1,0 +1,42 @@
+.comment-card {
+  padding: 1.5rem 2rem;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+}
+
+.comment-username {
+  font-size: 1.3rem;
+  font-weight: bolder;
+}
+
+.comment-content {
+  font-size: 1.8rem;
+  margin: 1.5rem 0;
+}
+
+.comment-card-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-likes-container {
+  font-size: 1.4rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.comment-likes-container svg {
+  margin: 0;
+  transition: 0.3s;
+}
+
+.comment-likes-container svg:hover {
+  transition: 0.1s;
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+.comment-date {
+  font-size: 1.4rem;
+  margin: 0;
+  color: rgb(150, 150, 150)
+}

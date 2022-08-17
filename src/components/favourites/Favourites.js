@@ -24,8 +24,8 @@ const Favourites = () => {
         { favorite_movies && notification.status === "success" && <FavoriteMovieList movies={favorite_movies} /> }
         { favorite_movies && notification.status === "pending" && <FavoriteMovieList movies={favorite_movies} /> }
         {!favorite_movies && notification?.error && <p>An error occured</p>}
-        <Footer />
       </DisplayContent>
+      <Footer />
     </>
   );
 };

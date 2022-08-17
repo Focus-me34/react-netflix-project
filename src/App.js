@@ -12,6 +12,7 @@ import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import NotFound from "./components/UI/NotFound";
 import WatchlistPage from "./pages/WatchlistPage";
 import WatchlistShow from "./components/watchlists/WatchlistShow";
+import WatchlistCommentsList from "./components/watchlists/WatchlistCommentsList";
 
 
 function App() {
@@ -98,7 +99,7 @@ function App() {
           <Route path="watchlists">
             <Route index element={<WatchlistPage />} />
             <Route path=":watchlistId" element={<WatchlistShow />}>
-              <Route path="comments" element={<p>DOUPI</p>} />
+              <Route path="comments" element={<WatchlistCommentsList />} />
             </Route>
           </Route>
         </>
