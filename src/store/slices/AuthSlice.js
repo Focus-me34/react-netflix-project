@@ -39,7 +39,8 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.isLoggedIn = true;
-      localStorage.setItem("token", action.payload.token);
+      const stringToken = JSON.stringify(action.payload.token);
+      localStorage.setItem("token", stringToken.slice(1,-1));
       localStorage.setItem("user", JSON.stringify(action.payload.user));
     },
 
@@ -104,13 +105,13 @@ export const signIn = (credentials) => {
       if (!res.ok) {
         throw new Error("An error occured: Failed to sign in...")
       }
-
-      return res.json()
+      const data = await res.json()
+      return [ data, res.headers.get('authorization').split(' ')[1] ]
     }
 
     try {
-      const data = await sendRequest();
-      dispatch(authSlice.actions.setSession({ token: data.token, user: data.user }));
+      const [ data, authToken ] = await sendRequest();
+      dispatch(authSlice.actions.setSession({ token: authToken, user: data.user }));
       dispatch(authSlice.actions.toggleModal())
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
     } catch (error) {
