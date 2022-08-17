@@ -106,19 +106,11 @@ export const signIn = (credentials) => {
         throw new Error("An error occured: Failed to sign in...")
       }
       const data = await res.json()
-      return [data, res.headers.get('authorization').split(' ')[1] ]
+      return [ data, res.headers.get('authorization').split(' ')[1] ]
     }
 
     try {
       const [ data, authToken ] = await sendRequest();
-      // console.log(JSON.parse(data.user))
-      // const userdata = JSON.parse(data.user)
-      // console.log(JSON.parse(data.user))
-      // console.log(userdata)
-      // const resbody = res.json()
-      // console.log(JSON.parse(data))
-      // const databody = data.json()
-      console.log(authToken)
       dispatch(authSlice.actions.setSession({ token: authToken, user: data.user }));
       dispatch(authSlice.actions.toggleModal())
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
