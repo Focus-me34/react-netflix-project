@@ -21,29 +21,47 @@ import Footer from "../footer/Footer";
 
 import classes from "../movies/MovieList.module.css";
 import btnClasses from "../UI/Buttons.module.css";
+import { useState } from "react";
 
 
 const WatchlistShow = () => {
-  const { allWatchlists, watchlist, reviews, watchlistMovies, watchlistCreator, isAddingToWatchlist, allFavorites, isSelectedMovie, selectedMovie, notification } = useSelector(state => state.movie)
+  const { allWatchlists, watchlist, reviews, watchlistMovies, watchlistCreator, isAddingToWatchlist, allFavorites, isSelectedMovie, selectedMovie, refreshWatchlist, notification } = useSelector(state => state.movie)
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch();
+  const [showCommentSection, setShowCommentSection] = useState(false)
+
 
   const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log(refreshWatchlist);
+  console.log(watchlistMovies);
 
   useEffect(() => {
-    if (!allWatchlists) dispatch(getAllWatchlists())
-    if (!watchlist) dispatch(getWatchlist(params.watchlistId));
+    if (!allWatchlists) dispatch(getAllWatchlists());
     if (allFavorites === null) dispatch(getFavorites());
-  }, [watchlist, getWatchlist, allFavorites, watchlistMovies]);
+    if (refreshWatchlist) dispatch(getWatchlist(params.watchlistId));
+;
+  }, [watchlist, allWatchlists, getWatchlist, allFavorites, watchlistMovies]);
+
+  // useEffect(() => {
+  //   let watchlist
+  // }, [watchlistMovies]);
+
+  useEffect(() => {
+    dispatch(getWatchlist(params.watchlistId));
+
+    if (!!location.pathname.match("comments") === true) setShowCommentSection(true);
+    if (!!location.pathname.match("comments") === false) setShowCommentSection(false);
+  }, [])
+
 
   const toggleCommentForm = () => {
+    showCommentSection ? setShowCommentSection(false) : setShowCommentSection(true);
     // !!location.pathname.match("comments") ? navigate(`/watchlists/${params.watchlistId}`) : navigate(`${location.pathname}/comments`)
     !!location.pathname.match("comments") ? navigate(-1) : navigate(`${location.pathname}/comments`)
   }
-
 
 
   const isMovieFavourite = useCallback(
@@ -67,7 +85,6 @@ const WatchlistShow = () => {
 
   const watchlistCreationDate = new Date(watchlist?.created_at).toLocaleDateString() || ""
 
-
   return (
     <>
       <NavbarDetailed />
@@ -85,11 +102,11 @@ const WatchlistShow = () => {
             { notification?.status === "error" && <p>An error occured while loadig the content of ths watchlist</p>}
 
           </div>
-            <Button type="button" onClick={ toggleCommentForm } className={btnClasses["btn-watchlist-comment"]} variant="danger">Add comment</Button>{' '}
+            <Button type="button" onClick={ toggleCommentForm } className={btnClasses["btn-watchlist-comment"]} variant="danger">{showCommentSection ? "Hide" : "Show"} comment section</Button>{' '}
         </div>
 
-      <Footer></Footer>
       <Outlet />
+      <Footer></Footer>
       </DisplayContent>
 
       {isSelectedMovie && (

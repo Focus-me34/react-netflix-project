@@ -40,6 +40,11 @@ const WatchlistList = (props) => {
     !isSelectedMovie ? dispatch(selectMovie({ movieId: movie_id, movie: movie })) : dispatch(unselectMovie())
   }
 
+  const goToWatchlistShowHandler = () => {
+    navigate(`/watchlists/${props.watchlist_id}`);
+
+  }
+
   return (
     <div className={classes["watchlist-category-container"]}>
       <h2>{props.name} <span className={classes["watchlist-creator"]}>(created by {props.creator})</span></h2>
@@ -51,7 +56,7 @@ const WatchlistList = (props) => {
       </div>
 
       {/* <Button type="button" onClick={ () => console.log("Open form modal to add a comment") } className={btnClasses["btn-watchlist-comment"]} variant="primary">Add comment</Button>{' '} */}
-      <Button type="button" onClick={ () => navigate(`/watchlists/${props.watchlist_id}`) } className={btnClasses["btn-watchlist-comment"]} variant="secondary">See comments</Button>{' '}
+      <Button type="button" onClick={ goToWatchlistShowHandler } className={btnClasses["btn-watchlist-comment"]} variant="secondary">See more about this watchlist</Button>{' '}
     </div>
     );
 }

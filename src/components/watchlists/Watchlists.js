@@ -39,9 +39,9 @@ const Watchlists = () => {
         {allWatchlists?.length === 0 && notification?.status === "success" && (<p className={classes["no-favorite-movie-msg"]}>You didn't create any watchlist yet! Browse the "Movies" category and try adding one !{" "}</p> )}
         {notification?.status === "error" && ( <p>AN ERROR OCCURED WHILE LOADING THE WAHCTHLISTS</p> )}
 
-        <Footer />
         <Outlet />
       </DisplayContent>
+      <Footer />
 
       {isSelectedMovie && (
         <>

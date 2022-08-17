@@ -1,0 +1,11 @@
+.watchlist-comment-section {
+  margin: 3rem auto 5rem;
+  width: 70%;
+  /* border: 1px solid white; */
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+}

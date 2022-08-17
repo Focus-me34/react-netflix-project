@@ -12,9 +12,12 @@ const initialState = {
   allWatchlists: null,
 
   watchlist: null,
-  reviews: null,
+  // ?EVERYTIME WE ADD OR REMOVE A MOVIE FROM A WATCHLIST, WE MAKE SET THIS VARIABLE TO TRUE.
+  // ? WE USE IT TO FETCH DATA ABOUT A SPECIFIC WATCHLIST (REFRESHES "WATCHLIST" STATE) OR NOT DEPENDING ON ITS VALUE.
+  refreshWatchlist: false,
   watchlistMovies: null,
-  watchlistCreator: null
+  watchlistCreator: null,
+  reviews: null,
 };
 
 
@@ -56,6 +59,7 @@ const movieSlice = createSlice({
 
     setAllWatchlists: (state, action) => {
       state.allWatchlists = action.payload.allWatchlists;
+      state.refreshWatchlist = true;
     },
 
     setWatchlistWithReviews: (state, action) => {
@@ -63,6 +67,7 @@ const movieSlice = createSlice({
       state.reviews = action.payload.reviews;
       state.watchlistMovies = action.payload.watchlistMovies;
       state.watchlistCreator = action.payload.watchlistCreator;
+      state.refreshWatchlist = false;
     },
 
     unsetWatchlistWithReviews: (state) => {
@@ -348,6 +353,38 @@ export const deleteMovieFromWatchlist = (movie_id) => {
     }
   }
 }
+
+// // ! GET REVIEWS FOR SPECIFIC WATCHLIST (SHOW)
+// export const getWatchlist = (watchlist_id) => {
+//   return async (dispatch) => {
+//     dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching specified watchlist..." }))
+//     const token = localStorage.getItem("token");
+
+//     const sendRequest = async () => {
+//       const res = await fetch(`http://localhost:3000/api/v1/watchlists/${watchlist_id}`, {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           "Authorization": `Bearer ${token}`,
+//         }
+//       });
+
+//       if (!res.ok) {
+//         throw new Error("An error occured: Failed to fetch all the watchlists...")
+//       }
+
+//       return res.json();
+//     }
+
+//     try {
+//       const data = await sendRequest();
+//       dispatch(movieSlice.actions.setWatchlistWithReviews({ watchlist: JSON.parse(data.watchlist), reviews: JSON.parse(data.reviews), watchlistMovies: JSON.parse(data.movies), watchlistCreator: JSON.parse(data.watchlist_creator) }));
+//       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed specified watchlist successfully!" }))
+//     } catch (error) {
+//       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while fetching the specified watchlist" }))
+//     }
+//   }
+// }
 
 export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists, setWatchlistWithReviews, unsetWatchlistWithReviews, openWatchlistForm,closeWatchlistForm } = movieSlice.actions;
 export default movieSlice.reducer;
