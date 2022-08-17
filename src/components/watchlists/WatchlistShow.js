@@ -25,24 +25,33 @@ import { useState } from "react";
 
 
 const WatchlistShow = () => {
-  const { allWatchlists, watchlist, reviews, watchlistMovies, watchlistCreator, isAddingToWatchlist, allFavorites, isSelectedMovie, selectedMovie, notification } = useSelector(state => state.movie)
+  const { allWatchlists, watchlist, reviews, watchlistMovies, watchlistCreator, isAddingToWatchlist, allFavorites, isSelectedMovie, selectedMovie, refreshWatchlist, notification } = useSelector(state => state.movie)
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const [showCommentSection, setShowCommentSection] = useState(false)
+
 
   const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
+  console.log(refreshWatchlist);
+  console.log(watchlistMovies);
 
   useEffect(() => {
-    if (!allWatchlists) dispatch(getAllWatchlists())
-    // if (!watchlist)
+    if (!allWatchlists) dispatch(getAllWatchlists());
     if (allFavorites === null) dispatch(getFavorites());
-  }, [watchlist, getWatchlist, allFavorites, watchlistMovies]);
+    if (refreshWatchlist) dispatch(getWatchlist(params.watchlistId));
+;
+  }, [watchlist, allWatchlists, getWatchlist, allFavorites, watchlistMovies]);
+
+  // useEffect(() => {
+  //   let watchlist
+  // }, [watchlistMovies]);
 
   useEffect(() => {
     dispatch(getWatchlist(params.watchlistId));
+
     if (!!location.pathname.match("comments") === true) setShowCommentSection(true);
     if (!!location.pathname.match("comments") === false) setShowCommentSection(false);
   }, [])

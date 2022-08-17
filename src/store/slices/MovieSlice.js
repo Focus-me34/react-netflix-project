@@ -12,6 +12,9 @@ const initialState = {
   allWatchlists: null,
 
   watchlist: null,
+  // ?EVERYTIME WE ADD OR REMOVE A MOVIE FROM A WATCHLIST, WE MAKE SET THIS VARIABLE TO TRUE.
+  // ? WE USE IT TO FETCH DATA ABOUT A SPECIFIC WATCHLIST (REFRESHES "WATCHLIST" STATE) OR NOT DEPENDING ON ITS VALUE.
+  refreshWatchlist: false,
   watchlistMovies: null,
   watchlistCreator: null,
   reviews: null,
@@ -56,6 +59,7 @@ const movieSlice = createSlice({
 
     setAllWatchlists: (state, action) => {
       state.allWatchlists = action.payload.allWatchlists;
+      state.refreshWatchlist = true;
     },
 
     setWatchlistWithReviews: (state, action) => {
@@ -63,6 +67,7 @@ const movieSlice = createSlice({
       state.reviews = action.payload.reviews;
       state.watchlistMovies = action.payload.watchlistMovies;
       state.watchlistCreator = action.payload.watchlistCreator;
+      state.refreshWatchlist = false;
     },
 
     unsetWatchlistWithReviews: (state) => {
