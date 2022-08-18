@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { addReviewToWatchlist } from "../../store/slices/MovieSlice";
@@ -13,19 +13,16 @@ import btnClasses from "../UI/Buttons.module.css"
 const WatchlistCommentsList = () => {
   const { watchlist, reviews, notification } = useSelector(state => state.movie)
   const dispatch = useDispatch()
-  const { user } = useSelector(state => state.auth)
   const [isReviewInputValid, setIsReviewInputValid] = useState(false)
   const reviewInputRef = useRef("")
-  // console.log(user);
 
   const submitReviewHandler = (e) => {
     e.preventDefault();
     dispatch(addReviewToWatchlist(watchlist.id, reviewInputRef.current.value));
   }
 
-
   const validateReviewInputHandler = () => {
-    reviewInputRef.current.value !== "" ? setIsReviewInputValid(true) : setIsReviewInputValid(false);
+    (reviewInputRef.current.value !== "" && reviewInputRef.current.value.length >= 3) ? setIsReviewInputValid(true) : setIsReviewInputValid(false);
   }
 
   return (
