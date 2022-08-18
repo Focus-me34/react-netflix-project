@@ -1,11 +1,25 @@
 .watchlist-comment-section {
   margin: 3rem auto 5rem;
   width: 70%;
-  /* border: 1px solid white; */
   color: white;
 
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
 
+.add-review-form {}
+
+.add-review-form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.2rem;
+  font-size: 1.5rem;
+  border: 0.1px solid black;
+  border-radius: 3px;
+  /* box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); */
+}
+
+.add-review-form input:focus {
+  outline-color: black;
 }

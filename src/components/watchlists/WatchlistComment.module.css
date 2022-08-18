@@ -21,8 +21,18 @@
 .comment-likes-container {
   font-size: 1.4rem;
   display: flex;
-  gap: 2rem;
+  align-items: flex-end;
+  gap: 1rem;
 }
+
+.likes-counter, .dislikes-counter {
+  text-align: center;
+}
+
+.likes-counter p, .dislikes-counter p {
+  margin: 0.3rem;
+}
+
 
 .comment-likes-container svg {
   margin: 0;
@@ -36,6 +46,7 @@
 }
 
 .comment-date {
+  align-self: flex-end;
   font-size: 1.4rem;
   margin: 0;
   color: rgb(150, 150, 150)

@@ -88,6 +88,10 @@ const movieSlice = createSlice({
       state.movie = null;
       state.movieId = null;
     },
+
+    addReviewToReviews: (state, action) => {
+      state.reviews = [action.payload.review, ...state.reviews];
+    },
   },
 });
 
@@ -357,6 +361,41 @@ export const deleteMovieFromWatchlist = (movie_id) => {
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Deleted movie from watchlist successfully!" }))
     } catch (error) {
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while deleting movie from watchlist" }))
+    }
+  }
+}
+
+// ! ADD A MOVIE TO A WATCHLIST
+export const addReviewToWatchlist = (watchlist_id, comment) => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: `Adding review to watchlist with id ${watchlist_id}...` }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch("http://localhost:3000/api/v1/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ watchlist_id: watchlist_id, comment: comment }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`An error occured: Failed to add review for the watchlist with id ${watchlist_id}...`)
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      console.log(JSON.parse(data.review));
+      dispatch(movieSlice.actions.addReviewToReviews({ review: JSON.parse(data.review) }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: `Added movie review to watchlist with id ${watchlist_id} successfully!` }))
+    } catch (error) {
+      console.log(error);
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: `An error occured while adding movie to the watchlist with id ${watchlist_id}` }))
     }
   }
 }
