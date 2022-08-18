@@ -31,7 +31,7 @@ const WatchlistCommentsList = () => {
     <div className={classes["watchlist-comment-section"]}>
 
       <form onSubmit={submitReviewHandler} id="add-review-form" className={classes["add-review-form"]}>
-        <input onChange={validateReviewInputHandler} type="text" placeholder="Write your review..." ref={reviewInputRef} />
+        <textarea onChange={validateReviewInputHandler} type="text" rows="1" required placeholder="Write your review..." ref={reviewInputRef} />
         <Button type="submit" form="add-review-form" disabled={!isReviewInputValid} className={btnClasses["btn-add-review"]} variant="dark">Submit Review</Button>{' '}
       </form>
 
