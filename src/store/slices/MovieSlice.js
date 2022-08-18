@@ -90,7 +90,7 @@ const movieSlice = createSlice({
     },
 
     addReviewToReviews: (state, action) => {
-      state.reviews = state.reviews.unshift(action.payload.review);
+      state.reviews = [action.payload.review, ...state.reviews];
     },
   },
 });
@@ -390,10 +390,11 @@ export const addReviewToWatchlist = (watchlist_id, comment) => {
 
     try {
       const data = await sendRequest();
-      console.log(data);
+      console.log(JSON.parse(data.review));
       dispatch(movieSlice.actions.addReviewToReviews({ review: JSON.parse(data.review) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: `Added movie review to watchlist with id ${watchlist_id} successfully!` }))
     } catch (error) {
+      console.log(error);
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: `An error occured while adding movie to the watchlist with id ${watchlist_id}` }))
     }
   }

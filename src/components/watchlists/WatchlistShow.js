@@ -92,7 +92,7 @@ const WatchlistShow = () => {
             { allWatchlists && watchlist && reviews && watchlistMovies && notification?.status === "pending" && watchlistMovies.map(movie => <Movie movie={movie} movies={watchlistMovies} selectMovie={selectMovieHandler} isInWatchlist={isMovieInUserWatchlists(movie)} watchlistName={watchlist.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
             { allWatchlists && watchlist && reviews && watchlistMovies && notification?.status === "success" && watchlistMovies.map(movie => <Movie movie={movie} movies={watchlistMovies} selectMovie={selectMovieHandler} isInWatchlist={isMovieInUserWatchlists(movie)} watchlistName={watchlist.name} isFavorite={isMovieFavourite(movie)} key={movie.id}/>) }
 
-            { notification?.status === "error" && <p>An error occured while loadig the content of ths watchlist</p>}
+            { notification?.status === "error" && <p>An error occured while loading the content of the watchlist</p>}
 
           </div>
             <Button type="button" onClick={ toggleCommentForm } className={btnClasses["btn-watchlist-comment"]} variant="danger">{showCommentSection ? "Hide" : "Show"} comment section</Button>{' '}

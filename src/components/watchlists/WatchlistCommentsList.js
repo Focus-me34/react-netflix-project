@@ -32,15 +32,13 @@ const WatchlistCommentsList = () => {
     <div className={classes["watchlist-comment-section"]}>
 
       <form onSubmit={submitReviewHandler} id="add-review-form" className={classes["add-review-form"]}>
-        {/* <input type="hidden" value={user.username} disabled/> */}
         <input onChange={validateReviewInputHandler} type="text" placeholder="Write your review..." ref={reviewInputRef} />
         <Button type="submit" form="add-review-form" disabled={!isReviewInputValid} className={btnClasses["btn-add-review"]} variant="dark">Submit Review</Button>{' '}
       </form>
 
       {!reviews || !watchlist && <SpinLoader /> }
-      {/* { !reviews && notification?.status === "pending" && <SpinLoader /> } */}
-      { reviews && notification?.status === "pending" && reviews.map((review) => ( <WatchlistComment review={review} key={review.id} /> )) }
-      { reviews && notification?.status === "success" && reviews.map((review) => ( <WatchlistComment review={review} key={review.id} /> )) }
+      { reviews && notification?.status === "pending" && reviews.map((review) => ( <WatchlistComment id={review.id} review={review} key={review.id} /> )) }
+      { reviews && notification?.status === "success" && reviews.map((review) => ( <WatchlistComment id={review.id} review={review} key={review.id} /> )) }
       { notification?.status === "error" && <p>An error occured while loading the comments... Try refreshing the page</p> }
     </div>
   );
