@@ -1,0 +1,38 @@
+.update-review-form {}
+
+.update-review-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.2rem;
+  font-size: 1.5rem;
+  border: 0.1px solid black;
+  border-radius: 3px;
+  /* box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); */
+}
+
+.update-review-form textarea:focus {
+  outline-color: black;
+}
+
+.edit-review-error-message {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.edit-actions-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.update-review-form svg {
+  transition: 0.4s;
+}
+
+.update-review-form svg:hover {
+  transition: 0.4s;
+  transform: scale(1.2);
+  cursor: pointer;
+}

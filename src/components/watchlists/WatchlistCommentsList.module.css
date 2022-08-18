@@ -10,7 +10,7 @@
 
 .add-review-form {}
 
-.add-review-form input {
+.add-review-form textarea {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 0.2rem;
@@ -20,6 +20,6 @@
   /* box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); */
 }
 
-.add-review-form input:focus {
+.add-review-form textarea:focus {
   outline-color: black;
 }

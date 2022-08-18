@@ -19,6 +19,8 @@ const WatchlistCommentsList = () => {
   const submitReviewHandler = (e) => {
     e.preventDefault();
     dispatch(addReviewToWatchlist(watchlist.id, reviewInputRef.current.value));
+    reviewInputRef.current.value = "";
+    setIsReviewInputValid(false);
   }
 
   const validateReviewInputHandler = () => {
@@ -29,7 +31,7 @@ const WatchlistCommentsList = () => {
     <div className={classes["watchlist-comment-section"]}>
 
       <form onSubmit={submitReviewHandler} id="add-review-form" className={classes["add-review-form"]}>
-        <input onChange={validateReviewInputHandler} type="text" placeholder="Write your review..." ref={reviewInputRef} />
+        <textarea onChange={validateReviewInputHandler} type="text" rows="1" required placeholder="Write your review..." ref={reviewInputRef} />
         <Button type="submit" form="add-review-form" disabled={!isReviewInputValid} className={btnClasses["btn-add-review"]} variant="dark">Submit Review</Button>{' '}
       </form>
 
@@ -42,6 +44,3 @@ const WatchlistCommentsList = () => {
 }
 
 export default WatchlistCommentsList;
-
-
-// GET ALL REVIEWS FOR THE SPECIFIED WATCHLIST
