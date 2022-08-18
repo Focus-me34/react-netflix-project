@@ -19,6 +19,8 @@ const WatchlistCommentsList = () => {
   const submitReviewHandler = (e) => {
     e.preventDefault();
     dispatch(addReviewToWatchlist(watchlist.id, reviewInputRef.current.value));
+    reviewInputRef.current.value = "";
+    setIsReviewInputValid(false);
   }
 
   const validateReviewInputHandler = () => {
@@ -42,6 +44,3 @@ const WatchlistCommentsList = () => {
 }
 
 export default WatchlistCommentsList;
-
-
-// GET ALL REVIEWS FOR THE SPECIFIED WATCHLIST

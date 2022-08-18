@@ -73,7 +73,7 @@ const movieSlice = createSlice({
     unsetWatchlistWithReviews: (state) => {
       state.watchlist = null;
       state.reviews = null;
-      state.watchlistMovies = null
+      state.watchlistMovies = null;
       state.watchlistCreator = null;
     },
 
@@ -91,6 +91,10 @@ const movieSlice = createSlice({
 
     addReviewToReviews: (state, action) => {
       state.reviews = [action.payload.review, ...state.reviews];
+    },
+
+    deleteReview: (state, action) => {
+      state.reviews = state.reviews.filter(review => review.id !== action.payload.review_id)
     },
   },
 });
@@ -365,7 +369,7 @@ export const deleteMovieFromWatchlist = (movie_id) => {
   }
 }
 
-// ! ADD A MOVIE TO A WATCHLIST
+// ! ADD A REVIEW TO A WATCHLIST
 export const addReviewToWatchlist = (watchlist_id, comment) => {
   return async (dispatch) => {
     dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: `Adding review to watchlist with id ${watchlist_id}...` }))
@@ -390,12 +394,43 @@ export const addReviewToWatchlist = (watchlist_id, comment) => {
 
     try {
       const data = await sendRequest();
-      console.log(JSON.parse(data.review));
       dispatch(movieSlice.actions.addReviewToReviews({ review: JSON.parse(data.review) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: `Added movie review to watchlist with id ${watchlist_id} successfully!` }))
     } catch (error) {
-      console.log(error);
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: `An error occured while adding movie to the watchlist with id ${watchlist_id}` }))
+    }
+  }
+}
+
+// ! DELETE A REVIEW FROM A WATCHLIST
+export const deleteReviewFromWatchlist = (review_id) => {
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: `Deleting review with id ${review_id}...` }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch(`http://localhost:3000/api/v1/reviews/${review_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(`An error occured: Failed to delete review with id ${review_id}...`)
+      }
+
+      return res.json();
+    }
+
+    try {
+      // const data = await sendRequest();
+      await sendRequest();
+      dispatch(movieSlice.actions.deleteReview({ review_id: review_id }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: `Deleted review with id ${review_id} successfully!` }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: `An error occured while adding movie to the watchlist with id ${review_id}` }))
     }
   }
 }
