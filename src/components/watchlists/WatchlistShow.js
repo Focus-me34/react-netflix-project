@@ -30,13 +30,10 @@ const WatchlistShow = () => {
   const dispatch = useDispatch();
   const [showCommentSection, setShowCommentSection] = useState(false)
 
-
   const params = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(refreshWatchlist);
-  console.log(watchlistMovies);
 
   useEffect(() => {
     if (!allWatchlists) dispatch(getAllWatchlists());

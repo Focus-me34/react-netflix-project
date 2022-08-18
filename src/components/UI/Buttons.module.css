@@ -74,5 +74,15 @@
   border-radius: 3px;
 }
 
+/* ! BUTTON ADD REVIEW SUBMIT */
+.btn-add-review {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 3px;
+}
+
 /* 212 30 34 */
 /* 216 13 18 */
