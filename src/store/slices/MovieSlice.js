@@ -18,6 +18,9 @@ const initialState = {
   watchlistMovies: null,
   watchlistCreator: null,
   reviews: null,
+
+  reviewLikes: [], // Array of liked reviews
+  reviewDislikes: [], // Array of disliked reviews
 };
 
 
@@ -68,6 +71,8 @@ const movieSlice = createSlice({
       state.watchlistMovies = action.payload.watchlistMovies;
       state.watchlistCreator = action.payload.watchlistCreator;
       state.refreshWatchlist = false;
+      state.reviewLikes = action.payload.reviewsLiked;
+      state.reviewDislikes = action.payload.reviewsDisliked;
     },
 
     unsetWatchlistWithReviews: (state) => {
@@ -98,9 +103,42 @@ const movieSlice = createSlice({
     },
 
     updateReview: (state, action) => {
-      const review_matching_id = state.reviews.find(review => review.id === action.payload.review.id )
-      const reviewToUpdateIndex = state.reviews.indexOf(review_matching_id);
+      const reviewMatchingId = state.reviews.find(review => review.id === action.payload.review.id);
+      const reviewToUpdateIndex = state.reviews.indexOf(reviewMatchingId);
       if (reviewToUpdateIndex !== -1) state.reviews[reviewToUpdateIndex] = action.payload.review;
+    },
+
+    updateReviewLikes: (state, action) => {
+      // ? UPDATE THE REVIEW ITSELF TO MODIFY THE LIKES COUNTER
+      const reviewMatchingId = state.reviews.find(review => review.id === action.payload.review.id);
+      const reviewToUpdateIndex = state.reviews.indexOf(reviewMatchingId);
+      if (reviewToUpdateIndex !== -1) state.reviews[reviewToUpdateIndex] = action.payload.review;
+
+      console.log(action.payload.review_like);
+      // ? UPDATE THE "reviewLikes" ARRAY
+      if (action.payload.action_type === "liked") {
+        state.reviewLikes.push(action.payload.review_like);
+        const updatedReviewDislikeArray = state.reviewDislikes.filter(review => review.id !== action.payload.review_like.id);
+        state.reviewDislikes = updatedReviewDislikeArray;
+      } else if (action.payload.action_type === "unliked") {
+        state.reviewLikes = state.reviewLikes.filter(reviewList => reviewList.id !== action.payload.review_like.id)
+      }
+    },
+
+    updateReviewDislikes: (state, action) => {
+      // ? UPDATE THE REVIEW ITSELF TO MODIFY THE LIKES COUNTER
+      const reviewMatchingId = state.reviews.find(review => review.id === action.payload.review.id);
+      const reviewToUpdateIndex = state.reviews.indexOf(reviewMatchingId);
+      if (reviewToUpdateIndex !== -1) state.reviews[reviewToUpdateIndex] = action.payload.review;
+
+      // ? UPDATE THE "reviewDislikes" ARRAY
+      if (action.payload.action_type === "disliked") {
+        state.reviewDislikes.push(action.payload.review_like);
+        const updatedReviewLikeArray = state.reviewLikes.filter(review => review.id !== action.payload.review_like.id)
+        state.reviewLikes = updatedReviewLikeArray;
+      } else if (action.payload.action_type === "undisliked") {
+        state.reviewDislikes = state.reviewDislikes.filter(reviewList => reviewList.id !== action.payload.review_like.id)
+      }
     },
   },
 });
@@ -277,6 +315,7 @@ export const getAllWatchlists = () => {
   }
 }
 
+
 // ! GET WATCHLIST WITH ID (SHOW)
 export const getWatchlist = (watchlist_id) => {
   return async (dispatch) => {
@@ -301,13 +340,14 @@ export const getWatchlist = (watchlist_id) => {
 
     try {
       const data = await sendRequest();
-      dispatch(movieSlice.actions.setWatchlistWithReviews({ watchlist: JSON.parse(data.watchlist), reviews: JSON.parse(data.reviews), watchlistMovies: JSON.parse(data.movies), watchlistCreator: JSON.parse(data.watchlist_creator) }));
+      dispatch(movieSlice.actions.setWatchlistWithReviews({ watchlist: JSON.parse(data.watchlist), reviews: JSON.parse(data.reviews), watchlistMovies: JSON.parse(data.movies), watchlistCreator: JSON.parse(data.watchlist_creator), reviewsLiked: JSON.parse(data.reviews_liked) , reviewsDisliked: JSON.parse(data.reviews_disliked) }));
       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed specified watchlist successfully!" }))
     } catch (error) {
       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while fetching the specified watchlist" }))
     }
   }
 }
+
 
 // ! ADD A MOVIE TO A WATCHLIST
 export const addMovieToWatchlist = (name, movie_id) => {
@@ -342,6 +382,7 @@ export const addMovieToWatchlist = (name, movie_id) => {
   }
 }
 
+
 // ! DELETE A MOVIE FROM A USER'S SPECIFIC WATCHLIST
 export const deleteMovieFromWatchlist = (movie_id) => {
   return async (dispatch) => {
@@ -374,6 +415,7 @@ export const deleteMovieFromWatchlist = (movie_id) => {
     }
   }
 }
+
 
 // ! ADD A REVIEW TO A WATCHLIST
 export const addReviewToWatchlist = (watchlist_id, comment) => {
@@ -408,9 +450,7 @@ export const addReviewToWatchlist = (watchlist_id, comment) => {
   }
 }
 
-// ! ///////////////////////////////////////////////////////////////////////
-// ! ///////////////////////////////////////////////////////////////////////
-// ! ///////////////////////////////////////////////////////////////////////
+
 // ! UPDATE A REVIEW
 export const updateReview = (review, modifificationObject) => {
   console.log(modifificationObject);
@@ -481,37 +521,80 @@ export const deleteReviewFromWatchlist = (review_id) => {
   }
 }
 
-// // ! GET REVIEWS FOR SPECIFIC WATCHLIST (SHOW)
-// export const getWatchlist = (watchlist_id) => {
-//   return async (dispatch) => {
-//     dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching specified watchlist..." }))
-//     const token = localStorage.getItem("token");
 
-//     const sendRequest = async () => {
-//       const res = await fetch(`http://localhost:3000/api/v1/watchlists/${watchlist_id}`, {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//           "Authorization": `Bearer ${token}`,
-//         }
-//       });
+// ! LIKE/UNLIKE A REVIEW
+export const updateLikeReview = (review, action_type) => {
+    console.log(action_type);
 
-//       if (!res.ok) {
-//         throw new Error("An error occured: Failed to fetch all the watchlists...")
-//       }
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: `Updating review's like with id ${review.id}...` }))
+    const token = localStorage.getItem("token");
 
-//       return res.json();
-//     }
+    const sendRequest = async () => {
+      const res = await fetch(`http://localhost:3000/api/v1/reviews/${review.id}/update_review_likes`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          action_type: action_type
+        })
+      });
 
-//     try {
-//       const data = await sendRequest();
-//       dispatch(movieSlice.actions.setWatchlistWithReviews({ watchlist: JSON.parse(data.watchlist), reviews: JSON.parse(data.reviews), watchlistMovies: JSON.parse(data.movies), watchlistCreator: JSON.parse(data.watchlist_creator) }));
-//       dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: "Fecthed specified watchlist successfully!" }))
-//     } catch (error) {
-//       dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while fetching the specified watchlist" }))
-//     }
-//   }
-// }
+      if (!res.ok) {
+        throw new Error(`An error occured: Failed to update review's like with id ${review.id}...`)
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.updateReviewLikes({ review: JSON.parse(data.review), review_like: JSON.parse(data.review_like), action_type: action_type }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: `Updated review's like with id ${review.id} successfully!` }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: `An error occured while updating review's like with id ${review.id}` }))
+    }
+  }
+}
+
+
+// ! DISLIKE/UNDISLIKE A REVIEW
+export const updateDislikeReview = (review, action_type) => {
+  console.log(action_type);
+  return async (dispatch) => {
+    dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: `Updating review's dislike with id ${review.id}...` }))
+    const token = localStorage.getItem("token");
+
+    const sendRequest = async () => {
+      const res = await fetch(`http://localhost:3000/api/v1/reviews/${review.id}/update_review_dislikes`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          action_type: action_type
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`An error occured: Failed to update review's dislike with id ${review.id}...`)
+      }
+
+      return res.json();
+    }
+
+    try {
+      const data = await sendRequest();
+      dispatch(movieSlice.actions.updateReviewDislikes({ review: JSON.parse(data.review), review_like: JSON.parse(data.review_like), action_type: action_type }));
+      dispatch(movieSlice.actions.showNotifications({ status: "success", title: "Success", message: `Updated review's dislike with id ${review.id} successfully!` }))
+    } catch (error) {
+      dispatch(movieSlice.actions.showNotifications({ status: "error", title: "Error", message: `An error occured while updating review's dislike with id ${review.id}` }))
+    }
+  }
+}
 
 export const { selectMovie, unselectMovie, setAllMovies, setFavorites, setAllWatchlists, setWatchlistWithReviews, unsetWatchlistWithReviews, openWatchlistForm,closeWatchlistForm } = movieSlice.actions;
 export default movieSlice.reducer;
