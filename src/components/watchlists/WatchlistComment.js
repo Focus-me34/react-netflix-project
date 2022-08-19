@@ -42,12 +42,12 @@ const WatchlistComment = (props) => {
       <div className={classes["comment-card-bottom"]}>
         <div className={classes["comment-likes-container"]}>
           <div className={classes["likes-counter"]}>
-            <p>{props.review.likes}</p>
+            <p>{props.review.likes_counter}</p>
             <ThumbsUpSharp color={'#198754'} title={"thumbs-up"} height="25px" width="25px"/>
           </div>
 
           <div className={classes["dislikes-counter"]}>
-            <p>{props.review.dislikes}</p>
+            <p>{props.review.dislikes_counter}</p>
             <ThumbsDownSharp color={'#ff0000'} title={"thumbs-down"} height="25px" width="25px" />
           </div>
         </div>
