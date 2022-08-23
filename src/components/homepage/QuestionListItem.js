@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ButtonUi from "../UI/ButtonUi"
 import classes from "./QuestionListItem.module.css"
-import btnClasses from "../UI/Buttons.module.css"
 import { motion, AnimatePresence } from "framer-motion"
 
 const QuestionListItem = (props) => {

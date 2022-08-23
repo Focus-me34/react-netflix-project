@@ -1,5 +1,8 @@
 import { useReducer, useCallback } from 'react';
 
+// ? NOT USED AT ALL. WE USE THE REDUX STORE CUSTOM ACTION INSTEAD
+// ? NOT DELETING IT FOR FUTURE REFERENCES
+
 function httpReducer(state, action) {
   if (action.type === 'SEND') {
     return {

@@ -2,14 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addFavoriteMovie, deleteMovieFromWatchlist ,openWatchlistForm, closeWatchlistForm } from "../../store/slices/MovieSlice";
+import { addFavoriteMovie, deleteMovieFromWatchlist ,openWatchlistForm } from "../../store/slices/MovieSlice";
 import { removeFavoriteMovie } from "../../store/slices/MovieSlice";
-import { getAllWatchlists } from "../../store/slices/MovieSlice";
 
 import { Heart, HeartOutline, Stopwatch, StopwatchOutline } from "react-ionicons";
 import favClasses from "../favourites/FavoriteMovie.module.css"
 
-import classes from "./MovieList.module.css";
 import movieListClasses from "./MovieList.module.css"
 
 
@@ -22,14 +20,8 @@ const Movie = (props) => {
   const [isFavorite, setIsFavorite] = useState(props.isFavorite)
   const [isInWatchlist, setIsInWatchlist] = useState(props.isInWatchlist)
 
-  const addFavorite = (movie_id) => {
-    dispatch(addFavoriteMovie(movie_id));
-  };
-
-  const removeFavorite = (movie_id) => {
-    dispatch(removeFavoriteMovie(movie_id));
-  };
-
+  const addFavorite = (movie_id) => { dispatch(addFavoriteMovie(movie_id)); };
+  const removeFavorite = (movie_id) => { dispatch(removeFavoriteMovie(movie_id)); };
 
 
   const setFavorite = (movie_id) => {
@@ -44,13 +36,9 @@ const Movie = (props) => {
     removeFavorite(movie_id);
   };
 
-  const openWatchlistModal = (movie, movie_id) => {
-    dispatch(openWatchlistForm({ movie: movie, movie_id: movie_id }));
-  } // ! THIS METHOD TRIIGERS THE OPENING OF THE MODAL INSIDE "MOVIES.JS"
 
-  // const closeWatchlistModal = (movie_id) => { // NOT HERE (IN MOVIES INSTEAD)
-  //   dispatch(closeWatchlistForm({ movie_id: movie_id }));
-  // }
+  // ! THIS METHOD TRIGERS THE OPENING OF THE MODAL INSIDE "MOVIES.JS"
+  const openWatchlistModal = (movie, movie_id) => { dispatch(openWatchlistForm({ movie: movie, movie_id: movie_id })) };
 
   const removeFromWatchlistHandler = (movie_id) => {
     setIsInWatchlist(false);

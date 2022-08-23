@@ -1,13 +1,14 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteReviewFromWatchlist } from "../../store/slices/MovieSlice";
-import { updateLikeReview, updateDislikeReview } from "../../store/slices/MovieSlice";
+import { deleteReviewFromWatchlist, updateLikeReview, updateDislikeReview } from "../../store/slices/MovieSlice";
 
 import ReviewEditForm from "./ReviewEditForm";
 import { ThumbsDownSharp, ThumbsUpSharp, ThumbsUpOutline, ThumbsDownOutline, CreateOutline, CloseCircleOutline } from "react-ionicons";
 
 import classes from "./WatchlistComment.module.css";
-import { useState } from "react";
 
+
+// ! Checker functions that don't require to be in the component's body.
 const didUserLikedReview = (likedReviewsArr, currentReview) => {
   return likedReviewsArr.some((review) => review.review_id === currentReview.id) ? true : false;
 }
@@ -27,26 +28,16 @@ const WatchlistComment = (props) => {
   const [disliked, setDisliked] = useState(didUserDislikedReview(reviewDislikes, props.review));
 
 
-  const deleteReviewHandler = (review_id) => {
-    dispatch(deleteReviewFromWatchlist(review_id));
-  }
+  // ! DELETE REVIEW HANDLER
+  const deleteReviewHandler = (review_id) => {dispatch(deleteReviewFromWatchlist(review_id)) }
 
-  const showEditInputHandler = () => {
-    setShowEditInput(true);
-  }
-
-  const hideEditInputHandler = () => {
-    setShowEditInput(false);
-  };
+  // ! DISPLAY / HIDE EDIT INPUT HANDLER
+  const showEditInputHandler = () => { setShowEditInput(true) }
+  const hideEditInputHandler = () => { setShowEditInput(false) };
 
   // ! LIKE / DISLIKE ACTIONS
-  const likeReviewHandler = (action) => {
-    dispatch(updateLikeReview(props.review, action));
-  }
-
-  const dislikeReviewHandler = (action) => {
-    dispatch(updateDislikeReview(props.review, action));
-  };
+  const likeReviewHandler = (action) => { dispatch(updateLikeReview(props.review, action)) }
+  const dislikeReviewHandler = (action) => { dispatch(updateDislikeReview(props.review, action)) };
 
 
   return (

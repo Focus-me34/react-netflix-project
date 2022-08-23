@@ -12,13 +12,12 @@ DONE - Close Backdrop modal when clicking on it
 
 DONE - Simplify / REFACTOR the whole code base
 
-
 DONE - Create new page for watch list and add link to the navbar.
 
 DONE - Create watchlist slice? (NO. same as movie)
 DONE - Add route + link for watchlist
 
-- WatchlistPage X => Watchlists X => WatchlistList => Watchlist
+DONE - WatchlistPage X => Watchlists X => WatchlistList => Watchlist
 
 
 DONE - WatchlistPage:
@@ -45,12 +44,20 @@ to ad a movie to. (New ? Existing?)
 - Reviews
   - Give the possibility for users to review a whole watchlist. Any user can review any watchlist
   DONE - Create watchlists index in rails + view
-  - Get all reviews for specified watchlist (GET#index in rails)
-  - Handle everykind of situation (No reviews /  etc. ...)
-  - Make it possible for users to add a new comment for this watchlist (POST#create)
-  - Make it possible for users to edit their comments (PATCH#update)
-  - Make it possible for a user to delete its comment (DELETE#destroy)
-  - Add some basic styling Netflic style to the form
+  DONE - Get all reviews for specified watchlist (GET#index in rails)
+  DONE - Handle every kind of situation (No reviews /  etc. ...)
+  DONE - Make it possible for users to add a new comment for this watchlist (POST#create)
+  DONE - Make it possible for users to edit their comments (PATCH#update)
+  DONE - Make it possible for a user to delete its comment (DELETE#destroy)
+  DONE - Add some basic styling Netflix style to the form
+
+
+
+
+
+- TESTING (Framework ? (JEST))
+- PRODUCTION (Heroku Rails + react and see how it all works together)
+
 
 
 
@@ -60,17 +67,14 @@ to ad a movie to. (New ? Existing?)
   - Add more comments (Both rails / React)
   - Make navbar shrink
 
-
-
 - Extra
   - Random movie from watchlist suggestion
   - Infinite scroll? / pagination?
+  - User login after sign up
 
 
-- TESTING (Framework ? (JEST))
-- PRODUCTION (Heroku Rails + react and see how it all works together)
 
-
+------------------------------------ NOTES ------------------------------------
 - PAGINATION:
 As soon as we build an endpoint that returns a list of items pagination should be put in place.
 Collections usually grow overtime thus it is important to always return a limited and controlled amount of elements.

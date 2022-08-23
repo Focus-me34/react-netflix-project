@@ -10,6 +10,8 @@ import Navbar from "../navbar/Navbar";
 test("Should render a Navbar component", () => {
   render(<Provider store={store}><Navbar /></Provider>);
 
+  screen.debug()
+
   const navbarComponent = screen.getByTestId("test-navbar");
   expect(navbarComponent).toBeInTheDocument();
 });

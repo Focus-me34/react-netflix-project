@@ -53,7 +53,6 @@ const MainInfo = () => {
 
       <div className={classes["main-info-card"]}>
         <div className={classes["main-info-card-media"]}>
-          {/* <Logo classInfo={"margin-left"}></Logo> */}
           <img src={kids} alt="Image for kids" />
         </div>
 

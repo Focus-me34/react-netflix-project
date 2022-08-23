@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const isToken = localStorage.getItem("token") ? true : false;
-
 const initialState = {
   isAuthModalOpen: false,
   user: isToken ? JSON.parse(localStorage.getItem("user")) : null, // ! If there's a token, there's a user obviously
@@ -15,10 +14,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // toggleModal: (state) => {
-    //   state.isAuthModalOpen = !state.isAuthModalOpen;
-    // },
-
     openAuthModal: (state) => {
       state.isAuthModalOpen = true;
     },
@@ -66,7 +61,6 @@ export const signUp = (credentials) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "localhost:3006"
         },
         body: JSON.stringify({
           user: { email: credentials.email, password: credentials.password },

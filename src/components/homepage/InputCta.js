@@ -23,7 +23,6 @@ const InputCta = () => {
     <div className={classes["input-cta-container"]}>
       <p className={classes["input-cta-title"]}>Ready to watch? Enter your email to create or restart your membership.</p>
       <form onSubmit={onSubmitHandler} id="cta-form" className={`${classes["cta-form"]} ${classes["form-cta"]}`}>
-        {/* <label htmlFor="email">E-mail</label> */}
         <div className={classes["input-cta-line"]}>
           <input onChange={onChangeHanlder} ref={email} className={`${classes["input-cta"]} ${classes["email-cta"]}`} type="email" name="email" placeholder={"E-mail"} />
           <Button type="submit" form="cta-form" disabled={disableButton} className={btnClasses["btn-cta"]} variant="danger">Get Started &gt;</Button>{' '}

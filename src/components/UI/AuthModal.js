@@ -1,5 +1,9 @@
 import ReactDom from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../../store/slices/AuthSlice";
+import { signIn } from "../../store/slices/AuthSlice";
 
 import Backdrop from "./Backdrop";
 import Button from "react-bootstrap/Button";
@@ -8,14 +12,7 @@ import SpinLoader from "./SpinLoader";
 
 import classes from "./AuthModal.module.css"
 
-import { closeAuthModal } from "../../store/slices/AuthSlice";
-import { useDispatch, useSelector } from "react-redux";
-
-import { signUp } from "../../store/slices/AuthSlice";
-import { signIn } from "../../store/slices/AuthSlice";
-import { useNavigate } from "react-router-dom";
-
-// ! CONTENT OF TYHE AUTH MODAL
+// ! CONTENT OF THE AUTH MODAL
 const AuthModalContent = () => {
   const [authType, setAuthType] = useState("signin");
   const [isError, setIsError] = useState({ status: false, message: "" })

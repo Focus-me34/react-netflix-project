@@ -1,5 +1,3 @@
-import { propTypes } from "react-bootstrap/esm/Image";
-
 import classes from "./DisplayContent.module.css"
 
 const DisplayContent = (props) => {

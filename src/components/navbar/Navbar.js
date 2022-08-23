@@ -1,4 +1,3 @@
-// import React, { Component } from "react";
 import Logo from "../UI/Logo";
 import Button from "react-bootstrap/Button";
 import AuthModal from "../UI/AuthModal";
@@ -9,7 +8,6 @@ import btnClasses from "../UI/Buttons.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "../../store/slices/AuthSlice";
 import { destroySession } from "../../store/slices/AuthSlice";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const isAuthModalOpen = useSelector((state) => state.auth.isAuthModalOpen);

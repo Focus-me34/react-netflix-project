@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getFavorites } from "../../store/slices/MovieSlice";
-import { getAllWatchlists } from "../../store/slices/MovieSlice";
+import { getFavorites, getAllWatchlists, selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
 import { getArrayWithAllWatchlistedMovies } from "../movies/MovieList";
-import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
 
 import Movie from "../movies/Movie";
 import SpinLoader from "../UI/SpinLoader";
@@ -11,7 +10,7 @@ import Button from "react-bootstrap/Button";
 
 import classes from "./WatchlistList.module.css";
 import btnClasses from "../UI/Buttons.module.css";
-import { useNavigate } from "react-router-dom";
+
 
 const WatchlistList = (props) => {
   const { allFavorites: favorite_movies, notification, allWatchlists: watchlists, isSelectedMovie } = useSelector(state => state.movie)
@@ -55,7 +54,6 @@ const WatchlistList = (props) => {
         { notification?.status === "error" && <p>An error occured. Try refreshing the page</p> }
       </div>
 
-      {/* <Button type="button" onClick={ () => console.log("Open form modal to add a comment") } className={btnClasses["btn-watchlist-comment"]} variant="primary">Add comment</Button>{' '} */}
       <Button type="button" onClick={ goToWatchlistShowHandler } className={btnClasses["btn-watchlist-comment"]} variant="secondary">See more about this watchlist</Button>{' '}
     </div>
     );

@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { addReviewToWatchlist } from "../../store/slices/MovieSlice";
 
 import SpinLoader from "../UI/SpinLoader";
@@ -9,6 +8,7 @@ import WatchlistComment from "./WatchlistComment";
 
 import classes from "./WatchlistCommentsList.module.css"
 import btnClasses from "../UI/Buttons.module.css"
+
 
 const WatchlistCommentsList = () => {
   const { watchlist, reviews, notification } = useSelector(state => state.movie)

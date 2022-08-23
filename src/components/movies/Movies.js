@@ -1,9 +1,7 @@
 import ReactDom from "react-dom";
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
-
 import { getAllMovies } from "../../store/slices/MovieSlice";
 
 import NavbarDetailed from "../navbar/NavbarDetailed";
