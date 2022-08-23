@@ -39,6 +39,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.isLoggedIn = true;
+      state.isAuthModalOpen = false
       const stringToken = JSON.stringify(action.payload.token);
       localStorage.setItem("token", stringToken.slice(1,-1));
       localStorage.setItem("user", JSON.stringify(action.payload.user));
