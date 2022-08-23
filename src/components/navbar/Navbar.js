@@ -1,9 +1,10 @@
+// import React, { Component } from "react";
 import Logo from "../UI/Logo";
 import Button from "react-bootstrap/Button";
 import AuthModal from "../UI/AuthModal";
 
-import classes from "./Navbar.module.css"
-import btnClasses from "../UI/Buttons.module.css"
+import classes from "./Navbar.module.css";
+import btnClasses from "../UI/Buttons.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "../../store/slices/AuthSlice";
@@ -11,21 +12,21 @@ import { destroySession } from "../../store/slices/AuthSlice";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const isAuthModalOpen = useSelector(state => state.auth.isAuthModalOpen);
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const isAuthModalOpen = useSelector((state) => state.auth.isAuthModalOpen);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
   const openModalHandler = () => {
-    dispatch(openAuthModal())
-  }
+    dispatch(openAuthModal());
+  };
 
   const signOutHandler = () => {
     dispatch(destroySession());
-  }
+  };
 
   return (
     <>
-      <nav className={classes.navbar}>
+      <nav className={classes.navbar} data-testid="test-navbar">
         <Logo></Logo>
         {!isLoggedIn && (
           <Button
@@ -51,6 +52,6 @@ const Navbar = () => {
       {isAuthModalOpen && <AuthModal />}
     </>
   );
-}
+};
 
 export default Navbar;

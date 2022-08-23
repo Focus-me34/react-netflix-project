@@ -12,15 +12,15 @@ const initialState = {
   allWatchlists: null,
 
   watchlist: null,
-  // ?EVERYTIME WE ADD OR REMOVE A MOVIE FROM A WATCHLIST, WE MAKE SET THIS VARIABLE TO TRUE.
+  // ? EVERYTIME WE ADD OR REMOVE A MOVIE FROM A WATCHLIST, WE MAKE SET THE VARIABLE BELOW TO TRUE.
   // ? WE USE IT TO FETCH DATA ABOUT A SPECIFIC WATCHLIST (REFRESHES "WATCHLIST" STATE) OR NOT DEPENDING ON ITS VALUE.
   refreshWatchlist: false,
   watchlistMovies: null,
   watchlistCreator: null,
   reviews: null,
 
-  reviewLikes: [], // Array of liked reviews
-  reviewDislikes: [], // Array of disliked reviews
+  reviewLikes: [], // ? Array of liked reviews
+  reviewDislikes: [], // ? Array of disliked reviews
 };
 
 
@@ -149,14 +149,6 @@ export const getAllMovies = () => {
   return async (dispatch) => {
     dispatch(movieSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Fetching all movies..." }))
     const token = localStorage.getItem("token");
-    // console.log(token)
-    // console.log()
-    // console.log("Clean token")
-    // const cleanToken = token.slice(1,-1)
-    // console.log(cleanToken)
-    // const authorizationValue = `Bearer ${cleanToken}`
-    // console.log("Authorization value coming")
-    // console.log(authorizationValue)
     const sendRequest = async () => {
       const res = await fetch("http://localhost:3000/api/v1/movies", {
         method: "GET",
