@@ -54,12 +54,8 @@ to ad a movie to. (New ? Existing?)
 
 
 
-
 - TESTING (Framework ? (JEST))
 - PRODUCTION (Heroku Rails + react and see how it all works together)
-
-
-
 
 - Animation + overall UX
   - Animate the whole website

@@ -1,4 +1,4 @@
-import ReactDom from "react-dom";
+import ReactDOM from "react-dom";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -121,10 +121,17 @@ const AuthModalContent = () => {
 
 // ! AUTH MODAL + BACKDROP
 const AuthModal = () => {
+  const nodeBackdrop = document.createElement("div");
+  document.body.appendChild(nodeBackdrop);
+
+  const nodeauthModalContent = document.createElement("div");
+  document.body.appendChild(nodeauthModalContent);
   return (
     <>
-      {ReactDom.createPortal(<Backdrop />, document.getElementById("backdrop"))}
-      {ReactDom.createPortal(<AuthModalContent />, document.getElementById("auth-modal"))}
+      {ReactDOM.createPortal(<Backdrop />, nodeBackdrop)}
+      {/* {ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))} */}
+      {ReactDOM.createPortal(<AuthModalContent />, nodeauthModalContent)}
+      {/* {ReactDOM.createPortal(<AuthModalContent />, document.getElementById("auth-modal"))} */}
     </>
   );
 }

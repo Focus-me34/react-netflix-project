@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const isToken = localStorage.getItem("token") ? true : false;
-const initialState = {
+export const initialState = {
   isAuthModalOpen: false,
   user: isToken ? JSON.parse(localStorage.getItem("user")) : null, // ! If there's a token, there's a user obviously
   notification: isToken ? { status: "success", title: "Success", message: "Signed in successfully!" } : null,

@@ -32,6 +32,7 @@ const Navbar = () => {
             className={btnClasses["btn-auth"]}
             variant="danger"
             size="s"
+            data-testid="button-sign-in"
           >
             Sign in
           </Button>
@@ -42,6 +43,7 @@ const Navbar = () => {
             className={btnClasses["btn-auth"]}
             variant="danger"
             size="s"
+            data-testid="button-sign-out"
           >
             Sign out
           </Button>
