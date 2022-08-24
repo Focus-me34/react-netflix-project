@@ -86,7 +86,7 @@ const AuthModalContent = () => {
 
           <div className={classes["auth-modal-bottom"]}>
             <div>
-              <p>New to Netflix? <span className={classes["auth-switch"]} onClick={changeAuthType}>Sign up</span> now</p>
+              <p>New to Netflix? <span className={classes["auth-switch"]} onClick={changeAuthType} data-testid="auth-modal-sign-up-btn">Sign up</span> now</p>
 
               <p>This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className={btnClasses["btn-link"]}> Learn more.</span></p>
             </div>
@@ -108,7 +108,7 @@ const AuthModalContent = () => {
 
           <div className={classes["auth-modal-bottom"]}>
             <div>
-              <p>Already have an account? <span className={classes["auth-switch"]} onClick={changeAuthType}>Sign in</span> now</p>
+              <p>Already have an account? <span className={classes["auth-switch"]} onClick={changeAuthType} data-testid="auth-modal-sign-in-btn">Sign in</span> now</p>
 
               <p>This page is protected by Google reCAPTCHA to ensure you're not a bot. <span className={btnClasses["btn-link"]}> Learn more.</span></p>
             </div>
@@ -124,13 +124,14 @@ const AuthModal = () => {
   const nodeBackdrop = document.createElement("div");
   document.body.appendChild(nodeBackdrop);
 
-  const nodeauthModalContent = document.createElement("div");
-  document.body.appendChild(nodeauthModalContent);
+  const nodeAuthModalContent = document.createElement("div");
+  document.body.appendChild(nodeAuthModalContent);
+
   return (
     <>
       {ReactDOM.createPortal(<Backdrop />, nodeBackdrop)}
       {/* {ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))} */}
-      {ReactDOM.createPortal(<AuthModalContent />, nodeauthModalContent)}
+      {ReactDOM.createPortal(<AuthModalContent />, nodeAuthModalContent)}
       {/* {ReactDOM.createPortal(<AuthModalContent />, document.getElementById("auth-modal"))} */}
     </>
   );
