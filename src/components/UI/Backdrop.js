@@ -11,12 +11,12 @@ const Backdrop = () => {
   const dispatch = useDispatch();
 
   const closeModalHandler = () => {
-    dispatch(closeAuthModal());
     dispatch(unselectMovie());
     dispatch(closeWatchlistForm());
+    dispatch(closeAuthModal());
   };
 
-  return <div className={classes.backdrop} onClick={closeModalHandler}></div>;
+  return <div className={classes.backdrop} onClick={closeModalHandler} data-testid="backdrop"></div>;
 };
 
 export default Backdrop;

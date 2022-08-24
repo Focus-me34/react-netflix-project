@@ -26,7 +26,7 @@ describe("Navbar", () => {
   });
 
 
-  // ! SETUP A SPY ON USESELECTOR / USE DISPATCH
+  // ! SETUP A SPY ON USESELECTOR / USE DISPATCH  WITH "jest.spyOn"
   // ! WE DO THIS TO BE ABLE TO CHECK IF THE DISPATCH MOCK GOT CALLED AND HOW MANY TIMES
   const reactRedux = { useDispatch, useSelector }
   const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
@@ -84,6 +84,64 @@ describe("Navbar", () => {
     )
   });
 
+  test("cliking the sign-in button should dispatch action in charge of displaying the AuthModal component", async () => {
+    const mockStore = configureStore();
+    const initialState = {
+      auth: {
+        isAuthModalOpen: false,
+        user: null,
+        notification: null,
+        isLoggedIn: false,
+        token: null,
+      },
+    };
+    let updatedStore = mockStore(initialState);
+
+    const mockDispatch = jest.fn();
+    useDispatchMock.mockReturnValue(mockDispatch);
+    updatedStore.dispatch = mockDispatch;
+
+    render(<Provider store={updatedStore}><Navbar /></Provider>);
+    const btnSignIn = screen.getByTestId("button-sign-in");
+    expect(btnSignIn).toBeInTheDocument();
+    expect(updatedStore.dispatch).not.toHaveBeenCalled();
+
+    userEvent.click(btnSignIn);
+
+    expect(updatedStore.dispatch).toHaveBeenCalledTimes(1);
+    expect(updatedStore.dispatch.mock.lastCall[0].type).toMatch(/openAuthModal/i)
+  });
+
+
+  test("cliking on the backdrop should close the AuthModal", async () => {
+    const mockStore = configureStore();
+    const initialState = {
+      auth: {
+        isAuthModalOpen: true,
+        user: null,
+        notification: null,
+        isLoggedIn: false,
+        token: null,
+      },
+    };
+    let updatedStore = mockStore(initialState);
+
+    const mockDispatch = jest.fn();
+    useDispatchMock.mockReturnValue(mockDispatch);
+    updatedStore.dispatch = mockDispatch;
+
+    render(<Provider store={updatedStore}><Navbar /></Provider>);
+    expect(updatedStore.dispatch).not.toHaveBeenCalled();
+
+    const backdrop = screen.getByTestId("backdrop");
+
+    userEvent.click(backdrop);
+    console.log(updatedStore.dispatch.mock.calls[2][0]);
+    expect(updatedStore.dispatch).toHaveBeenCalledTimes(3);
+    expect(updatedStore.dispatch.mock.calls[2][0].type).toMatch(/closeAuthModal/i)
+  });
+
+
   // ! -------------------------------------------------------------------------
   // ! KEEP THIS BLOCK FOR FUTURE REFERENCE
   // ? MOCKS A STORE + DISPATCH ACTION FOR THIS MOCKED STORE
@@ -97,7 +155,7 @@ describe("Navbar", () => {
       auth: {
         isAuthModalOpen: false,
         user: { id: 1, email: "test@test.com" },
-        notification: null,
+        notification: { status: "success", title: "Success", message: "Signed in successfully!" },
         isLoggedIn: true,
         token: "ABC123",
       },
@@ -116,11 +174,7 @@ describe("Navbar", () => {
     // console.log(updatedStore.dispatch.mock);
 
     // ! We pass our store mockup to the Provider
-    render(
-      <Provider store={updatedStore}>
-        <Navbar />
-      </Provider>
-    );
+    render(<Provider store={updatedStore}><Navbar /></Provider>);
     const signOutBtn = screen.getByTestId("button-sign-out");
     expect(signOutBtn).toBeInTheDocument();
 
@@ -135,9 +189,7 @@ describe("Navbar", () => {
     // ! We now expect the mockDispatch function to have been called once
     expect(updatedStore.dispatch).toHaveBeenCalledTimes(1);
     // ! We expect the action to be dispatched when clicking the button to trigger the "destroySession action"
-    expect(updatedStore.dispatch.mock.lastCall[0].type).toMatch(
-      "destroySession"
-    );
+    expect(updatedStore.dispatch.mock.lastCall[0].type).toMatch("destroySession");
   });
   // ! -------------------------------------------------------------------------
 
@@ -174,9 +226,3 @@ describe("Navbar", () => {
     })
   });
 })
-
-// !ADD TO NOTES
-// screen.debug()
-// console.log(store.getState()) --> Return the store values;
-
-// mockStore = configureStore(); (import from specific redux + whole process of mocking)
