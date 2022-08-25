@@ -84,6 +84,7 @@ export const signUp = (credentials) => {
 
 // ! SIGN IN
 export const signIn = (credentials) => {
+
   return async (dispatch) => {
     dispatch(authSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Signing in Please wait..." }))
 
@@ -105,6 +106,7 @@ export const signIn = (credentials) => {
     }
 
     try {
+      // console.log("Hey");
       const [ data, authToken ] = await sendRequest();
       dispatch(authSlice.actions.setSession({ token: authToken, user: data.user }));
       dispatch(authSlice.actions.toggleModal())
@@ -147,5 +149,5 @@ export const signOut = () => {
   }
 }
 
-export const { openAuthModal, closeAuthModal, destroySession } = authSlice.actions;
+export const { openAuthModal, closeAuthModal, destroySession, showNotifications, setSession } = authSlice.actions;
 export default authSlice.reducer;

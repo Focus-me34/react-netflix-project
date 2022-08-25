@@ -136,7 +136,7 @@ describe("Navbar", () => {
     const backdrop = screen.getByTestId("backdrop");
 
     userEvent.click(backdrop);
-    console.log(updatedStore.dispatch.mock.calls[2][0]);
+    // console.log(updatedStore.dispatch.mock.calls[2][0]);
     expect(updatedStore.dispatch).toHaveBeenCalledTimes(3);
     expect(updatedStore.dispatch.mock.calls[2][0].type).toMatch(/closeAuthModal/i)
   });

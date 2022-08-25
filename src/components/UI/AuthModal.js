@@ -35,13 +35,13 @@ const AuthModalContent = () => {
     e.preventDefault();
 
     if ((emailSignIn.current.value !== "") &&  passwordSignIn.current.value !== "") {
-      try{
+      // try{
         dispatch(signIn({ email: emailSignIn.current.value, password: passwordSignIn.current.value }))
-      } finally {
-        setTimeout(() => {
-          navigate("/movies");
-        }, 1000);
-      }
+      // } finally {
+      //   setTimeout(() => {
+      //     navigate("/movies");
+      //   }, 1000);
+      // }
     } else {
       setIsError({ status: true, message: "Make sure you povide both email and password" });
     }
@@ -68,12 +68,12 @@ const AuthModalContent = () => {
         <div className={classes["auth-modal"]}>
           <h2>Sign In</h2>
           <form onSubmit={signinHandler} action="">
-            <input ref={emailSignIn} type="email" name="auth-email" id="auth-email" placeholder="Email"></input>
-            <input ref={passwordSignIn} type="password" name="auth-password" id="auth-password" placeholder="Password"></input>
+            <input ref={emailSignIn} type="email" name="auth-email" id="auth-email" placeholder="Email" aria-label="auth-email-input-sign-in"></input>
+            <input ref={passwordSignIn} type="password" name="auth-password" id="auth-password" placeholder="Password" aria-label="auth-password-input-sign-in"></input>
 
             {isError.status && <p className={classes["error-message"]}>{isError.message}</p>}
 
-            {(notification === null || notification?.status !== "pending") && <Button type="submit" className={`${btnClasses["btn-auth"]} w-100`} variant="danger" size="s">Sign in</Button>}
+            {(notification === null || notification?.status !== "pending") && <Button type="submit" className={`${btnClasses["btn-auth"]} w-100`} variant="danger" size="s" data-testid="btn-form-sign-in">Sign in</Button>}
             {notification?.status === "pending" && <SpinLoader />}
 
             <div className={classes["auth-remember-me-section"]}>
@@ -103,7 +103,7 @@ const AuthModalContent = () => {
 
             {isError.status && <p className={classes["error-message"]}>{isError.message}</p> }
 
-            <Button type="submit" className={`${btnClasses["btn-auth"]} w-100`} variant="danger" size="s">Sign up</Button>
+            <Button type="submit" className={`${btnClasses["btn-auth"]} w-100`} variant="danger" size="s" data-testid="btn-form-sign-up">Sign up</Button>
           </form>
 
           <div className={classes["auth-modal-bottom"]}>
