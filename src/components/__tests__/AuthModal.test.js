@@ -6,7 +6,6 @@ import store from "../../store/redux-store";
 import { Provider } from "react-redux";
 import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-test-renderer";
 
 import AuthModal from "../UI/AuthModal";
 
@@ -29,7 +28,6 @@ describe("AuthModal", () => {
     expect(screen.getByLabelText(/auth-password-input-sign-in/i)).toBeInTheDocument();
     expect(screen.getByTestId("btn-form-sign-in")).toBeInTheDocument();
 
-    act(() => {
     const inputEmail = screen.getByLabelText(/auth-email-input-sign-in/i);
     userEvent.clear(inputEmail);
     userEvent.tab();
@@ -42,9 +40,11 @@ describe("AuthModal", () => {
 
     const signInFormButton = screen.getByTestId("btn-form-sign-in");
 
-      userEvent.click(signInFormButton);
+    userEvent.click(signInFormButton);
+
+    await waitFor(()=> {
+      expect(screen.getByTestId("spin-loader")).toBeInTheDocument()
     })
-    expect(screen.getByTestId("spin-loader")).toBeInTheDocument()
 
   });
 
