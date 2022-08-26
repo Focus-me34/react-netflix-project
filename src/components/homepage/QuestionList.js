@@ -3,11 +3,7 @@ import QuestionListItem from "./QuestionListItem";
 import Container from "react-bootstrap/Container";
 import InputCta from "../homepage/InputCta";
 
-// import { motion, AnimateSharedLayout } from "framer-motion";
-
 const QuestionList = () => {
-
-
   return (
     <section className={classes["frequently-asked-questions"]}>
       <Container>

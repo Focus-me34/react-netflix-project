@@ -14,8 +14,6 @@ switch (props.type) {
   case "qa":
     buttonClasses = classes["btn-qa"]
     break;
-  // default:
-  //   break;
 }
 
   return (

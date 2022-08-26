@@ -1,4 +1,3 @@
-import { propTypes } from "react-bootstrap/esm/Image";
 import classes from "./SeparationPattern.module.css"
 
 const SeparationPattern = () => {

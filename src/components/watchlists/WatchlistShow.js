@@ -1,13 +1,8 @@
 import ReactDom from "react-dom";
-
-import { useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
-import { getWatchlist } from "../../store/slices/MovieSlice";
-import { getFavorites } from "../../store/slices/MovieSlice";
-import { getAllWatchlists } from "../../store/slices/MovieSlice";
-import { selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
+import { getWatchlist, getFavorites, getAllWatchlists, selectMovie, unselectMovie } from "../../store/slices/MovieSlice";
 
 import NavbarDetailed from "../navbar/NavbarDetailed";
 import DisplayContent from "../UI/DisplayContent";
@@ -21,7 +16,6 @@ import Footer from "../footer/Footer";
 
 import classes from "../movies/MovieList.module.css";
 import btnClasses from "../UI/Buttons.module.css";
-import { useState } from "react";
 
 
 const WatchlistShow = () => {

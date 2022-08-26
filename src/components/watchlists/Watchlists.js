@@ -1,5 +1,5 @@
 import ReactDom from "react-dom";
-
+import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllWatchlists } from "../../store/slices/MovieSlice";
@@ -15,7 +15,7 @@ import WatchListForm from "./WatchListForm";
 import SelectedMovieInformation from "../UI/SelectedMovieInformation";
 
 import classes from "./Watchlists.module.css";
-import { useParams } from "react-router-dom";
+
 
 const Watchlists = () => {
   const { allWatchlists, isAddingToWatchlist, isSelectedMovie, selectedMovie, notification } = useSelector(state => state.movie)

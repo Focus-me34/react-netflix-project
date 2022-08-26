@@ -9,6 +9,7 @@
 import "@testing-library/jest-dom";
 import React from "react";
 
+
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -17,3 +18,16 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 global.React = React;
+
+
+const mockedUsedNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
+// const mockedUseDispatch = jest.fn();
+// jest.mock("react-redux", () => ({
+//   ...jest.requireActual("react-redux"),
+//   useDispatch: mockedUseDispatch,
+// }));

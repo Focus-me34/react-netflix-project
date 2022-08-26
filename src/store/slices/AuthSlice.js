@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const isToken = localStorage.getItem("token") ? true : false;
-
-const initialState = {
+export const initialState = {
   isAuthModalOpen: false,
   user: isToken ? JSON.parse(localStorage.getItem("user")) : null, // ! If there's a token, there's a user obviously
   notification: isToken ? { status: "success", title: "Success", message: "Signed in successfully!" } : null,
@@ -15,10 +14,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // toggleModal: (state) => {
-    //   state.isAuthModalOpen = !state.isAuthModalOpen;
-    // },
-
     openAuthModal: (state) => {
       state.isAuthModalOpen = true;
     },
@@ -66,7 +61,6 @@ export const signUp = (credentials) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "localhost:3006"
         },
         body: JSON.stringify({
           user: { email: credentials.email, password: credentials.password },
@@ -90,6 +84,7 @@ export const signUp = (credentials) => {
 
 // ! SIGN IN
 export const signIn = (credentials) => {
+
   return async (dispatch) => {
     dispatch(authSlice.actions.showNotifications({ status: "pending", title: "Sending...", message: "Signing in Please wait..." }))
 
@@ -99,7 +94,7 @@ export const signIn = (credentials) => {
         headers: {
           "Content-Type": "application/json",
           // "Access-Control-Allow-Origin": "localhost:3006"
-       },
+        },
         body: JSON.stringify({ user: { email: credentials.email, password: credentials.password } }),
       })
 
@@ -113,7 +108,7 @@ export const signIn = (credentials) => {
     try {
       const [ data, authToken ] = await sendRequest();
       dispatch(authSlice.actions.setSession({ token: authToken, user: data.user }));
-      dispatch(authSlice.actions.toggleModal())
+      dispatch(authSlice.actions.closeAuthModal());
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
     } catch (error) {
       dispatch(authSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while signing in. Please try again" }))
@@ -153,5 +148,5 @@ export const signOut = () => {
   }
 }
 
-export const { openAuthModal, closeAuthModal, destroySession } = authSlice.actions;
+export const { openAuthModal, closeAuthModal, destroySession, showNotifications, setSession } = authSlice.actions;
 export default authSlice.reducer;

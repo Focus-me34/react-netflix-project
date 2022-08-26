@@ -3,11 +3,10 @@ import { useDispatch, useSelector,  } from "react-redux";
 import { getAllWatchlists } from "../../store/slices/MovieSlice";
 import { addMovieToWatchlist } from "../../store/slices/MovieSlice";
 import { closeWatchlistForm } from "../../store/slices/MovieSlice";
-import { Close } from "react-ionicons";
-
 
 import SpinLoader from "../UI/SpinLoader"
 import Button from "react-bootstrap/Button";
+import { Close } from "react-ionicons";
 
 import classes from "./WatchListForm.module.css";
 import btnClasses from "../UI/Buttons.module.css";
@@ -68,7 +67,6 @@ const WatchListForm = () => {
         <form id="add-to-existing-watchlist-form" className={classes["add-to-existing-watchlist-form"]}>
           <input name="movie-name" id="movie-name-input" type="text" disabled placeholder="Give a name to your watchlist" value={movie.title} />
 
-          {/* <label htmlFor="watchlist-name" id="watchlist-name-label"></label> */}
           <select name="watchlist-name" id="watchlist-name-select" ref={wl_name}>
             {userWatchlists?.map((wl) => <option value={wl.name} key={wl.id}>{wl.name}</option>)}
           </select>
@@ -109,8 +107,6 @@ const WatchListForm = () => {
         </div>
       }
 
-      {/* FORMIK HERE */}
-      {/* {showForm && <form></form>} */}
     </div>
   );
 }
