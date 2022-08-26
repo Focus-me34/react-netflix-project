@@ -8,6 +8,7 @@ import btnClasses from "../UI/Buttons.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "../../store/slices/AuthSlice";
 import { destroySession } from "../../store/slices/AuthSlice";
+import { signOut } from "../../store/slices/AuthSlice";
 
 const Navbar = () => {
   const isAuthModalOpen = useSelector((state) => state.auth.isAuthModalOpen);

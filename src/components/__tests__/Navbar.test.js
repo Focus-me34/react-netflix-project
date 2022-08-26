@@ -11,7 +11,9 @@ import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Navbar from "../navbar/Navbar";
-
+import { act } from "react-dom/test-utils";
+import thunk from "redux-thunk";
+import { showNotifications, setSession, destroySession } from "../../store/slices/AuthSlice";
 
 describe("Navbar", () => {
 
@@ -194,35 +196,110 @@ describe("Navbar", () => {
   // ! -------------------------------------------------------------------------
 
 
-  test("the AuthModal component should have a link to sign up", async () => {
+  test("it should have a link to sign in", async () => {
+    render(<Provider store={store}><Navbar /></Provider>);
+    expect(screen.getByTestId("button-sign-in")).toBeInTheDocument();
+  });
+
+
+  // test("it should have a link to sign up", async () => {
+  //   render(<Provider store={store}><Navbar /></Provider>);
+
+  //   const btnSignIn = screen.getByTestId("button-sign-in");
+  //   userEvent.click(btnSignIn);
+  //   await waitFor(() =>
+  //     expect(screen.getByText(/New to Netflix/i)).toBeInTheDocument(),
+  //     expect(screen.getByTestId("auth-modal-sign-up-btn")).toBeInTheDocument()
+  //   )
+
+  //   const btnSignUp = screen.getByTestId("auth-modal-sign-up-btn");
+  //   userEvent.click(btnSignUp);
+
+  //   await waitFor(() => {
+  //     expect(screen.getByText(/Already have an account/i)).toBeInTheDocument(),
+  //     expect(screen.getByTestId("auth-modal-sign-in-btn")).toBeInTheDocument()
+  //   })
+  // });
+
+
+  test("it should have a link to sign up", async () => {
     render(<Provider store={store}><Navbar /></Provider>);
 
     const btnSignIn = screen.getByTestId("button-sign-in");
-
     userEvent.click(btnSignIn);
+
     await waitFor(
       () => expect(screen.getByText(/New to Netflix/i)).toBeInTheDocument(),
       expect(screen.getByTestId("auth-modal-sign-up-btn")).toBeInTheDocument()
     );
   });
 
+  // ! THIS TEST USES A MOCK STORE (NOT THE BEST IMO)
+  test("it should destroy the user's session when clicking on the 'sign out' button", async () => {
+    const mockStore = configureStore({});
+    const initialState = {
+      auth: {
+        isAuthModalOpen: false,
+        user: { id: 1, email: "test@test.com" },
+        notification: {
+          status: "success",
+          title: "Success",
+          message: "Signed in successfully!",
+        },
+        isLoggedIn: true,
+        token: "ABC123",
+      },
+    };
+    let updatedStore = mockStore(initialState);
 
-  test("the AuthModal component should have a link to sign in", async () => {
+    render(
+      <Provider store={updatedStore}>
+        <Navbar />
+      </Provider>
+    );
+
+    const btnSignOut = screen.getByTestId("button-sign-out");
+
+    expect(updatedStore.getActions()).toEqual([])
+
+    userEvent.click(btnSignOut);
+
+    expect(updatedStore.getActions()).not.toEqual([])
+    expect(updatedStore.getActions().length).toBe(1);
+    expect(updatedStore.getActions()[0].type).toMatch(/auth\/destroySession/i);
+  });
+
+  // ! THIS TEST USES THE REAL REDUX STORE. IT'S JUST AMAZING !!!
+  test("it should destroy the user's session when clicking on the 'sign out' button", async () => {
+    const spy = jest.spyOn(store, "dispatch"); // ALWAYS SPY BEFORE PASSING THE STORE TO THE PROVIDER
+
+    store.dispatch(setSession({
+        token: "ABC123",
+      user: {
+        id: 1,
+        email: "test@test.com",
+        username: "Tester",
+        created_at: "2022-08-19T21:05:35.667Z",
+        updated_at: "2022-08-19T21:05:35.667Z",
+      }
+    }));
+
+    store.dispatch(
+      showNotifications({
+        status: "success",
+        title: "Success",
+        message: "Signed in successfully!",
+      })
+    );
+
     render(<Provider store={store}><Navbar /></Provider>);
 
-    const btnSignIn = screen.getByTestId("button-sign-in");
-    userEvent.click(btnSignIn);
-    await waitFor(() =>
-      expect(screen.getByText(/New to Netflix/i)).toBeInTheDocument(),
-      expect(screen.getByTestId("auth-modal-sign-up-btn")).toBeInTheDocument()
-    )
+    expect(spy.mock.calls.length).toBe(2)
 
-    const btnSignUp = screen.getByTestId("auth-modal-sign-up-btn");
-    userEvent.click(btnSignUp);
+    const btnSignOut = screen.getByTestId("button-sign-out");
+    userEvent.click(btnSignOut);
 
-    await waitFor(() => {
-      expect(screen.getByText(/Already have an account/i)).toBeInTheDocument(),
-      expect(screen.getByTestId("auth-modal-sign-in-btn")).toBeInTheDocument()
-    })
+    expect(spy.mock.calls.length).toBe(3)
+    expect(spy.mock.lastCall[0].type).toMatch(/auth\/destroySession/i);
   });
 })

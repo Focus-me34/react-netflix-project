@@ -94,7 +94,7 @@ export const signIn = (credentials) => {
         headers: {
           "Content-Type": "application/json",
           // "Access-Control-Allow-Origin": "localhost:3006"
-       },
+        },
         body: JSON.stringify({ user: { email: credentials.email, password: credentials.password } }),
       })
 
@@ -106,10 +106,9 @@ export const signIn = (credentials) => {
     }
 
     try {
-      // console.log("Hey");
       const [ data, authToken ] = await sendRequest();
       dispatch(authSlice.actions.setSession({ token: authToken, user: data.user }));
-      dispatch(authSlice.actions.toggleModal())
+      dispatch(authSlice.actions.closeAuthModal());
       dispatch(authSlice.actions.showNotifications({ status: "success", title: "Success", message: "Signed in successfully!" }))
     } catch (error) {
       dispatch(authSlice.actions.showNotifications({ status: "error", title: "Error", message: "An error occured while signing in. Please try again" }))
